@@ -12,4 +12,14 @@
     <welcome-file>SFLibrary.html</welcome-file>
   </welcome-file-list>
 
+	<!-- Hibernate 相关 -->
+	<filter>
+		<filter-name>HibernateSessionFilter</filter-name>
+		<filter-class>com.successfactors.library.server.hibernate.HibernateSessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HibernateSessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 </web-app>
