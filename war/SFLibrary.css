@@ -1,34 +1,512 @@
-/** Add css rules here for your application. */
-
-
-/** Example rules used by the template application (remove for your app) */
-h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #777777;
-  margin: 40px 0px 70px;
-  text-align: center;
+* {
 }
 
-.sendButton {
-  display: block;
-  font-size: 16pt;
+body,table td,select {
+	font-size: 11px;
 }
 
-/** Most GWT widgets already have a style name defined */
-.gwt-DialogBox {
-  width: 400px;
+/* default text */
+.normal {
+	color: #15428b;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
 }
 
-.dialogVPanel {
-  margin: 5px;
+.crm-Masthead {
+	background-image: url(images/masthead.png);
+	background-repeat: repeat-x;
 }
 
-.serverResponseLabelError {
-  color: red;
+.crm-Masthead-Logo {
+	padding-top: 4px;
+	padding-left: 8px;
 }
 
-/** Set ids using widget.getElement().setId("idOfElement") */
-#closeButton {
-  margin: 15px 6px 6px;
+.crm-Masthead-Name {
+	font-family: Tahoma, Verdana, sans-serif font-weight :   bold;
+	overflow: hidden;
+	padding-top: 12px;
+	padding-left: 2px;
+	text-align: left;
+	font-size: 16px;
+	color: white;
 }
+
+.crm-Masthead-SignedInUser {
+	color: #FFFFFF;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	overflow: hidden;
+	padding-right: 4px;
+	text-align: right;
+}
+
+.crm-Masthead-SignedInOrganisation {
+	color: #FFFFFF;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 10px;
+	font-weight: normal;
+	overflow: hidden;
+	padding-right: 4px;
+	text-align: right;
+}
+
+.crm-ApplicationMenu {
+	background-image: url(images/application_menu.png);
+	background-repeat: repeat-x;
+	padding-top: 4px;
+	padding-left: 4px;
+}
+
+/*
+ * Application Menu/ToolStrip buttons
+ */
+.buttonTitle,.buttonTitleOver,.buttonTitleDown,.buttonTitleSelected,.buttonTitleFocused,.buttonTitleSelectedFocused,.buttonTitleSelectedOver,.buttonTitleFocusedOver,.buttonTitleSelectedFocusedOver,.buttonTitleSelectedDown,.buttonTitleFocusedDown,.buttonTitleSelectedFocusedDown,.buttonTitleDisabled,.buttonTitleSelectedDisabled
+	{
+	color: #15428b;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+}
+
+.crm-NavigationPane-Header {
+	border-top: 1px solid #7598c7;
+	background-image: url(images/navigation_pane_header.png);
+	background-repeat: repeat-x;
+}
+
+.crm-NavigationPane-Header-Label {
+	border-right: 1px solid #7598c7;
+	color: #15428b;
+	cursor: default;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 8px;
+}
+
+.crm-ContextArea-Header-Label {
+	color: #15428b;
+	cursor: default;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 14px;
+	font-weight: bold;
+	padding-left: 8px;
+}
+
+.crm-NavigationPane {
+	border-top: 1px solid #7598c7;
+}
+
+.crm-ContextArea {
+	border-top: 1px solid #7598c7;
+	background-image: url(images/context_area.png);
+	background-repeat: repeat-x;
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-bottom: 4px;
+	padding-right: 4px;
+}
+
+/*
+ * Application Menu buttons
+ */
+.menuButton,.menuButtonOver,.menuButtonDown,.menuButtonDisabled,.menuButtonSelected,.menuButtonSelectedDown,.menuButtonSelectedOver,.menuButtonSelectedDisabled
+	{
+	border: transparent 1px solid;
+	background: none;
+	color: #15428b;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+
+.menuButtonOver {
+	border: #ffdb6c 1px solid;
+	background-image: url(images/application_menu_button_over.png);
+	background-repeat: repeat-x;
+	color: #15428b;
+	cursor: default;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.menuButtonDown,.menuButtonSelected,.menuButtonSelectedDown,.menuButtonSelectedOver
+	{
+	border: #ffdb6c 1px solid;
+	background-image: url(images/application_menu_button_down.png);
+	background-repeat: repeat-x;
+	color: #15428b;
+	cursor: default;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.menu,.menuSelected,.menuOver,.menuSelectedOver,.menuDisabled,.menuTitleField,.menuTitleFieldSelected,.menuTitleFieldOver,.menuTitleFieldSelectedOver,.menuTitleFieldDisabled,.menuIconField,.menuIconFieldOver,.menuIconFieldSelected,.menuIconFieldSelectedOver,.menuIconFieldDisabled,.treeMenuSelected,.treeMenuSelectedOver,.treeMenuSelectedSelected,.treeMenuSelectedSelectedOver
+	{
+	color: #15428b;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: normal;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+/*
+ * Navigation Pane SectionStack headers - image based
+ */
+.imgSectionHeaderclosed,.imgSectionHeaderopened,.imgSectionHeaderDisabledclosed,.imgSectionHeaderDisabledopened
+	{
+	color: #15428b;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.imgSectionHeaderTitleclosed,.imgSectionHeaderTitleopened {
+	color: #15428b;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.imgSectionHeaderTitleOverclosed,.imgSectionHeaderTitleOveropened {
+	color: #15428b;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+.imgSectionHeaderTitleDisabledopened,.imgSectionHeaderTitleDisabledclosed
+	{
+	color: #15428b;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+}
+
+/*
+ * Navigation Pane ListGrid cells
+ */
+.crm-NavigationPaneGridCell {
+	color: black;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+}
+
+.crm-NavigationPaneGridCellDark {
+	color: black;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+}
+
+.crm-NavigationPaneGridCellOver,.crm-NavigationPaneGridCellOverDark {
+	background: url(images/navigation_pane_gridcell_over.png) repeat-x
+		bottom left scroll;
+	border-top: 1px solid #ffb74c;
+	border-bottom: 1px solid #ffb74c;
+	color: black;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+}
+
+.crm-NavigationPaneGridCellSelected,.crm-NavigationPaneGridCellSelectedDark
+	{
+	border-top: 1px solid #ffb74c;
+	border-bottom: 1px solid #ffb74c;
+	background-color: #ffe6a0;
+	color: black;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+}
+
+.crm-NavigationPaneGridCellSelectedOver,.crm-NavigationPaneGridCellSelectedOverDark
+	{
+	border-top: 1px solid #ffb74c;
+	border-bottom: 1px solid #ffb74c;
+	background-color: #ffe6a0;
+	color: black;
+	cursor: pointer;
+	cursor: hand;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+}
+
+/*
+ * Context Area Search Bar
+ */
+.crm-SearchBar { /* border-top: 1px solid #7598c7; */
+	background-color: #d6e8ff;
+	background-image: url(images/context_area.png);
+	background-repeat: repeat-x;
+	cursor: default;
+	font-family: tahoma;
+	font-size: 11px;
+	vertical-align: middle;
+	color: #15428b;
+	padding-top: 8px;
+	padding-right: 8px;
+	padding-bottom: 8px;
+	padding-left: 8px;
+}
+
+/*
+ * Context Area Tool Bar
+ */
+.crm-ToolBar { /*
+  background-image: url(images/toolbar.png);
+  background-repeat: repeat-x;
+  color: #15428b;  
+  cursor: default;   
+  padding-top: 4px;
+  padding-left: 4px;
+  */
+	
+}
+
+.toolStrip {
+	padding-top: 1px;
+	background-image: url(images/toolbar.png);
+	background-repeat: repeat-x;
+	padding-left: 2px;
+}
+
+/*
+ * Context Area Status Bar
+ */
+.crm-StatusBar {
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #999999;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+	cursor: default;
+}
+
+.crm-StatusBar-Label {
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+	cursor: default;
+	padding-left: 8px;
+	padding-right: 8px;
+}
+
+/*
+ * Context Area Jump Bar
+ */
+.crm-JumpBar {
+	border-bottom: 1px solid #999999;
+	background-color: #f0f0f0;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+	cursor: default;
+	/*
+  padding-left: 4px;  	
+  padding-right: 4px; 
+  */
+}
+
+.crm-JumpBar-Label {
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+	cursor: default;
+}
+
+.crm-JumpBar-LabelOver,.crm-JumpBar-LabelDown {
+	font-weight: bold;
+}
+
+/*
+ * Entity styles
+ */
+.crm-Entity-MainLayout {
+	background-image: url(images/context_area.png);
+	background-repeat: repeat-x;
+}
+
+.crm-Entity-Masthead {
+	
+}
+
+.crm-Entity-Masthead-Logo {
+	padding-top: 6px;
+	padding-left: 68px;
+}
+
+.crm-Entity-Masthead-Name {
+	color: black;
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 10px;
+	overflow: hidden;
+	padding-left: 6px;
+	vertical-align: top;
+}
+
+.crm-Entity-NavigationPane {
+	
+}
+
+.crm-Entity-ContextArea {
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-bottom: 4px;
+	padding-right: 4px;
+}
+
+.tabSetContainer {
+	border: 1px solid #C0C3C7;
+	background-color: #F0F8FF; /* AliceBlue */
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: #D9D9D9;
+}
+
+.crm-Entity-Masthead-Logo { /* padding-top: 6px; */
+	padding-left: 60px;
+}
+
+.crm-Entity-ToolBar {
+	background-image: url(images/toolbar.png);
+	background-repeat: repeat-x;
+}
+
+.crm-Entity-ToolStrip { /*
+  padding-top: 1px;
+  background-image: url(images/toolbar.png);
+  background-repeat: repeat-x;
+  */
+	padding-left: 48px;
+}
+
+.crm-Entity-ToolBar-Logo {
+	margin-left: 10px;
+	position: absolute;
+}
+
+/*-----------------------------Alex Styles-----------------------------*/
+.alex_LoginBox {
+	background-image: url(images/context_area.png);
+	background-repeat: repeat-x;
+	border-right: 1px solid #7598C7;	
+	border-top: 1px solid #7598c7;
+}
+
+.alex_LoginBox_Form {
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+.alex_LoginBox_DateChooser {
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+}
+
+.alex_Title{
+	color: #212121;
+	font-size: 20px;
+	font-weight: bold;
+	margin: 5px;
+	padding: 2px 0;
+	text-shadow: 0 1px 1px #A29F9F;
+	text-align:center;
+	letter-spacing: 2px;
+}
+
+.alex_Content{
+	font-family: Microsoft YaHei;
+	font-size: 14px;
+	color: #212121;
+	letter-spacing: 2px;
+	
+	margin-left: 10px;
+	margin-top: 5px;
+	margin-right: 20px;
+}
+
+.alex_Picture{
+	margin-left: 20px;
+	margin-top: 5px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+.alex_myDecoratorPanel {
+	box-shadow: rgba(0, 0, 0, 0.3) 0 0px 1px;
+	border: 1px solid;
+	border-color: gray;
+}
+
+.alex_logout_label {
+}
+.alex_logout_label:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+.alex_header_label {
+color: #4D4D4D;
+font-family: Arial, Verdana, sans-serif;
+font-size: 14px;
+font-weight: bold;
+}
+
+.alex_welcome_title {
+font-family: STHeiti;
+font-size: 14px;
+color: #3A3A3A;
+letter-spacing: 2px;
+text-shadow: 0 0px 1px #5C5858;
+margin-left: 10px;
+}
+
+.alex_welcome_content{
+font-family: STHeiti;
+font-size: 14px;
+color: #585858;
+letter-spacing: 1px;
+margin-left: 30px;
+margin-bottom: 10px;
+font-style: italic;
+}
+
+.alex_warning{
+font-family: Microsoft YaHei;
+font-size: 26px;
+color: #2C2C2C;
+letter-spacing: 2px;
+}
+/*---------------------------Alex Styles End---------------------------*/
