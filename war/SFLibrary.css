@@ -428,11 +428,19 @@ body,table td,select {
 	margin-left: 10px;
 }
 
-.alex_LoginBox_DateChooser {
+.alex_LoginBox_Picture {
 	margin-top: 20px;
 	margin-left: 5px;
 	margin-bottom: 5px;
 	margin-right: 5px;
+}
+
+.alex_LoginBox_Header {
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	letter-spacing: 2px;
 }
 
 .alex_Title{

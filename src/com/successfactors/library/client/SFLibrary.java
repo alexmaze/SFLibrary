@@ -23,7 +23,7 @@ public class SFLibrary implements EntryPoint {
 	private static SFLibrary singleton;
 
 	private static final int NORTH_HEIGHT = 85;
-	private static final String WEST_WIDTH = "20%";
+	public static final String WEST_WIDTH = "250";
 
 	private VLayout mainLayout;
 	private HLayout northLayout;
@@ -106,7 +106,7 @@ public class SFLibrary implements EntryPoint {
 	
 	// 默认欢迎界面
 	private void initEastPart() {
-		navigationPaneHeader.setContextAreaHeaderLabelContents("欢迎使用本在线项目管理系统");
+		navigationPaneHeader.setContextAreaHeaderLabelContents("欢迎使用");
 		eastLayout = new WelcomeView();
 	}
 	

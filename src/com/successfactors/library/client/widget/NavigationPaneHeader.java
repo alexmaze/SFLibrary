@@ -5,10 +5,10 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.Overflow;
 import com.smartgwt.client.widgets.Label;
+import com.successfactors.library.client.SFLibrary;
 
 public class NavigationPaneHeader extends HLayout {
 
-  private static final String WEST_WIDTH = "20%";
   private static final String NAVIGATION_PANE_HEADER_HEIGHT = "27px";
   private static final String NAVIGATION_PANE_HEADER_LABEL_DISPLAY_NAME = "Workplace";
   private static final String CONTEXT_AREA_HEADER_LABEL_DISPLAY_NAME = "Activities";
@@ -28,7 +28,7 @@ public class NavigationPaneHeader extends HLayout {
 	// Initialize the Navigation Pane Header Label
     navigationPaneHeaderLabel = new Label(); 
     navigationPaneHeaderLabel.setStyleName("crm-NavigationPane-Header-Label");
-    navigationPaneHeaderLabel.setWidth(WEST_WIDTH);
+    navigationPaneHeaderLabel.setWidth(SFLibrary.WEST_WIDTH);
     navigationPaneHeaderLabel.setContents(NAVIGATION_PANE_HEADER_LABEL_DISPLAY_NAME); 
     navigationPaneHeaderLabel.setAlign(Alignment.LEFT);  
     navigationPaneHeaderLabel.setOverflow(Overflow.HIDDEN); 

@@ -23,7 +23,7 @@ public class Masthead extends HLayout {
     this.setHeight(MASTHEAD_HEIGHT);
     
 	// Initialize the Logo image
-    Img logo = new Img("logo.png", 280, 48); 
+    Img logo = new Img("logo.png", 430, 48); 
     logo.setStyleName("crm-Masthead-Logo");	  
     
 	// Initialize the Name label	
@@ -41,7 +41,7 @@ public class Masthead extends HLayout {
     // Initialize the Signed In User label
 	Label signedInUser = new Label();  
 	signedInUser.setStyleName("crm-MastHead-SignedInUser");  
-	signedInUser.setContents("<b>&nbsp &nbsp &nbsp SMS</b><br />— Group 8");   
+	signedInUser.setContents("<b>&nbsp &nbsp &nbsp SuccessFactors</b><br /><i>&nbsp&nbsp&nbsp— 内部使用</i>");   
 
     // Initialize the East layout container
     HLayout eastLayout = new HLayout();

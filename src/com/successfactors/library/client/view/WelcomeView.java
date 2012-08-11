@@ -5,11 +5,11 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
- *  欢迎界面，显示系统简介，近期项目列表（简），共享资料列表（简）
+ *  欢迎界面，显示系统简介，新增书目
  * */
 public class WelcomeView  extends VLayout{
 
-	private static final String DESCRIPTION = "欢迎使用本在线项目管理系统";
+	private static final String DESCRIPTION = "欢迎使用";
 	private static final String CONTEXT_AREA_WIDTH = "*";
 
 	public WelcomeView() {
