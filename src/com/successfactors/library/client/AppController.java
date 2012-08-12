@@ -1,6 +1,8 @@
 package com.successfactors.library.client;
 
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.smartgwt.client.util.SC;
+import com.successfactors.library.shared.FieldVerifier;
 
 public class AppController {
 	
@@ -45,7 +47,13 @@ public class AppController {
 	}
 
 	public static void doLogin(String strName, String strPwd) {
-		// TODO Auto-generated method stub
+		// 初步验证用户名密码
+		if (!FieldVerifier.isUserNameValid(strName)
+				|| !FieldVerifier.isPasswordValid(strPwd)) {
+			SC.say("用户名或密码错误！");
+			return;
+		}
+		// TODO 联系服务器进行登录验证
 		
 	}
 

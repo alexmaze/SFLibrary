@@ -1,42 +1,64 @@
 package com.successfactors.library.shared;
 
 /**
- * <p>
- * FieldVerifier validates that the name the user enters is valid.
- * </p>
- * <p>
- * This class is in the <code>shared</code> package because we use it in both
- * the client code and on the server. On the client, we verify that the name is
- * valid before sending an RPC request so the user doesn't have to wait for a
- * network round trip to get feedback. On the server, we verify that the name is
- * correct to ensure that the input is correct regardless of where the RPC
- * originates.
- * </p>
- * <p>
- * When creating a class that is used on both the client and the server, be sure
- * that all code is translatable and does not use native JavaScript. Code that
- * is not translatable (such as code that interacts with a database or the file
- * system) cannot be compiled into client side JavaScript. Code that uses native
- * JavaScript (such as Widgets) cannot be run on the server.
- * </p>
- */
+ * 输入框信息正确性验证类
+ * */
 public class FieldVerifier {
+	
+	/**
+	 * 用户名：字母开头5-16位字母数字下划线组合
+	 * */
+	public static boolean isUserNameValid(String username) {
+		return username.matches("^[a-zA-Z][a-zA-Z0-9_]{4,15}$");
+	}
+	
+	/**
+	 * 真实姓名：汉字
+	 * */
+	public static boolean isRealNameValid(String realname) {
+		return realname
+				.matches("[\u4e00-\u9fa5]{1,10}");
+	}
+	
+	/**
+	 * 密码为6-16位字符组合!
+	 * */
+	public static boolean isPasswordValid(String password) {
+		return password.matches("^[a-zA-Z0-9_]{6,16}$");
+	}
 
 	/**
-	 * Verifies that the specified name is valid for our service.
-	 * 
-	 * In this example, we only require that the name is at least four
-	 * characters. In your application, you can use more complex checks to ensure
-	 * that usernames, passwords, email addresses, URLs, and other fields have the
-	 * proper syntax.
-	 * 
-	 * @param name the name to validate
-	 * @return true if valid, false if invalid
-	 */
-	public static boolean isValidName(String name) {
-		if (name == null) {
-			return false;
-		}
-		return name.length() > 3;
+	 * 电子邮箱验证
+	 * */
+	public static boolean isEmailValid(String email) {
+		return email
+				.matches("^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$");
 	}
+	
+	/**
+	 * 输入非空验证
+	 * */
+	public static boolean isNotEmptyValid(String strinfo) {
+		if (strinfo == null)
+			return false;
+		if (strinfo.length() == 0)
+			return false;
+		
+		return true;
+	}
+	
+	/**
+	 * 身份证验证
+	 * */
+	public static boolean isCerIDValid(String cerID) {
+		return cerID.matches("\\d{18}|\\d{15}");
+	}
+
+	/**
+	 * 手机号验证
+	 * */
+	public static boolean isPhoneValid(String phone) {
+		return phone.matches("(\\(\\d{3,4}\\)|\\d{3,4}-|\\s)?\\d{7,14}");
+	}
+	
 }

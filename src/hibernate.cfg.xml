@@ -9,7 +9,7 @@
 
         <!-- Database connection settings -->
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mysql://localhost/sflibrarydb</property>
+        <property name="connection.url">jdbc:mysql://localhost/sflibrarydb_hibernate</property>
         <property name="connection.username">root</property>
         <property name="connection.password">1234</property>
 
@@ -26,7 +26,7 @@
         <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
         <!-- Echo all executed SQL to stdout -->
-        <property name="show_sql">false</property>
+        <property name="show_sql">true</property>
 
 		<!--hibernate.cfg.xml -->
 		<property name="format_sql">true</property>
@@ -36,16 +36,10 @@
 
 		<property name="javax.persistence.validation.mode">none</property>
        
-       <!-- 
-       <mapping class="edu.tongji.sms.shared.domain.SmsUser"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsProject"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsMessage"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsUserProject"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsUserTask"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsPlan"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsTask"/>
-       <mapping class="edu.tongji.sms.shared.domain.SmsShare"/>
-        -->
+       <mapping class="com.successfactors.library.shared.model.SLBook"/>
+       <mapping class="com.successfactors.library.shared.model.SLBorrow"/>
+       <mapping class="com.successfactors.library.shared.model.SLOrder"/>
+       <mapping class="com.successfactors.library.shared.model.SLUser"/>
         
     </session-factory>
 
