@@ -1,12 +1,18 @@
 package com.successfactors.library.client;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
+import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.client.service.UserService;
+import com.successfactors.library.client.service.UserServiceAsync;
 import com.successfactors.library.shared.FieldVerifier;
 
 public class AppController {
 	
 	private final SimpleEventBus eventBus;
+	final static UserServiceAsync userService = GWT.create(UserService.class);
 	
 	public AppController(SimpleEventBus eBus) {
 		eventBus = eBus;
@@ -54,7 +60,27 @@ public class AppController {
 			return;
 		}
 		// TODO 联系服务器进行登录验证
-		
+		new RPCCall<String>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				// TODO Auto-generated method stub
+				SC.say("sorry!");
+			}
+
+			@Override
+			public void onSuccess(String result) {
+				// TODO Auto-generated method stub
+				SC.say(result);
+			}
+
+			@Override
+			protected void callService(AsyncCallback<String> cb) {
+				// TODO Auto-generated method stub
+				userService.helloServer("Alex", cb);
+			}
+			
+		}.retry(3);
 	}
 
 	public static void doSignUp() {

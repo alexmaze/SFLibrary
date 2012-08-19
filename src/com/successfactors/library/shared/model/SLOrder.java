@@ -16,6 +16,7 @@ public class SLOrder implements Serializable {
 	private String userEmail;
 	private String bookISBN;
 	private Date orderDate;
+	private String status;
 	
 	@Id
 	public int getOrderId() {
@@ -41,6 +42,12 @@ public class SLOrder implements Serializable {
 	}
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
