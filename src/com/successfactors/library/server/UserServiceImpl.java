@@ -20,13 +20,21 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	@Override
 	public SLUser login(String strEmail, String strPassword) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		SLUser test = new SLUser();
+		test.setUserName("AlexYan");
+		test.setUserEmail(strEmail);
+		test.setUserPassword(strPassword);
+		test.setUserType("管理员");
+		test.setUserDepartment("Rules Engine");
+		
+		return test;
 	}
 
 	@Override
 	public boolean logout() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override

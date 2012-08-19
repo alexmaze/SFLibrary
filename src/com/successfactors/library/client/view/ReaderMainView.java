@@ -5,17 +5,17 @@ import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.VLayout;
 
 /**
- *  欢迎界面，显示系统简介，新增书目
+ *  欢迎界面，推荐图书，新增图书
  * */
-public class WelcomeView  extends VLayout{
+public class ReaderMainView extends VLayout {
 
 	private static final String DESCRIPTION = "欢迎使用";
 	private static final String CONTEXT_AREA_WIDTH = "*";
 
-	public WelcomeView() {
+	public ReaderMainView() {
 		super();
 
-		GWT.log("初始化: WelcomeView", null);
+		GWT.log("初始化: ReaderMainView", null);
 
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
@@ -50,7 +50,7 @@ public class WelcomeView  extends VLayout{
 		private String id;
 
 		public Canvas create() {
-			WelcomeView view = new WelcomeView();
+			ReaderMainView view = new ReaderMainView();
 			id = view.getID();
 
 //			GWT.log("WelcomeView.Factory.create()->view.getID() - " + id, null);
