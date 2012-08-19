@@ -1,21 +1,15 @@
 package com.successfactors.library.client;
 
-import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.shared.SimpleEventBus;
+import static com.successfactors.library.client.SFLibrary.userService;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.successfactors.library.client.helper.RPCCall;
-import com.successfactors.library.client.service.UserService;
-import com.successfactors.library.client.service.UserServiceAsync;
 import com.successfactors.library.shared.FieldVerifier;
 
 public class AppController {
 	
-	private final SimpleEventBus eventBus;
-	final static UserServiceAsync userService = GWT.create(UserService.class);
-	
-	public AppController(SimpleEventBus eBus) {
-		eventBus = eBus;
+	public AppController() {
 		bind();
 	}
 

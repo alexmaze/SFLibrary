@@ -3,11 +3,11 @@ package com.successfactors.library.server;
 import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.successfactors.library.client.service.UserService;
-import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.client.service.BookService;
+import com.successfactors.library.shared.model.SLBook;
 
 @SuppressWarnings("serial")
-public class UserServiceImpl extends RemoteServiceServlet implements UserService {
+public class BookServiceImpl extends RemoteServiceServlet implements BookService {
 
 	/**
 	 * 测试服务器连通
@@ -18,43 +18,38 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 
 	@Override
-	public SLUser login(String strEmail, String strPassword) {
+	public SLBook addBook(SLBook newBook) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean logout() {
+	public boolean deleteBook(String bookISBN) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean register(SLUser newUser) {
+	public boolean updateBook(SLBook updateBook) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean saveUserInfo(SLUser slUser) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public SLUser getUserById(String userEmail) {
+	public SLBook getBookByISBN(String bookISBN) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean deleteUserById(String userEmail) {
+	public ArrayList<SLBook> getAllBookList() {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public ArrayList<SLUser> getUserList(int iStart, int iEnd) {
+	public ArrayList<SLBook> searchBookList(String searchType,
+			String searchValue, int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}

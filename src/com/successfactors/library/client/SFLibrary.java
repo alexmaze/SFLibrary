@@ -1,6 +1,7 @@
 package com.successfactors.library.client;
 
 import com.google.gwt.core.client.EntryPoint;
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.user.client.Window;
 import com.smartgwt.client.widgets.Canvas;
@@ -9,6 +10,14 @@ import com.smartgwt.client.widgets.grid.events.RecordClickHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.data.NavigationPaneRecord;
+import com.successfactors.library.client.service.BookService;
+import com.successfactors.library.client.service.BookServiceAsync;
+import com.successfactors.library.client.service.BorrowService;
+import com.successfactors.library.client.service.BorrowServiceAsync;
+import com.successfactors.library.client.service.OrderService;
+import com.successfactors.library.client.service.OrderServiceAsync;
+import com.successfactors.library.client.service.UserService;
+import com.successfactors.library.client.service.UserServiceAsync;
 import com.successfactors.library.client.view.ContextAreaFactory;
 import com.successfactors.library.client.view.RegisterView;
 import com.successfactors.library.client.view.WelcomeView;
@@ -19,6 +28,11 @@ import com.successfactors.library.client.widget.NavigationPaneHeader;
 import com.successfactors.library.client.widget.StatusInfoBar;
 
 public class SFLibrary implements EntryPoint {
+
+	public final static UserServiceAsync userService = GWT.create(UserService.class);
+	public final static BookServiceAsync bookService = GWT.create(BookService.class);
+	public final static OrderServiceAsync orderService = GWT.create(OrderService.class);
+	public final static BorrowServiceAsync borrowService = GWT.create(BorrowService.class);
 	
 	private static SFLibrary singleton;
 
@@ -34,13 +48,13 @@ public class SFLibrary implements EntryPoint {
 	private StatusInfoBar statusInfoBar;
 	private NavigationPaneHeader navigationPaneHeader;
 	
-	private SimpleEventBus eventBus;
+	public SimpleEventBus eventBus;
 	
 	public void onModuleLoad() {
 
 		singleton = this;
 		eventBus = new SimpleEventBus();
-		new AppController(eventBus);
+		new AppController();
 		
 		Window.enableScrolling(false);
 		Window.setMargin("0px");

@@ -3,11 +3,11 @@ package com.successfactors.library.server;
 import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.successfactors.library.client.service.UserService;
-import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.client.service.BorrowService;
+import com.successfactors.library.shared.model.SLBorrow;
 
 @SuppressWarnings("serial")
-public class UserServiceImpl extends RemoteServiceServlet implements UserService {
+public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowService {
 
 	/**
 	 * 测试服务器连通
@@ -18,43 +18,45 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 
 	@Override
-	public SLUser login(String strEmail, String strPassword) {
+	public boolean borrowBook(String bookISBN) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean returnBook(int borrowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean lostBook(int borrowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public SLBorrow renewBorrow(int borrowId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean logout() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean register(SLUser newUser) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean saveUserInfo(SLUser slUser) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public SLUser getUserById(String userEmail) {
+	public SLBorrow getBorrowInfo(int borrowId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean deleteUserById(String userEmail) {
+	public ArrayList<SLBorrow> getBorrowList(String strType, String userEmail,
+			int iStart, int iEnd) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override
-	public ArrayList<SLUser> getUserList(int iStart, int iEnd) {
+	public ArrayList<SLBorrow> getBorrowList(String strType, int iStart,
+			int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}

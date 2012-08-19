@@ -6,6 +6,41 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
+	<servlet>
+		<servlet-name>userServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.UserServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>userServlet</servlet-name>
+		<url-pattern>/sflibrary/userService</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>bookServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.BookServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bookServlet</servlet-name>
+		<url-pattern>/sflibrary/bookService</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>borrowServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.BorrowServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>borrowServlet</servlet-name>
+		<url-pattern>/sflibrary/borrowService</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>orderServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.OrderServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>orderServlet</servlet-name>
+		<url-pattern>/sflibrary/orderService</url-pattern>
+	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
@@ -21,15 +56,5 @@
 		<filter-name>HibernateSessionFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<!-- Servlets -->
-	<servlet>
-		<servlet-name>userServlet</servlet-name>
-		<servlet-class>com.successfactors.library.server.UserServiceImpl</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>userServlet</servlet-name>
-		<url-pattern>/sflibrary/userService</url-pattern>
-	</servlet-mapping>
 	
 </web-app>
