@@ -38,7 +38,7 @@ public class LoginBox extends VLayout {
         //header2.setCellStyle("alex_LoginBox_Header");
         
         TextItem userNameItem = new TextItem();
-        userNameItem.setTitle("用户名");
+        userNameItem.setTitle("Email");
         userNameItem.setName("userName");
         userNameItem.setWidth(170);
         

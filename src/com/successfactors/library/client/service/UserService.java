@@ -19,7 +19,7 @@ public interface UserService extends RemoteService {
 	boolean logout();
 	
 	// 新用户注册
-	boolean register(SLUser newUser);
+	SLUser register(SLUser newUser);
 	
 	// 保存用户信息
 	boolean saveUserInfo(SLUser slUser);

@@ -38,9 +38,9 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 
 	@Override
-	public boolean register(SLUser newUser) {
+	public SLUser register(SLUser newUser) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ public interface UserServiceAsync {
 
 	void getUserById(String userEmail, AsyncCallback<SLUser> callback);
 
-	void register(SLUser newUser, AsyncCallback<Boolean> callback);
+	void register(SLUser newUser, AsyncCallback<SLUser> callback);
 
 	void saveUserInfo(SLUser slUser, AsyncCallback<Boolean> callback);
 
