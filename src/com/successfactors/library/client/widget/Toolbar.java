@@ -7,6 +7,12 @@ import com.smartgwt.client.widgets.toolbar.ToolStrip;
 import com.smartgwt.client.widgets.toolbar.ToolStripButton;
 
 public class Toolbar extends HLayout {
+	
+	public enum ToolbarButtonType {
+		New_Button,
+		Delete_Button,
+		Update_Button,
+	}
 
 	private static final String TOOLBAR_HEIGHT = "25px";
 	private static final String TOOLSTRIP_WIDTH = "*";
@@ -14,7 +20,7 @@ public class Toolbar extends HLayout {
 	private static final String NEW_BUTTON = "toolbar/new.png";
 	private static final String DELETE_BUTTON = "toolbar/delete.png";
 
-	private static final String APPLY_BUTTON = "toolbar/email.png";
+	private static final String APPLY_BUTTON = "toolbar/reports.png";
 
 	private static final String NEW_BUTTON_DISPLAY_NAME = "新建";
 	private static final String DELETE_BUTTON_DISPLAY_NAME = "删除";
@@ -57,16 +63,16 @@ public class Toolbar extends HLayout {
 		this.addMember(toolStrip);
 	}
 
-	public void addButtonClickHandler(String butName, ClickHandler clickHandler) {
+	public void addButtonClickHandler(ToolbarButtonType butType, ClickHandler clickHandler) {
 		
-		if (butName.equals("newButton")) {
+		if (butType == ToolbarButtonType.New_Button) {
 			newButton.addClickHandler(clickHandler);
-		} else if (butName.equals("deleteButton")) {
+		} else if (butType == ToolbarButtonType.Delete_Button) {
 			deleteButton.addClickHandler(clickHandler);
-		} else if (butName.equals("updateButton")) {
+		} else if (butType == ToolbarButtonType.Update_Button) {
 			updateButton.addClickHandler(clickHandler);
 		} else {
-			GWT.log("Toolbar 按钮绑定单击事件错误 "+butName);
+			GWT.log("Toolbar 按钮绑定单击事件错误 " + butType.name());
 		}
 		
 	}

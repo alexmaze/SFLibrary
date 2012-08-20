@@ -25,7 +25,7 @@ public interface BookService extends RemoteService {
 	SLBook getBookByISBN(String bookISBN);
 	
 	// 获取所有图书列表
-	ArrayList<SLBook> getAllBookList();
+	ArrayList<SLBook> getAllBookList(int iStart, int iEnd);
 	
 	// 搜索图书
 	// searchType = "bookName","bookAuthor",

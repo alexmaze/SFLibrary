@@ -6,6 +6,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.smartgwt.client.data.Record;
 
 @SuppressWarnings("serial")
 @Entity
@@ -113,4 +116,26 @@ public class SLBook implements Serializable {
 		this.bookPicUrl = bookPicUrl;
 	}
 	
+	@Transient
+	public Record getRecord() {
+
+		Record record = new Record();
+		
+		record.setAttribute("bookName", bookName);
+		record.setAttribute("bookAuthor", bookAuthor);
+		record.setAttribute("bookISBN", bookISBN);
+		record.setAttribute("bookPublisher", bookPublisher);
+		record.setAttribute("bookPublishDate", bookPublishDate);
+		record.setAttribute("bookLanguage", bookLanguage);
+		record.setAttribute("bookPrice", bookPrice);
+		record.setAttribute("bookClass", bookClass);
+		record.setAttribute("bookContributor", bookContributor);
+		record.setAttribute("bookIntro", bookIntro);
+		record.setAttribute("bookTotalQuantity", bookTotalQuantity);
+		record.setAttribute("bookInStoreQuantity", bookInStoreQuantity);
+		record.setAttribute("bookAvailableQuantity", bookAvailableQuantity);
+		record.setAttribute("bookPicUrl", bookPicUrl);
+		
+		return record;
+	}
 }

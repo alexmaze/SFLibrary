@@ -92,6 +92,10 @@ public class LoginBox extends VLayout {
         
         this.addMember(logo);
 	    
+        // TODO 测试用
+        userNameItem.setValue("ayan@successfactors.com");
+        passwordItem.setValue("123456");
+        
 	  }
 	  
 	}

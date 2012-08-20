@@ -13,7 +13,8 @@ public interface BookServiceAsync {
 
 	void deleteBook(String bookISBN, AsyncCallback<Boolean> callback);
 
-	void getAllBookList(AsyncCallback<ArrayList<SLBook>> callback);
+	void getAllBookList(int iStart, int iEnd,
+			AsyncCallback<ArrayList<SLBook>> callback);
 
 	void getBookByISBN(String bookISBN, AsyncCallback<SLBook> callback);
 
