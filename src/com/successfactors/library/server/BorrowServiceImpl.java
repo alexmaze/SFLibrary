@@ -36,12 +36,6 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	}
 
 	@Override
-	public SLBorrow renewBorrow(int borrowId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public SLBorrow getBorrowInfo(int borrowId) {
 		// TODO Auto-generated method stub
 		return null;

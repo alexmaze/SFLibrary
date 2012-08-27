@@ -21,8 +21,6 @@ public interface BorrowServiceAsync {
 
 	void lostBook(int borrowId, AsyncCallback<Boolean> callback);
 
-	void renewBorrow(int borrowId, AsyncCallback<SLBorrow> callback);
-
 	void returnBook(int borrowId, AsyncCallback<Boolean> callback);
 
 }

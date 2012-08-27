@@ -21,9 +21,6 @@ public interface BorrowService extends RemoteService {
 	// 图书遗失登记
 	boolean lostBook(int borrowId);
 	
-	// 续借图书
-	SLBorrow renewBorrow(int borrowId);
-	
 	// 通过ID获取借阅信息
 	SLBorrow getBorrowInfo(int borrowId);
 	

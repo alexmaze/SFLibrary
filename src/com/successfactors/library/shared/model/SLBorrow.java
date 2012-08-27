@@ -20,7 +20,6 @@ public class SLBorrow implements Serializable {
 	private Date returnDate;
 	private boolean inStore;
 	private boolean overdue;
-	private int renewTimes;
 	private String status;
 	
 	@Id
@@ -59,12 +58,6 @@ public class SLBorrow implements Serializable {
 	}
 	public void setReturnDate(Date returnDate) {
 		this.returnDate = returnDate;
-	}
-	public int getRenewTimes() {
-		return renewTimes;
-	}
-	public void setRenewTimes(int renewTimes) {
-		this.renewTimes = renewTimes;
 	}
 	public String getStatus() {
 		return status;
