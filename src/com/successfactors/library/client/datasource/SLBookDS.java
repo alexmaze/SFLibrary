@@ -16,7 +16,7 @@ public class SLBookDS extends DataSource {
 		this.setClientOnly(true);
 		
 		DataSourceImageField bookPicUrlField = new DataSourceImageField("bookPicUrl", "封面");
-		bookPicUrlField.setImageURLPrefix("/upload/");
+		//bookPicUrlField.setImageURLPrefix("/upload/");
 		bookPicUrlField.setType(FieldType.IMAGE);
 		
 		DataSourceTextField bookNameField = new DataSourceTextField("bookName", "书名");

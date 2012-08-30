@@ -4,6 +4,9 @@ import static com.successfactors.library.client.SFLibrary.userService;
 
 import java.util.Date;
 
+import junit.framework.Test;
+
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -12,7 +15,9 @@ import com.successfactors.library.client.event.LoginSucceedEvent;
 import com.successfactors.library.client.event.LoginSucceedEventHandler;
 import com.successfactors.library.client.helper.MyToolsInClient;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.client.widget.BookDisplayWindow;
 import com.successfactors.library.shared.FieldVerifier;
+import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLUser;
 
 public class AppController {
@@ -99,5 +104,4 @@ public class AppController {
 	public static void doSignUp() {
 		SFLibrary.get().showRegisterView();
 	}
-	
 }
