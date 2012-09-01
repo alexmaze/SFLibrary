@@ -33,7 +33,7 @@ public class AdminBookManagementListGrid extends ListGrid {
 		this.setCellHeight(80);
 		
 		ListGridField bookPicUrlField = new ListGridField("bookPicUrl", "封面");
-		bookPicUrlField.setImageURLPrefix("/upload/");
+		bookPicUrlField.setImageURLPrefix("/images/upload/");
 		bookPicUrlField.setType(ListGridFieldType.IMAGE);
 		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
 		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);

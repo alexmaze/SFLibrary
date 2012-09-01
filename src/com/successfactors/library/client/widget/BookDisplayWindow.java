@@ -66,7 +66,7 @@ public class BookDisplayWindow  extends Window {
 		hLayout.setWidth(WINDOW_WIDTH);
 		
 		String strBookPicUrl = theRecord.getAttributeAsString("bookPicUrl");
-		Img bookPicUrlItem = new Img("/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 		
 		//Form 1-----------------------------------------------------------------------------------------
 		bookForm1 = new DynamicForm();

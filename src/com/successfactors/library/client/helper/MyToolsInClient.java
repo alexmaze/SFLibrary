@@ -125,14 +125,14 @@ public class MyToolsInClient {
 		return ret;
 	}
 	
-	public static String getTenWords(String strContent) {
+	public static String getWords(int num, String strContent) {
 		
 		if(strContent == null) {
 			return "......";
 		}
 		
-		if(strContent.length() > 12)
-			return strContent.subSequence(1, 12) + "......";
+		if(strContent.length() > num)
+			return strContent.subSequence(0, num) + "......";
 		else
 			return strContent + "......";
 	}

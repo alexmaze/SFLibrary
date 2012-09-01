@@ -1,12 +1,20 @@
 package com.successfactors.library.client.view;
 
+import static com.successfactors.library.client.SFLibrary.bookService;
+
+import java.util.ArrayList;
+
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.widget.NewBookShelf;
 import com.successfactors.library.client.widget.HotBookShelf;
 import com.successfactors.library.client.widget.RecommendBookList;
+import com.successfactors.library.shared.model.SLBook;
 
 /**
  *  欢迎界面，推荐图书，新增图书
@@ -24,8 +32,8 @@ public class ReaderMainView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		HotBookShelf northShelf = new HotBookShelf();
-		NewBookShelf southShelf = new NewBookShelf();
+		NewBookShelf northShelf = new NewBookShelf();
+		HotBookShelf southShelf = new HotBookShelf();
 		RecommendBookList southList = new RecommendBookList();
 		
 		northShelf.setHeight("40%");

@@ -79,7 +79,7 @@ public class BookEditWindow  extends Window {
 		String strBookPicUrl = theBook.getBookPicUrl();
 		VLayout imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
@@ -282,7 +282,7 @@ public class BookEditWindow  extends Window {
 		String strBookPicUrl = "nopic.jpg";
 		VLayout imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
