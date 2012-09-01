@@ -5,7 +5,6 @@ import static com.successfactors.library.client.SFLibrary.bookService;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.layout.client.Layout.Alignment;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.util.SC;
