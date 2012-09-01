@@ -29,6 +29,7 @@ public class SLBook implements Serializable {
 	private int bookInStoreQuantity;
 	private int bookAvailableQuantity;
 	private String bookPicUrl;
+	private Date bookAddDate;
 	
 	public String getBookName() {
 		return bookName;
@@ -115,7 +116,12 @@ public class SLBook implements Serializable {
 	public void setBookPicUrl(String bookPicUrl) {
 		this.bookPicUrl = bookPicUrl;
 	}
-	
+	public Date getBookAddDate() {
+		return bookAddDate;
+	}
+	public void setBookAddDate(Date bookAddDate) {
+		this.bookAddDate = bookAddDate;
+	}
 	@Transient
 	public Record getRecord() {
 
@@ -135,6 +141,7 @@ public class SLBook implements Serializable {
 		record.setAttribute("bookInStoreQuantity", bookInStoreQuantity);
 		record.setAttribute("bookAvailableQuantity", bookAvailableQuantity);
 		record.setAttribute("bookPicUrl", bookPicUrl);
+		record.setAttribute("bookAddDate", bookAddDate);
 		
 
 		record.setAttribute("bookTotalQuantityTitle", "总数");
