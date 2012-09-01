@@ -136,6 +136,12 @@ public class SLBook implements Serializable {
 		record.setAttribute("bookAvailableQuantity", bookAvailableQuantity);
 		record.setAttribute("bookPicUrl", bookPicUrl);
 		
+
+		record.setAttribute("bookTotalQuantityTitle", "总数");
+		record.setAttribute("bookInStoreQuantityTitle", "库中数量");
+		record.setAttribute("bookAvailableQuantityTitle", "可借数量");
+		record.setAttribute("bookIntroTitle", "简介：");
+		
 		return record;
 	}
 }

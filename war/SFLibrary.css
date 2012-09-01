@@ -518,3 +518,29 @@ color: #2C2C2C;
 letter-spacing: 2px;
 }
 /*---------------------------Alex Styles End---------------------------*/
+
+.alex_bookdisplaywindow_form_text_title,.alex_bookdisplaywindow_form_text_titleFocused{
+color: #003066;
+font-family: Arial, Verdana, sans-serif;
+font-size: 16px;
+font-weight: bold;
+letter-spacing: 1px;
+}
+.alex_bookdisplaywindow_form_text_content,.alex_bookdisplaywindow_form_text_contentFocused{
+color: black;
+font-family: Arial, Verdana, sans-serif;
+font-size: 16px;
+letter-spacing: 1px;
+}
+.alex_bookdisplaywindow_form_intro_content,.alex_bookdisplaywindow_form_intro_contentFocused{
+color: black;
+font-family: Arial, Verdana, sans-serif;
+font-size: 16px;
+letter-spacing: 1px;
+}
+.alex_bookdisplaywindow_form_header{
+	color: #4D4D4D;
+font-family: Arial, Verdana, sans-serif;
+font-size: 14px;
+font-weight: bold;
+}

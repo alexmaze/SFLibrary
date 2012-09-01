@@ -28,6 +28,22 @@ public class MyToolsInClient {
 		
 		return ret;
 	}
+
+	/**
+	 * 将字符串 "YY-MM-DD" 转换为日期
+	 * */
+	public static Date getDateFormString(String strDate)
+	{
+		Date ret = new Date();
+		
+		String[] arrDate = strDate.split("-");
+		
+		ret.setYear(Integer.parseInt(arrDate[0])-1900);
+		ret.setMonth(Integer.parseInt(arrDate[1])-1);
+		ret.setDate(Integer.parseInt(arrDate[2]));
+		
+		return ret;
+	}
 	
 	/**
 	 * 格式化日期，返回 YYYY-MM-DD

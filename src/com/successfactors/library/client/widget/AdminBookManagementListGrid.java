@@ -18,6 +18,8 @@ import com.successfactors.library.shared.model.SLBook;
 public class AdminBookManagementListGrid extends ListGrid {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
+	public static final int DEFAULT_IMG_HEIGHT = 76;
+	public static final int DEFAULT_IMG_WIDTH = 53;
 	
 	private SLBookDS slBookDS = new SLBookDS();
 	private int pageNo = 0;
@@ -34,8 +36,8 @@ public class AdminBookManagementListGrid extends ListGrid {
 		ListGridField bookPicUrlField = new ListGridField("bookPicUrl", "封面");
 		bookPicUrlField.setImageURLPrefix("/upload/");
 		bookPicUrlField.setType(ListGridFieldType.IMAGE);
-		bookPicUrlField.setImageHeight(76);
-		bookPicUrlField.setImageWidth(53);
+		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
+		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);
 		
 		ListGridField bookNameField = new ListGridField("bookName", "书名");
 		ListGridField bookAuthorField = new ListGridField("bookAuthor", "作者");
