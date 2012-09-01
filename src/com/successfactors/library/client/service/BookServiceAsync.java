@@ -23,4 +23,8 @@ public interface BookServiceAsync {
 
 	void updateBook(SLBook updateBook, AsyncCallback<Boolean> callback);
 
+	void getNewBookList(int num, AsyncCallback<ArrayList<SLBook>> callback);
+
+	void getHotBookList(int num, AsyncCallback<ArrayList<SLBook>> callback);
+
 }

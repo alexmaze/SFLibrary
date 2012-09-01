@@ -75,4 +75,16 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 		return ret;
 	}
 
+	@Override
+	public ArrayList<SLBook> getNewBookList(int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SLBook> getHotBookList(int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -27,6 +27,12 @@ public interface BookService extends RemoteService {
 	// 获取所有图书列表
 	ArrayList<SLBook> getAllBookList(int iStart, int iEnd);
 	
+	// 获取新添加图书列表 添加日期降序
+	ArrayList<SLBook> getNewBookList(int num);
+	
+	// 获取最热图书列表 热度降序
+	ArrayList<SLBook> getHotBookList(int num);
+	
 	// 搜索图书
 	// searchType = "bookName","bookAuthor",
 	//				"bookPublisher","bookIntro",
