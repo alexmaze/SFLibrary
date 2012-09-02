@@ -38,7 +38,7 @@ public class ToolbarWithBookSearch extends ToolStrip {
 
 	private DynamicForm searchForm;
 
-	public ToolbarWithBookSearch() {
+	public ToolbarWithBookSearch(boolean canEdit) {
 		super();
 
 		GWT.log("初始化：Toolbar", null);
@@ -46,25 +46,29 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		this.setHeight(TOOLBAR_HEIGHT);
 		this.setWidth(TOOLSTRIP_WIDTH);
 
-		newButton = new ToolStripButton();
-		newButton.setIcon(NEW_BUTTON);
-		newButton.setTitle(NEW_BUTTON_DISPLAY_NAME);
-		this.addButton(newButton);
-		this.addSeparator();
+		if (canEdit) {
+			
+			newButton = new ToolStripButton();
+			newButton.setIcon(NEW_BUTTON);
+			newButton.setTitle(NEW_BUTTON_DISPLAY_NAME);
+			this.addButton(newButton);
+			this.addSeparator();
 
-		deleteButton = new ToolStripButton();
-		deleteButton.setIcon(DELETE_BUTTON);
-		deleteButton.setTitle(DELETE_BUTTON_DISPLAY_NAME);
-		this.addButton(deleteButton);
+			deleteButton = new ToolStripButton();
+			deleteButton.setIcon(DELETE_BUTTON);
+			deleteButton.setTitle(DELETE_BUTTON_DISPLAY_NAME);
+			this.addButton(deleteButton);
 
-		this.addSeparator();
-		
-		updateButton = new ToolStripButton();
-		updateButton.setIcon(APPLY_BUTTON);
-		updateButton.setTitle(UPDATE_BUTTON_DISPLAY_NAME);
-		this.addButton(updateButton);
+			this.addSeparator();
+			
+			updateButton = new ToolStripButton();
+			updateButton.setIcon(APPLY_BUTTON);
+			updateButton.setTitle(UPDATE_BUTTON_DISPLAY_NAME);
+			this.addButton(updateButton);
 
-		this.addSeparator();
+			this.addSeparator();
+			
+		}
 		
 		//---------------------------------------------------
 		// search part

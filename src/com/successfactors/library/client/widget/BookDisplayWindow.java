@@ -37,6 +37,14 @@ public class BookDisplayWindow  extends Window {
 		initDisplayWindow();
 	}
 	
+	public BookDisplayWindow(Record bookRec) {
+		super();
+		this.theRecord = bookRec;
+		this.theDataSource = new SLBookDS();
+		this.theDataSource.addData(theRecord);
+		initDisplayWindow();
+	}
+	
 	private void initDisplayWindow() {
 		
 		String strBookName = theRecord.getAttributeAsString("bookName");

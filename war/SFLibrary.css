@@ -486,7 +486,7 @@ body,table td,select {
 }
 
 .alex_header_label {
-color: #4D4D4D;
+color: #383838;
 font-family: Arial, Verdana, sans-serif;
 font-size: 14px;
 font-weight: bold;
@@ -546,13 +546,13 @@ letter-spacing: 1px;
 }
 
 .alex_bookshelf_bookname {
-	color: #4D4D4D;
+	color: black;
 	font-family: Arial, Verdana, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
 }
 .alex_bookshelf_bookname:hover {
-	color: #4D4D4D;
+	color: black;
 	font-family: Arial, Verdana, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
@@ -560,7 +560,7 @@ letter-spacing: 1px;
 	cursor: pointer;
 }
 .alex_bookshelf_bookauthor {
-	color: #4D4D4D;
+	color: black;
 	font-family: Arial, Verdana, sans-serif;
 	font-size: 11px;
 }

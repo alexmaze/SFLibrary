@@ -30,7 +30,7 @@ public class AdminBookManagementView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolbarWithBookSearch();
+		theToolbar = new ToolbarWithBookSearch(true);
 		theJumpBar = new JumpBar();
 		theListGrid = new AdminBookManagementListGrid(theJumpBar);
 		
