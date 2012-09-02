@@ -33,6 +33,10 @@ public class SLBorrowDS extends DataSource {
 		DataSourceTextField overdueField = new DataSourceTextField("overdue", "是否超期");
 		DataSourceTextField statusField = new DataSourceTextField("status", "状态");
 
+		//--------------------------------------------------------------------------------------
+		DataSourceTextField bookNameField = new DataSourceTextField("bookName", "书名");
+		DataSourceTextField bookPicUrlField = new DataSourceTextField("bookPicUrl", "封面");
+		DataSourceTextField userNameField = new DataSourceTextField("userName", "借书人");
 		
 		this.setFields(
 				iconField,
@@ -44,7 +48,10 @@ public class SLBorrowDS extends DataSource {
 				returnDateField,
 				inStoreField,
 				overdueField,
-				statusField
+				statusField,
+				bookNameField,
+				bookPicUrlField,
+				userNameField
 				);
 	}
 }

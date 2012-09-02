@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.smartgwt.client.data.Record;
+import com.successfactors.library.client.helper.MyToolsInClient;
 
 @SuppressWarnings("serial")
 @Entity
@@ -82,8 +83,13 @@ public class SLOrder implements Serializable {
 		record.setAttribute("userEmail", userEmail);
 		record.setAttribute("bookISBN", bookISBN);
 		record.setAttribute("bookISBN", bookISBN);
-		record.setAttribute("orderDate", orderDate);
+		record.setAttribute("orderDate", MyToolsInClient.formatDateTime(orderDate));
 		record.setAttribute("status", status);
+		
+		//------------------------------------------------------
+		record.setAttribute("userName", theUser.getUserName());
+		record.setAttribute("bookName", theBook.getBookName());
+		record.setAttribute("bookPicUrl", theBook.getBookPicUrl());
 		
 		return record;
 	}
@@ -99,6 +105,16 @@ public class SLOrder implements Serializable {
 		record.getAttribute("bookISBN");
 		record.getAttribute("orderDate");
 		record.getAttribute("status");
+
+		//------------------------------------------------------
+		SLUser newUser = new SLUser();
+		newUser.setUserName(record.getAttribute("userName"));
+		SLBook newBook = new SLBook();
+		newBook.setBookName(record.getAttribute("bookName"));
+		newBook.setBookPicUrl(record.getAttribute("bookPicUrl"));
+		
+		ret.setTheUser(newUser);
+		ret.setTheBook(newBook);
 		
 		return ret;
 	}

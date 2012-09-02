@@ -3,7 +3,6 @@ package com.successfactors.library.client.datasource;
 import java.util.Date;
 
 import com.smartgwt.client.data.DataSource;
-import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
@@ -25,9 +24,14 @@ public class SLOrderDS extends DataSource {
 		DataSourceTextField userEmailField = new DataSourceTextField("userEmail", "读者Email");
 		DataSourceTextField bookISBNField = new DataSourceTextField("bookISBN", "书籍ISBN");
 		
-		DataSourceDateField orderDateField = new DataSourceDateField("orderDate", "预订时间");
+		DataSourceTextField orderDateField = new DataSourceTextField("orderDate", "预订时间");
 		
 		DataSourceTextField statusField = new DataSourceTextField("status", "状态");
+
+		//--------------------------------------------------------------------------------------
+		DataSourceTextField bookNameField = new DataSourceTextField("bookName", "书名");
+		DataSourceTextField bookPicUrlField = new DataSourceTextField("bookPicUrl", "封面");
+		DataSourceTextField userNameField = new DataSourceTextField("userName", "借书人");
 
 		
 		this.setFields(
@@ -36,7 +40,10 @@ public class SLOrderDS extends DataSource {
 				userEmailField,
 				bookISBNField,
 				orderDateField,
-				statusField
+				statusField,
+				bookNameField,
+				bookPicUrlField,
+				userNameField
 				);
 	}
 }

@@ -38,7 +38,7 @@ public class SFLibrary implements EntryPoint {
 	public final static OrderServiceAsync orderService = GWT.create(OrderService.class);
 	public final static BorrowServiceAsync borrowService = GWT.create(BorrowService.class);
 	
-	public final static boolean isTestWidget = false;
+	public final static boolean isTestWidget = true;
 	
 	private static SFLibrary singleton;
 

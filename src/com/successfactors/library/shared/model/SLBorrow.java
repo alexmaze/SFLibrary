@@ -115,7 +115,12 @@ public class SLBorrow implements Serializable {
 		record.setAttribute("inStore", inStore);
 		record.setAttribute("overdue", overdue);
 		record.setAttribute("status", status);		
-
+		
+		//------------------------------------------------------
+		record.setAttribute("userName", theUser.getUserName());
+		record.setAttribute("bookName", theBook.getBookName());
+		record.setAttribute("bookPicUrl", theBook.getBookPicUrl());
+		
 		return record;
 	}
 	
@@ -133,6 +138,16 @@ public class SLBorrow implements Serializable {
 		ret.setInStore(record.getAttributeAsBoolean("inStore"));
 		ret.setOverdue(record.getAttributeAsBoolean("overdue"));
 		ret.setStatus(record.getAttributeAsString("status"));	
+
+		//------------------------------------------------------
+		SLUser newUser = new SLUser();
+		newUser.setUserName(record.getAttribute("userName"));
+		SLBook newBook = new SLBook();
+		newBook.setBookName(record.getAttribute("bookName"));
+		newBook.setBookPicUrl(record.getAttribute("bookPicUrl"));
+		
+		ret.setTheUser(newUser);
+		ret.setTheBook(newBook);
 		
 		return ret;
 	}
