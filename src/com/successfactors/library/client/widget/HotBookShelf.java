@@ -116,7 +116,7 @@ public class HotBookShelf extends VLayout {
 //		bookLanguageLabel.setStyleName("alex_bookshelf_bookauthor");
 //		bookLanguageLabel.setSize("110px", "20px");
 
-		bookInfo1.setWidth(150);
+		bookInfo1.setWidth(100);
 		bookInfo1.setMargin(10);
 		bookInfo1.setMembers(bookNameLabel, bookAuthorLabel, bookPublisherLabel);
 		bookInfo1.setMembersMargin(5);
@@ -126,7 +126,7 @@ public class HotBookShelf extends VLayout {
 		
 		
 
-		Label bookIntroLabel = new Label("&nbsp&nbsp&nbsp&nbsp"+MyToolsInClient.getWords(250, theBook.getBookIntro()));
+		Label bookIntroLabel = new Label("&nbsp&nbsp&nbsp&nbsp"+MyToolsInClient.getWords(120, theBook.getBookIntro()));
 		bookIntroLabel.setWidth(320);
 		
 
