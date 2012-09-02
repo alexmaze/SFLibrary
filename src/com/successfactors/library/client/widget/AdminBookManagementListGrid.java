@@ -2,8 +2,6 @@ package com.successfactors.library.client.widget;
 
 import static com.successfactors.library.client.SFLibrary.bookService;
 
-import java.util.ArrayList;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.ListGridFieldType;
@@ -12,7 +10,7 @@ import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.client.helper.RPCCall;
-import com.successfactors.library.shared.model.SLBook;
+import com.successfactors.library.shared.model.BookPage;
 
 public class AdminBookManagementListGrid extends ListGrid {
 	
@@ -82,23 +80,21 @@ public class AdminBookManagementListGrid extends ListGrid {
 	}
 	
 	private void updateDS(final int iStart, final int iEnd) {
-		new RPCCall<ArrayList<SLBook>>() {
+		new RPCCall<BookPage>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				SC.say("通信失败，请检查您的网络连接！");
 			}
 			@Override
-			public void onSuccess(ArrayList<SLBook> result) {
-				if (result == null || result.isEmpty()) {
+			public void onSuccess(BookPage result) {
+				if (result == null) {
 					SC.say("暂无资料。。。囧rz");
 					return;
 				}
-				for (SLBook slBook : result) {
-					slBookDS.addData(slBook.getRecord());
-				}
+				slBookDS = result.getDataSource();
 			}
 			@Override
-			protected void callService(AsyncCallback<ArrayList<SLBook>> cb) {
+			protected void callService(AsyncCallback<BookPage> cb) {
 				bookService.getAllBookList(iStart, iEnd, cb);
 			}
 		}.retry(3);

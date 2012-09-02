@@ -16,6 +16,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.helper.MyToolsInClient;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
 /**
@@ -52,22 +53,22 @@ public class HotBookShelf extends VLayout {
 	}
 
 	private void fetchDataAndDisplay() {
-		new RPCCall<ArrayList<SLBook>>() {
+		new RPCCall<BookPage>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				SC.say("通信失败，请检查您的网络连接！");
 			}
 			@Override
-			public void onSuccess(ArrayList<SLBook> result) {
-				if (result == null || result.isEmpty()) {
+			public void onSuccess(BookPage result) {
+				if (result == null) {
 					SC.say("暂无资料。。。囧rz");
 					return;
 				}
-				bookList = result;
+				bookList = result.getTheBooks();
 				refreshView();
 			}
 			@Override
-			protected void callService(AsyncCallback<ArrayList<SLBook>> cb) {
+			protected void callService(AsyncCallback<BookPage> cb) {
 				bookService.getHotBookList(BOOK_NUM, cb);
 			}
 		}.retry(3);

@@ -1,9 +1,8 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
 @RemoteServiceRelativePath("bookService")
@@ -25,17 +24,17 @@ public interface BookService extends RemoteService {
 	SLBook getBookByISBN(String bookISBN);
 	
 	// 获取所有图书列表
-	ArrayList<SLBook> getAllBookList(int iStart, int iEnd);
+	BookPage getAllBookList(int iStart, int iEnd);
 	
 	// 获取新添加图书列表 添加日期降序
-	ArrayList<SLBook> getNewBookList(int num);
+	BookPage getNewBookList(int num);
 	
 	// 获取最热图书列表 热度降序
-	ArrayList<SLBook> getHotBookList(int num);
+	BookPage getHotBookList(int num);
 	
 	// 搜索图书
 	// searchType = "bookName","bookAuthor",
 	//				"bookPublisher","bookIntro",
 	//				"bookContributor","bookClass","bookLanguage"
-	ArrayList<SLBook> searchBookList(String searchType, String searchValue, int iStart, int iEnd);
+	BookPage searchBookList(String searchType, String searchValue, int iStart, int iEnd);
 }

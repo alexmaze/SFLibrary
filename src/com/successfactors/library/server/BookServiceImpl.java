@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BookService;
+import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
 @SuppressWarnings("serial")
@@ -57,16 +58,17 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 	}
 
 	@Override
-	public ArrayList<SLBook> searchBookList(String searchType,
+	public BookPage searchBookList(String searchType,
 			String searchValue, int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<SLBook> getAllBookList(int iStart, int iEnd) {
+	public BookPage getAllBookList(int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		
+		BookPage page = new BookPage(iStart, iEnd);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 		
 		for (int i = 0;i < 10;i++) {
@@ -89,14 +91,16 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 			
 			ret.add(temp);
 		}
-		
-		return ret;
+		page.setTheBooks(ret);
+		page.setTotalNum(7);
+		return page;
 	}
 
 	@Override
-	public ArrayList<SLBook> getNewBookList(int num) {
+	public BookPage getNewBookList(int num) {
 		// TODO Auto-generated method stub
-		
+
+		BookPage page = new BookPage(1, num);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 		
 		for (int i = 0;i < num;i++) {
@@ -119,14 +123,17 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 			
 			ret.add(temp);
 		}
-		
-		return ret;
+
+		page.setTheBooks(ret);
+		page.setTotalNum(1);
+		return page;
 	}
 
 	@Override
-	public ArrayList<SLBook> getHotBookList(int num) {
+	public BookPage getHotBookList(int num) {
 		// TODO Auto-generated method stub
-		
+
+		BookPage page = new BookPage(1, num);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 		
 		for (int i = 0;i < num;i++) {
@@ -149,8 +156,10 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 			
 			ret.add(temp);
 		}
-		
-		return ret;
+
+		page.setTheBooks(ret);
+		page.setTotalNum(1);
+		return page;
 	}
 
 }
