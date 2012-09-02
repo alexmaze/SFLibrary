@@ -1,8 +1,7 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
 public interface OrderServiceAsync {
@@ -16,9 +15,9 @@ public interface OrderServiceAsync {
 	void orderBook(String bookISBN, AsyncCallback<Boolean> callback);
 
 	void getOrderList(String strType, String userEmail, int iStart, int iEnd,
-			AsyncCallback<ArrayList<SLOrder>> callback);
+			AsyncCallback<OrderPage> callback);
 
 	void getOrderList(String strType, int iStart, int iEnd,
-			AsyncCallback<ArrayList<SLOrder>> callback);
+			AsyncCallback<OrderPage> callback);
 
 }

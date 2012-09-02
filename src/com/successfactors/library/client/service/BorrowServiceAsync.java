@@ -1,8 +1,7 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 public interface BorrowServiceAsync {
@@ -14,10 +13,10 @@ public interface BorrowServiceAsync {
 	void getBorrowInfo(int borrowId, AsyncCallback<SLBorrow> callback);
 
 	void getBorrowList(String strType, String userEmail, int iStart, int iEnd,
-			AsyncCallback<ArrayList<SLBorrow>> callback);
+			AsyncCallback<BorrowPage> callback);
 
 	void getBorrowList(String strType, int iStart, int iEnd,
-			AsyncCallback<ArrayList<SLBorrow>> callback);
+			AsyncCallback<BorrowPage> callback);
 
 	void lostBook(int borrowId, AsyncCallback<Boolean> callback);
 

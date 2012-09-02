@@ -1,9 +1,8 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
 @RemoteServiceRelativePath("orderService")
@@ -20,11 +19,11 @@ public interface OrderService extends RemoteService {
 	
 	// 获取某用户预定列表
 	// strType = "history","now","all"
-	ArrayList<SLOrder> getOrderList(String strType, String userEmail, int iStart, int iEnd);
+	OrderPage getOrderList(String strType, String userEmail, int iStart, int iEnd);
 
 	// 获取所有用户借阅列表
 	// strType = "history","now","all","overDue"
-	ArrayList<SLOrder> getOrderList(String strType, int iStart, int iEnd);
+	OrderPage getOrderList(String strType, int iStart, int iEnd);
 	
 	// 获取某预定信息
 	SLOrder getOrderInfo(int orderId);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BorrowService;
+import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 @SuppressWarnings("serial")
@@ -42,14 +43,14 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	}
 
 	@Override
-	public ArrayList<SLBorrow> getBorrowList(String strType, String userEmail,
+	public BorrowPage getBorrowList(String strType, String userEmail,
 			int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<SLBorrow> getBorrowList(String strType, int iStart,
+	public BorrowPage getBorrowList(String strType, int iStart,
 			int iEnd) {
 		// TODO Auto-generated method stub
 		return null;

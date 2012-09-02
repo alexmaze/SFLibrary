@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.OrderService;
+import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
 @SuppressWarnings("serial")
@@ -30,14 +31,14 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	}
 
 	@Override
-	public ArrayList<SLOrder> getOrderList(String strType, String userEmail,
+	public OrderPage getOrderList(String strType, String userEmail,
 			int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<SLOrder> getOrderList(String strType, int iStart, int iEnd) {
+	public OrderPage getOrderList(String strType, int iStart, int iEnd) {
 		// TODO Auto-generated method stub
 		return null;
 	}

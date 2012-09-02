@@ -1,9 +1,8 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
+import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 @RemoteServiceRelativePath("borrowService")
@@ -24,12 +23,11 @@ public interface BorrowService extends RemoteService {
 	// 通过ID获取借阅信息
 	SLBorrow getBorrowInfo(int borrowId);
 	
-	// 获取某用户借阅列表
-	// strType = "history","now","all","overDue"
-	ArrayList<SLBorrow> getBorrowList(String strType, String userEmail, int iStart, int iEnd);
+	BorrowPage getBorrowList(String strType, String userEmail,
+			int iStart, int iEnd);
 	
 	// 获取所有用户借阅列表
 	// strType = "history","now","all","overDue"
-	ArrayList<SLBorrow> getBorrowList(String strType, int iStart, int iEnd);
+	BorrowPage getBorrowList(String strType, int iStart, int iEnd);
 	
 }
