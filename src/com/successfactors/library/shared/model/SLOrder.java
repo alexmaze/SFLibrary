@@ -6,6 +6,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.smartgwt.client.data.Record;
 
 @SuppressWarnings("serial")
 @Entity
@@ -17,6 +20,10 @@ public class SLOrder implements Serializable {
 	private String bookISBN;
 	private Date orderDate;
 	private String status;
+	
+	//关联实体
+	private SLBook theBook;
+	private SLUser theUser;
 	
 	@Id
 	public int getOrderId() {
@@ -49,5 +56,50 @@ public class SLOrder implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	@Transient
+	public SLBook getTheBook() {
+		return theBook;
+	}
+	public void setTheBook(SLBook theBook) {
+		this.theBook = theBook;
+	}
+	@Transient
+	public SLUser getTheUser() {
+		return theUser;
+	}
+	public void setTheUser(SLUser theUser) {
+		this.theUser = theUser;
+	}
 	
+	@Transient
+	public Record getRecord() {
+
+		Record record = new Record();
+
+		record.setAttribute("icon", "reports.png");
+		record.setAttribute("orderId", orderId);
+		record.setAttribute("userEmail", userEmail);
+		record.setAttribute("bookISBN", bookISBN);
+		record.setAttribute("bookISBN", bookISBN);
+		record.setAttribute("orderDate", orderDate);
+		record.setAttribute("status", status);
+		
+		return record;
+	}
+	
+	@Transient
+	public static SLOrder parse(Record record) {
+
+		SLOrder ret = new SLOrder();
+		
+		record.getAttribute("orderId");
+		record.getAttribute("userEmail");
+		record.getAttribute("bookISBN");
+		record.getAttribute("bookISBN");
+		record.getAttribute("orderDate");
+		record.getAttribute("status");
+		
+		return ret;
+	}
 }
