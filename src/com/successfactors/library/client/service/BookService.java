@@ -23,7 +23,7 @@ public interface BookService extends RemoteService {
 	// 通过ISBN获取图书
 	SLBook getBookByISBN(String bookISBN);
 	
-	// 获取所有图书列表
+	// 获取所有图书列表 例如：1->10 取前十本
 	BookPage getAllBookList(int iStart, int iEnd);
 	
 	// 获取新添加图书列表 添加日期降序

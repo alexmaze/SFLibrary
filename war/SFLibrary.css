@@ -278,10 +278,10 @@ body,table td,select {
 /*
  * Context Area Tool Bar
  */
-.crm-ToolBar { /*
+.crm-ToolBar {
   background-image: url(images/toolbar.png);
   background-repeat: repeat-x;
-  color: #15428b;  
+  color: #15428b;   /*
   cursor: default;   
   padding-top: 4px;
   padding-left: 4px;
@@ -563,4 +563,24 @@ letter-spacing: 1px;
 	color: #4D4D4D;
 	font-family: Arial, Verdana, sans-serif;
 	font-size: 11px;
+}
+
+.alex_jumpbar_label {
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+}
+.alex_jumpbar_linklabel {
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+}
+.alex_jumpbar_linklabel:hover {
+	font-family: Tahoma, Verdana, sans-serif;
+	font-size: 11px;
+	color: black;
+	cursor: pointer;
+	font-weight: bold;
+	text-decoration:underline;
 }

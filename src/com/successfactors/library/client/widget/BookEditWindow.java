@@ -50,6 +50,12 @@ public class BookEditWindow  extends Window {
 		initEditWindow();
 	}
 	
+	public BookEditWindow(Record slBookRc) {
+		super();
+		theBook = SLBook.parse(slBookRc);
+		initEditWindow();
+	}
+	
 	private void initEditWindow() {
 		
 		String strBookName = theBook.getBookName();

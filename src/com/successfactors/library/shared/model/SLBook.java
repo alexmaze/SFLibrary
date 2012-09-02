@@ -151,4 +151,28 @@ public class SLBook implements Serializable {
 		
 		return record;
 	}
+	
+	@Transient
+	public static SLBook parse(Record record) {
+
+		SLBook ret = new SLBook();
+		
+		ret.setBookName(record.getAttribute("bookName"));
+		ret.setBookAuthor(record.getAttribute("bookAuthor"));
+		ret.setBookISBN(record.getAttribute("bookISBN"));
+		ret.setBookPublisher(record.getAttribute("bookPublisher"));
+		ret.setBookPublishDate(record.getAttributeAsDate("bookPublishDate"));
+		ret.setBookLanguage(record.getAttribute("bookLanguage"));
+		ret.setBookPrice(record.getAttributeAsDouble("bookPrice"));
+		ret.setBookClass(record.getAttribute("bookClass"));
+		ret.setBookContributor(record.getAttribute("bookContributor"));
+		ret.setBookIntro(record.getAttribute("bookIntro"));
+		ret.setBookTotalQuantity(record.getAttributeAsInt("bookTotalQuantity"));
+		ret.setBookInStoreQuantity(record.getAttributeAsInt("bookInStoreQuantity"));
+		ret.setBookAvailableQuantity(record.getAttributeAsInt("bookAvailableQuantity"));
+		ret.setBookPicUrl(record.getAttribute("bookPicUrl"));
+		ret.setBookAddDate(record.getAttributeAsDate("bookAddDate"));
+		
+		return ret;
+	}
 }

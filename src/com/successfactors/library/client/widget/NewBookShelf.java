@@ -24,7 +24,7 @@ import com.successfactors.library.shared.model.SLBook;
 public class NewBookShelf extends VLayout {
 
 	private static final int IMG_HEIGHT = 158;
-	private static final int IMG_WIDTH = 110;
+	private static final int IMG_WIDTH = 104;
 
 	private static final String TILE_HEIGHT = "180px";
 	private static final String TILE_WIDTH = "155px";

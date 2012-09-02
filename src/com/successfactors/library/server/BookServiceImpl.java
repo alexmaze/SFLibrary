@@ -92,7 +92,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 			ret.add(temp);
 		}
 		page.setTheBooks(ret);
-		page.setTotalNum(7);
+		page.setTotalNum(24);
 		return page;
 	}
 

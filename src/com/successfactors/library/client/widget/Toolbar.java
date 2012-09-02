@@ -59,7 +59,7 @@ public class Toolbar extends HLayout {
 		updateButton.setIcon(APPLY_BUTTON);
 		updateButton.setTitle(UPDATE_BUTTON_DISPLAY_NAME);
 		toolStrip.addButton(updateButton);
-
+		
 		this.addMember(toolStrip);
 	}
 
