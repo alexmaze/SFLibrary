@@ -13,6 +13,10 @@ public class BookPage implements Serializable {
 	private int endNum;
 	private int totalNum;
 	
+	public BookPage() {
+		
+	}
+	
 	public BookPage(int start, int end) {
 		startNum = start;
 		endNum = end;
