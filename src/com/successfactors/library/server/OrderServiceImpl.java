@@ -31,14 +31,13 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	}
 
 	@Override
-	public OrderPage getOrderList(String strType, String userEmail,
-			int iStart, int iEnd) {
+	public OrderPage getOrderList(String strType, String userEmail, int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OrderPage getOrderList(String strType, int iStart, int iEnd) {
+	public OrderPage getOrderList(String strType, int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}

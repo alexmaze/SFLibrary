@@ -9,17 +9,17 @@ import com.successfactors.library.client.datasource.SLBookDS;
 public class BookPage implements Serializable {
 	
 	private ArrayList<SLBook> theBooks;
-	private int startNum;
-	private int endNum;
-	private int totalNum;
+	private int itemsNumPerPage;
+	private int pageNum;
+	private int totalPageNum;
 	
 	public BookPage() {
 		
 	}
 	
-	public BookPage(int start, int end) {
-		startNum = start;
-		endNum = end;
+	public BookPage(int itemsNumPerPage, int pageNum) {
+		this.itemsNumPerPage = itemsNumPerPage;
+		this.pageNum = pageNum;
 	}
 	
 	public ArrayList<SLBook> getTheBooks() {
@@ -28,25 +28,30 @@ public class BookPage implements Serializable {
 	public void setTheBooks(ArrayList<SLBook> theBooks) {
 		this.theBooks = theBooks;
 	}
-	public int getStartNum() {
-		return startNum;
+	public int getItemsNumPerPage() {
+		return itemsNumPerPage;
 	}
-	public void setStartNum(int startNum) {
-		this.startNum = startNum;
+
+	public void setItemsNumPerPage(int itemsNumPerPage) {
+		this.itemsNumPerPage = itemsNumPerPage;
 	}
-	public int getEndNum() {
-		return endNum;
+
+	public int getPageNum() {
+		return pageNum;
 	}
-	public void setEndNum(int endNum) {
-		this.endNum = endNum;
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
-	public int getTotalNum() {
-		return totalNum;
+
+	public int getTotalPageNum() {
+		return totalPageNum;
 	}
-	public void setTotalNum(int totalNum) {
-		this.totalNum = totalNum;
+
+	public void setTotalPageNum(int totalPageNum) {
+		this.totalPageNum = totalPageNum;
 	}
-	
+
 	public SLBookDS getDataSource() {
 		SLBookDS theDs = new SLBookDS();
 		for (SLBook book : theBooks) {

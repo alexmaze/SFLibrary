@@ -62,7 +62,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements UserService
 	}
 
 	@Override
-	public ArrayList<SLUser> getUserList(int iStart, int iEnd) {
+	public ArrayList<SLUser> getUserList(int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -59,16 +59,16 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public BookPage searchBookList(String searchType,
-			String searchValue, int iStart, int iEnd) {
+			String searchValue, int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public BookPage getAllBookList(int iStart, int iEnd) {
+	public BookPage getAllBookList(int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		
-		BookPage page = new BookPage(iStart, iEnd);
+		BookPage page = new BookPage(itemsPerPage, pageNum);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 		
 		for (int i = 0;i < 10;i++) {
@@ -92,7 +92,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 			ret.add(temp);
 		}
 		page.setTheBooks(ret);
-		page.setTotalNum(24);
+		page.setTotalPageNum(6);
 		return page;
 	}
 
@@ -125,7 +125,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 		}
 
 		page.setTheBooks(ret);
-		page.setTotalNum(1);
+		page.setTotalPageNum(6);
 		return page;
 	}
 
@@ -158,7 +158,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 		}
 
 		page.setTheBooks(ret);
-		page.setTotalNum(1);
+		page.setTotalPageNum(1);
 		return page;
 	}
 

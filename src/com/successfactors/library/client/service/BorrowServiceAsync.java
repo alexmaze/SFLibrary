@@ -12,10 +12,10 @@ public interface BorrowServiceAsync {
 
 	void getBorrowInfo(int borrowId, AsyncCallback<SLBorrow> callback);
 
-	void getBorrowList(String strType, String userEmail, int iStart, int iEnd,
+	void getBorrowList(String strType, String userEmail, int itemsPerPage, int pageNum,
 			AsyncCallback<BorrowPage> callback);
 
-	void getBorrowList(String strType, int iStart, int iEnd,
+	void getBorrowList(String strType, int itemsPerPage, int pageNum,
 			AsyncCallback<BorrowPage> callback);
 
 	void lostBook(int borrowId, AsyncCallback<Boolean> callback);

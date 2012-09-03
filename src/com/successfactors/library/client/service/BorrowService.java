@@ -24,10 +24,10 @@ public interface BorrowService extends RemoteService {
 	SLBorrow getBorrowInfo(int borrowId);
 	
 	BorrowPage getBorrowList(String strType, String userEmail,
-			int iStart, int iEnd);
+			int itemsPerPage, int pageNum);
 	
 	// 获取所有用户借阅列表
 	// strType = "history","now","all","overDue"
-	BorrowPage getBorrowList(String strType, int iStart, int iEnd);
+	BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum);
 	
 }

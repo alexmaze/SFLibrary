@@ -31,5 +31,5 @@ public interface UserService extends RemoteService {
 	boolean deleteUserById(String userEmail);
 	
 	// 获取所有用户列表
-	ArrayList<SLUser> getUserList(int iStart, int iEnd);
+	ArrayList<SLUser> getUserList(int itemsPerPage, int pageNum);
 }

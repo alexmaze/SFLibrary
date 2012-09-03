@@ -19,11 +19,11 @@ public interface OrderService extends RemoteService {
 	
 	// 获取某用户预定列表
 	// strType = "history","now","all"
-	OrderPage getOrderList(String strType, String userEmail, int iStart, int iEnd);
+	OrderPage getOrderList(String strType, String userEmail, int itemsPerPage, int pageNum);
 
 	// 获取所有用户借阅列表
 	// strType = "history","now","all","overDue"
-	OrderPage getOrderList(String strType, int iStart, int iEnd);
+	OrderPage getOrderList(String strType, int itemsPerPage, int pageNum);
 	
 	// 获取某预定信息
 	SLOrder getOrderInfo(int orderId);

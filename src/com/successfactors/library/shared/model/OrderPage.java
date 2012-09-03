@@ -9,44 +9,44 @@ import com.successfactors.library.client.datasource.SLOrderDS;
 public class OrderPage implements Serializable {
 	
 	private ArrayList<SLOrder> theOrders;
-	private int startNum;
-	private int endNum;
-	private int totalNum;
+	private int itemsNumPerPage;
+	private int pageNum;
+	private int totalPageNum;
 	
 	public OrderPage() {
 		
 	}
 	
-	public OrderPage(int start, int end) {
-		startNum = start;
-		endNum = end;
+	public OrderPage(int itemsNumPerPage, int pageNum) {
+		this.itemsNumPerPage = itemsNumPerPage;
+		this.pageNum = pageNum;
 	}
 	
 	public ArrayList<SLOrder> getTheOrders() {
 		return theOrders;
 	}
-
-	public void setTheOrders(ArrayList<SLOrder> theOrders) {
-		this.theOrders = theOrders;
+	public int getItemsNumPerPage() {
+		return itemsNumPerPage;
 	}
 
-	public int getStartNum() {
-		return startNum;
+	public void setItemsNumPerPage(int itemsNumPerPage) {
+		this.itemsNumPerPage = itemsNumPerPage;
 	}
-	public void setStartNum(int startNum) {
-		this.startNum = startNum;
+
+	public int getPageNum() {
+		return pageNum;
 	}
-	public int getEndNum() {
-		return endNum;
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
-	public void setEndNum(int endNum) {
-		this.endNum = endNum;
+
+	public int getTotalPageNum() {
+		return totalPageNum;
 	}
-	public int getTotalNum() {
-		return totalNum;
-	}
-	public void setTotalNum(int totalNum) {
-		this.totalNum = totalNum;
+
+	public void setTotalPageNum(int totalPageNum) {
+		this.totalPageNum = totalPageNum;
 	}
 	
 	public SLOrderDS getDataSource() {

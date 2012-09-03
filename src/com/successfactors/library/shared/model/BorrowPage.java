@@ -9,17 +9,17 @@ import com.successfactors.library.client.datasource.SLBorrowDS;
 public class BorrowPage implements Serializable {
 	
 	private ArrayList<SLBorrow> theBorrows;
-	private int startNum;
-	private int endNum;
-	private int totalNum;
+	private int itemsNumPerPage;
+	private int pageNum;
+	private int totalPageNum;
 	
 	public BorrowPage() {
 		
 	}
 	
-	public BorrowPage(int start, int end) {
-		startNum = start;
-		endNum = end;
+	public BorrowPage(int itemsNumPerPage, int pageNum) {
+		this.itemsNumPerPage = itemsNumPerPage;
+		this.pageNum = pageNum;
 	}
 	
 	public ArrayList<SLBorrow> getTheBorrows() {
@@ -29,24 +29,28 @@ public class BorrowPage implements Serializable {
 	public void setTheBorrows(ArrayList<SLBorrow> theBorrows) {
 		this.theBorrows = theBorrows;
 	}
+	public int getItemsNumPerPage() {
+		return itemsNumPerPage;
+	}
 
-	public int getStartNum() {
-		return startNum;
+	public void setItemsNumPerPage(int itemsNumPerPage) {
+		this.itemsNumPerPage = itemsNumPerPage;
 	}
-	public void setStartNum(int startNum) {
-		this.startNum = startNum;
+
+	public int getPageNum() {
+		return pageNum;
 	}
-	public int getEndNum() {
-		return endNum;
+
+	public void setPageNum(int pageNum) {
+		this.pageNum = pageNum;
 	}
-	public void setEndNum(int endNum) {
-		this.endNum = endNum;
+
+	public int getTotalPageNum() {
+		return totalPageNum;
 	}
-	public int getTotalNum() {
-		return totalNum;
-	}
-	public void setTotalNum(int totalNum) {
-		this.totalNum = totalNum;
+
+	public void setTotalPageNum(int totalPageNum) {
+		this.totalPageNum = totalPageNum;
 	}
 	
 	public SLBorrowDS getDataSource() {

@@ -23,8 +23,8 @@ public interface BookService extends RemoteService {
 	// 通过ISBN获取图书
 	SLBook getBookByISBN(String bookISBN);
 	
-	// 获取所有图书列表 例如：1->10 取前十本
-	BookPage getAllBookList(int iStart, int iEnd);
+	// 获取所有图书列表 例如：10,2 每页10项，取第二页
+	BookPage getAllBookList(int itemsPerPage, int pageNum);
 	
 	// 获取新添加图书列表 添加日期降序
 	BookPage getNewBookList(int num);
@@ -36,5 +36,5 @@ public interface BookService extends RemoteService {
 	// searchType = "bookName","bookAuthor",
 	//				"bookPublisher","bookIntro",
 	//				"bookContributor","bookClass","bookLanguage"
-	BookPage searchBookList(String searchType, String searchValue, int iStart, int iEnd);
+	BookPage searchBookList(String searchType, String searchValue, int itemsPerPage, int pageNum);
 }

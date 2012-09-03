@@ -70,7 +70,7 @@ public class AdminBookManagementListGrid extends ListGrid {
 				bookAvailableQuantityField
 				);
 		
-		updateDS(1, DEFAULT_RECORDS_EACH_PAGE);
+		updateDS(DEFAULT_RECORDS_EACH_PAGE, 1);
 		this.setDataSource(slBookDS);
 		this.setAutoFetchData(true);
 		
@@ -89,7 +89,7 @@ public class AdminBookManagementListGrid extends ListGrid {
 		});
 	}
 	
-	private void updateDS(final int iStart, final int iEnd) {
+	private void updateDS(final int itemsPerPage, final int pageNum) {
 		new RPCCall<BookPage>() {
 			@Override
 			public void onFailure(Throwable caught) {
@@ -104,13 +104,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 				for (SLBook book : result.getTheBooks()) {
 					slBookDS.addData(book.getRecord());
 				}
-				pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-				pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
 				jumpBar.refreshView(pageNowNum, pageTotalNum);
 			}
 			@Override
 			protected void callService(AsyncCallback<BookPage> cb) {
-				bookService.getAllBookList(iStart, iEnd, cb);
+				bookService.getAllBookList(itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -175,13 +175,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 				for (SLBook book : result.getTheBooks()) {
 					slBookDS.addData(book.getRecord());
 				}
-				pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-				pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
 				jumpBar.refreshView(pageNowNum, pageTotalNum);
 			}
 			@Override
 			protected void callService(AsyncCallback<BookPage> cb) {
-				bookService.searchBookList(searchInfo[1], searchInfo[0], 1, DEFAULT_RECORDS_EACH_PAGE, cb);
+				bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
 			}
 		}.retry(3);
 		
@@ -216,13 +216,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 					for (SLBook book : result.getTheBooks()) {
 						slBookDS.addData(book.getRecord());
 					}
-					pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-					pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+					pageNowNum = result.getPageNum();
+					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.searchBookList(searchInfo[1], searchInfo[0], pageNowNum*DEFAULT_RECORDS_EACH_PAGE+1, (pageNowNum+1) * DEFAULT_RECORDS_EACH_PAGE, cb);
+					bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 			
@@ -242,13 +242,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 					for (SLBook book : result.getTheBooks()) {
 						slBookDS.addData(book.getRecord());
 					}
-					pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-					pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+					pageNowNum = result.getPageNum();
+					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.getAllBookList(pageNowNum*DEFAULT_RECORDS_EACH_PAGE+1, (pageNowNum+1) * DEFAULT_RECORDS_EACH_PAGE, cb);
+					bookService.getAllBookList(DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		}
@@ -283,13 +283,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 					for (SLBook book : result.getTheBooks()) {
 						slBookDS.addData(book.getRecord());
 					}
-					pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-					pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+					pageNowNum = result.getPageNum();
+					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.searchBookList(searchInfo[1], searchInfo[0], (pageNowNum-1)*DEFAULT_RECORDS_EACH_PAGE+1, pageNowNum * DEFAULT_RECORDS_EACH_PAGE, cb);
+					bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 			
@@ -310,13 +310,13 @@ public class AdminBookManagementListGrid extends ListGrid {
 					for (SLBook book : result.getTheBooks()) {
 						slBookDS.addData(book.getRecord());
 					}
-					pageNowNum = result.getEndNum() / DEFAULT_RECORDS_EACH_PAGE;
-					pageTotalNum = result.getTotalNum() / DEFAULT_CELL_HEIGHT +1;
+					pageNowNum = result.getPageNum();
+					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.getAllBookList((pageNowNum-1)*DEFAULT_RECORDS_EACH_PAGE+1, pageNowNum * DEFAULT_RECORDS_EACH_PAGE, cb);
+					bookService.getAllBookList( DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}

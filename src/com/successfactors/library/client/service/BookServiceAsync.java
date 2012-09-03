@@ -12,13 +12,12 @@ public interface BookServiceAsync {
 
 	void deleteBook(String bookISBN, AsyncCallback<Boolean> callback);
 
-	void getAllBookList(int iStart, int iEnd,
+	void getAllBookList(int itemsPerPage, int pageNum,
 			AsyncCallback<BookPage> callback);
 
 	void getBookByISBN(String bookISBN, AsyncCallback<SLBook> callback);
 
-	void searchBookList(String searchType, String searchValue, int iStart,
-			int iEnd, AsyncCallback<BookPage> callback);
+	void searchBookList(String searchType, String searchValue, int itemsPerPage, int pageNum, AsyncCallback<BookPage> callback);
 
 	void updateBook(SLBook updateBook, AsyncCallback<Boolean> callback);
 

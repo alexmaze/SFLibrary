@@ -14,10 +14,10 @@ public interface OrderServiceAsync {
 
 	void orderBook(String bookISBN, AsyncCallback<Boolean> callback);
 
-	void getOrderList(String strType, String userEmail, int iStart, int iEnd,
+	void getOrderList(String strType, String userEmail, int itemsPerPage, int pageNum,
 			AsyncCallback<OrderPage> callback);
 
-	void getOrderList(String strType, int iStart, int iEnd,
+	void getOrderList(String strType, int itemsPerPage, int pageNum,
 			AsyncCallback<OrderPage> callback);
 
 }

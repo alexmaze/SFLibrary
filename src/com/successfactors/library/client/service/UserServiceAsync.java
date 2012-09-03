@@ -21,7 +21,7 @@ public interface UserServiceAsync {
 
 	void saveUserInfo(SLUser slUser, AsyncCallback<Boolean> callback);
 
-	void getUserList(int iStart, int iEnd,
+	void getUserList(int itemsPerPage, int pageNum,
 			AsyncCallback<ArrayList<SLUser>> callback);
 
 }
