@@ -38,20 +38,6 @@ public class ReaderBorrowView extends VLayout {
 	}
 	
 	private void bind() {
-		theToolbar.addButtonClickHandler(ToolbarButtonType.Need_Return, new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				theListGrid.showNeedReturnWindow();
-			}
-		});
-		theToolbar.addButtonClickHandler(ToolbarButtonType.Need_Tooken, new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				theListGrid.showNeedTookenWindow();
-			}
-		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.NEXT_PAGE, new ClickHandler() {
 			
 			@Override

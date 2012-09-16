@@ -112,8 +112,8 @@ public class SLBorrow implements Serializable {
 		record.setAttribute("borrowDate", borrowDate);
 		record.setAttribute("shouldReturnDate", shouldReturnDate);
 		record.setAttribute("returnDate", returnDate);
-		record.setAttribute("inStore", inStore?"是":"否");
-		record.setAttribute("overdue", overdue?"是":"否");
+		record.setAttribute("inStore", inStore);
+		record.setAttribute("overdue", overdue);
 		record.setAttribute("status", status);		
 		
 		//------------------------------------------------------
