@@ -38,14 +38,14 @@ public class ReaderBorrowHistoryView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doNextPage(null);
+				theListGrid.doNextPage();
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.PRE_PAGE, new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doPrePage(null);
+				theListGrid.doPrePage();
 			}
 		});
 	}

@@ -48,4 +48,11 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 		return null;
 	}
 
+	@Override
+	public OrderPage searchOrderList(String orderType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

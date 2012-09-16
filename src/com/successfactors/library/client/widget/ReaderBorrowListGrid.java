@@ -117,7 +117,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 		}.retry(3);
 	}
 
-	public void doNextPage(final String[] searchInfo) {
+	public void doNextPage() {
 		
 		if (pageNowNum >= pageTotalNum) {
 			SC.say("已到最后一页！");
@@ -154,7 +154,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 			}.retry(3);
 		}
 
-	public void doPrePage(final String[] searchInfo) {
+	public void doPrePage() {
 
 		if (pageNowNum <= 1) {
 			SC.say("已到第一页！");

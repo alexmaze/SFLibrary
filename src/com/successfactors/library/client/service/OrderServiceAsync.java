@@ -20,4 +20,8 @@ public interface OrderServiceAsync {
 	void getOrderList(String strType, int itemsPerPage, int pageNum,
 			AsyncCallback<OrderPage> callback);
 
+	void searchOrderList(String orderType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum,
+			AsyncCallback<OrderPage> callback);
+
 }
