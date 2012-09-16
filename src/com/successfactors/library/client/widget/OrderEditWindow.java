@@ -128,7 +128,7 @@ public class OrderEditWindow  extends Window {
 		buttonLayout.setMembers(deleteButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
-		vLayout.setMembers(hLayout, deleteButton);
+		vLayout.setMembers(hLayout, buttonLayout);
 //		vLayout.setMembersMargin(20);
 
 		this.addItem(vLayout);

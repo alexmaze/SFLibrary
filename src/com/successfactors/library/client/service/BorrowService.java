@@ -30,7 +30,7 @@ public interface BorrowService extends RemoteService {
 	// strType = "history","now","all","overDue"
 	BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum);
 
-	// borrowType = "history","now","all","overDue"
+	// borrowType = "history","now","all","overDue", "inStore"
 	BorrowPage searchBorrowList(String borrowType, String searchType,
 			String searchValue, int itemsPerPage, int pageNum);
 }

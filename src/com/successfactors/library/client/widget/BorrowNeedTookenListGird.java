@@ -16,7 +16,7 @@ import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
-public class AdminBorrowManagementListGrid extends ListGrid {
+public class BorrowNeedTookenListGird extends ListGrid {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -30,11 +30,11 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 	private int pageNowNum = 1;
 	private int pageTotalNum = 1;
 	
-	public AdminBorrowManagementListGrid(Refreshable jumpbar) {
+	public BorrowNeedTookenListGird(Refreshable jumpbar) {
 		super();
 		jumpBar = jumpbar;
 		
-		GWT.log("初始化: AdminBorrowManagementListGrid");
+		GWT.log("初始化: BorrowNeedTookenListGird");
 		
 		this.setShowAllRecords(true);
 		this.setSortField("bookClass");
@@ -48,27 +48,17 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 
 		ListGridField borrowIdField = new ListGridField("borrowId", "借阅编号");
 		ListGridField bookNameField = new ListGridField("bookName", "书名");
-		ListGridField bookISBNField = new ListGridField("bookISBN", "ISBN");
 		ListGridField userNameField = new ListGridField("userName", "借书人");
-		
 		ListGridField borrowDateField = new ListGridField("borrowDate", "借书日期");
 		ListGridField shouldReturnDateField = new ListGridField("shouldReturnDate", "应还日期");
-		
-		ListGridField inStoreField = new ListGridField("inStore", "是否已取");
-		ListGridField overdueField = new ListGridField("overdue", "是否超期");
-		ListGridField statusField = new ListGridField("status", "状态");
 		
 		this.setFields(
 				bookPicUrlField,
 				borrowIdField,
 				bookNameField,
-				bookISBNField,
 				userNameField,
 				borrowDateField,
-				shouldReturnDateField,
-				inStoreField,
-				overdueField,
-				statusField
+				shouldReturnDateField
 				);
 		
 		updateDS(DEFAULT_RECORDS_EACH_PAGE, 1);
@@ -111,45 +101,12 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("now", itemsPerPage, pageNum, cb);
+				borrowService.getBorrowList("inStore", itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
 
-	public void doSearchBorrow(final String[] searchInfo) {
-		
-		for (Record record : this.getRecords()) {
-			slBorrowDS.removeData(record);
-		}
-		
-		new RPCCall<BorrowPage>() {
-			@Override
-			public void onFailure(Throwable caught) {
-				SC.say("通信失败，请检查您的网络连接！");
-			}
-			@Override
-			public void onSuccess(BorrowPage result) {
-				
-				if (result == null) {
-					SC.say("暂无资料。。。囧rz");
-					return;
-				}
-				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
-				}
-				pageNowNum = result.getPageNum();
-				pageTotalNum = result.getTotalPageNum();
-				jumpBar.refreshView(pageNowNum, pageTotalNum);
-			}
-			@Override
-			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
-			}
-		}.retry(3);
-		
-	}
-
-	public void doNextPage(boolean isSearchMode, final String[] searchInfo) {
+	public void doNextPage() {
 		
 		if (pageNowNum >= pageTotalNum) {
 			SC.say("已到最后一页！");
@@ -160,8 +117,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			slBorrowDS.removeData(record);
 		}
 		
-		if (isSearchMode) {
-			
+
 			new RPCCall<BorrowPage>() {
 				@Override
 				public void onFailure(Throwable caught) {
@@ -183,40 +139,13 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.getBorrowList("inStore", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
-			
-		} else {
-			new RPCCall<BorrowPage>() {
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.say("通信失败，请检查您的网络连接！");
-				}
-				@Override
-				public void onSuccess(BorrowPage result) {
-					
-					if (result == null) {
-						SC.say("暂无资料。。。囧rz");
-						return;
-					}
-					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
-					}
-					pageNowNum = result.getPageNum();
-					pageTotalNum = result.getTotalPageNum();
-					jumpBar.refreshView(pageNowNum, pageTotalNum);
-				}
-				@Override
-				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
-				}
-			}.retry(3);
-		}
 		
 	}
 
-	public void doPrePage(boolean isSearchMode, final String[] searchInfo) {
+	public void doPrePage() {
 
 		if (pageNowNum <= 1) {
 			SC.say("已到第一页！");
@@ -227,8 +156,6 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			slBorrowDS.removeData(record);
 		}
 		
-		if (isSearchMode) {
-			
 			new RPCCall<BorrowPage>() {
 				@Override
 				public void onFailure(Throwable caught) {
@@ -250,52 +177,9 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.getBorrowList("inStore", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
-			
-		} else {
-			
-			new RPCCall<BorrowPage>() {
-				@Override
-				public void onFailure(Throwable caught) {
-					SC.say("通信失败，请检查您的网络连接！");
-				}
-				@Override
-				public void onSuccess(BorrowPage result) {
-					
-					if (result == null) {
-						SC.say("暂无资料。。。囧rz");
-						return;
-					}
-					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
-					}
-					pageNowNum = result.getPageNum();
-					pageTotalNum = result.getTotalPageNum();
-					jumpBar.refreshView(pageNowNum, pageTotalNum);
-				}
-				@Override
-				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
-				}
-			}.retry(3);
-		}
-	}
-
-	public void showNeedReturnWindow() {
-		BorrowNeedReturnWindow borrowNeedReturnWindow = new BorrowNeedReturnWindow();
-		borrowNeedReturnWindow.show();
-	}
-
-	public void showNeedTookenWindow() {
-		BorrowNeedTookenWindow borrowNeedTookenWindow = new BorrowNeedTookenWindow();
-		borrowNeedTookenWindow.show();
-	}
-
-	public void doReturnBook() {
-		BorrowEditWindow borrowEditWindow = new BorrowEditWindow();
-		borrowEditWindow.show();
 	}
 	
 }
