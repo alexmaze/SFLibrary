@@ -22,4 +22,7 @@ public interface BorrowServiceAsync {
 
 	void returnBook(int borrowId, AsyncCallback<Boolean> callback);
 
+	void searchBorrowList(String borrowType, String searchType, String searchValue,
+			int itemsPerPage, int pageNum, AsyncCallback<BorrowPage> callback);
+
 }
