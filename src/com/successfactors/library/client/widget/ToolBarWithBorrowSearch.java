@@ -39,7 +39,7 @@ public class ToolBarWithBorrowSearch extends ToolStrip {
 
 	private DynamicForm searchForm;
 
-	public ToolBarWithBorrowSearch(boolean canEdit, boolean canSearch) {
+	public ToolBarWithBorrowSearch(boolean canEdit, boolean canSearch, boolean needExtra) {
 		super();
 
 		GWT.log("初始化：Toolbar", null);
@@ -90,17 +90,19 @@ public class ToolBarWithBorrowSearch extends ToolStrip {
 		}
 
 		//---------------------------------------------------
-		this.addSeparator();
-		needTooken = new ToolStripButton();
-		needTooken.setIcon(NEED_TOOKEN);
-		needTooken.setTitle(NEED_TOOKEN_DISPLAY_NAME);
-		this.addButton(needTooken);
-		this.addSeparator();
+		if (needExtra) {
+			this.addSeparator();
+			needTooken = new ToolStripButton();
+			needTooken.setIcon(NEED_TOOKEN);
+			needTooken.setTitle(NEED_TOOKEN_DISPLAY_NAME);
+			this.addButton(needTooken);
+			this.addSeparator();
 
-		needReturn = new ToolStripButton();
-		needReturn.setIcon(NEED_RETURN);
-		needReturn.setTitle(NEED_RETURN_DISPLAY_NAME);
-		this.addButton(needReturn);
+			needReturn = new ToolStripButton();
+			needReturn.setIcon(NEED_RETURN);
+			needReturn.setTitle(NEED_RETURN_DISPLAY_NAME);
+			this.addButton(needReturn);
+		}
 		this.addSeparator();
 	}
 

@@ -28,7 +28,7 @@ public class ReaderBorrowView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(false, false);
+		theToolbar = new ToolBarWithBorrowSearch(false, false, false);
 		theJumpBar = new JumpBar();
 		theListGrid = new ReaderBorrowListGrid(theJumpBar);
 		
@@ -56,14 +56,14 @@ public class ReaderBorrowView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doNextPage(theToolbar.getSearchInfo());
+				theListGrid.doNextPage(null);
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.PRE_PAGE, new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doPrePage(theToolbar.getSearchInfo());
+				theListGrid.doPrePage(null);
 			}
 		});
 	}

@@ -8,14 +8,12 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.JumpBar;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ReaderBorrowHistoryListGrid;
-import com.successfactors.library.client.widget.ToolBarWithBorrowSearch;
 
 public class ReaderBorrowHistoryView extends VLayout {
 
 	private static final String DESCRIPTION = "借阅历史";
 	private static final String CONTEXT_AREA_WIDTH = "*";
-
-	private ToolBarWithBorrowSearch theToolbar;
+	
 	private ReaderBorrowHistoryListGrid theListGrid;
 	private JumpBar theJumpBar;
 
@@ -27,11 +25,10 @@ public class ReaderBorrowHistoryView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(false, false);
 		theJumpBar = new JumpBar();
 		theListGrid = new ReaderBorrowHistoryListGrid(theJumpBar);
 		
-		this.setMembers(theToolbar, theListGrid, theJumpBar);
+		this.setMembers(theListGrid, theJumpBar);
 		bind();
 		
 	}
@@ -41,14 +38,14 @@ public class ReaderBorrowHistoryView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doNextPage(theToolbar.getSearchInfo());
+				theListGrid.doNextPage(null);
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.PRE_PAGE, new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				theListGrid.doPrePage(theToolbar.getSearchInfo());
+				theListGrid.doPrePage(null);
 			}
 		});
 	}
