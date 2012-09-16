@@ -28,7 +28,7 @@ public class ReaderBorrowView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(false, true);
+		theToolbar = new ToolBarWithBorrowSearch(false, false);
 		theJumpBar = new JumpBar();
 		theListGrid = new ReaderBorrowListGrid(theJumpBar);
 		

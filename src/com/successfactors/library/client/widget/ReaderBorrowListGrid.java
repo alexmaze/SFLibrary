@@ -35,7 +35,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 		super();
 		jumpBar = jumpbar;
 		
-		GWT.log("初始化: AdminBorrowManagementListGrid");
+		GWT.log("初始化: ReaderBorrowListGrid");
 		
 		this.setShowAllRecords(true);
 		this.setSortField("bookClass");

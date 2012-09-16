@@ -6,10 +6,9 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.AdminBorrowHistoryListGrid;
-import com.successfactors.library.client.widget.AdminBorrowManagementListGrid;
 import com.successfactors.library.client.widget.JumpBar;
-import com.successfactors.library.client.widget.ToolBarWithBorrowSearch;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
+import com.successfactors.library.client.widget.ToolBarWithBorrowSearch;
 import com.successfactors.library.client.widget.ToolBarWithBorrowSearch.ToolbarButtonType;
 
 public class AdminBorrowHistoryView extends VLayout {
