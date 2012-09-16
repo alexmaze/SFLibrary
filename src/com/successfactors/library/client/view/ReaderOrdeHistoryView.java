@@ -14,7 +14,7 @@ public class ReaderOrdeHistoryView extends VLayout {
 		private String id;
 
 		public Canvas create() {
-			AdminBookManagementView view = new AdminBookManagementView();
+			ReaderOrdeHistoryView view = new ReaderOrdeHistoryView();
 			id = view.getID();
 			return view;
 		}

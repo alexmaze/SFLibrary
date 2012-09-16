@@ -27,7 +27,7 @@ public class ReaderNavigationPaneSectionData {
 				 new NavigationPaneRecord("reports", "我的借阅", new ReaderBorrowView.Factory(), null),
 				 new NavigationPaneRecord("reports", "借阅历史", new ReaderBorrowHistoryView.Factory(), null),
 				 new NavigationPaneRecord("reports", "我的预定", new ReaderOrderView.Factory(), null),
-				 new NavigationPaneRecord("reports", "我的预定", new ReaderOrdeHistoryView.Factory(), null),
+				 new NavigationPaneRecord("reports", "预定历史", new ReaderOrdeHistoryView.Factory(), null),
 		};
 	}
 

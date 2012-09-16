@@ -14,7 +14,7 @@ public class AdminBorrowHistoryView extends VLayout {
 		private String id;
 
 		public Canvas create() {
-			AdminBookManagementView view = new AdminBookManagementView();
+			AdminBorrowHistoryView view = new AdminBorrowHistoryView();
 			id = view.getID();
 			return view;
 		}

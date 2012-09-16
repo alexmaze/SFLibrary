@@ -12,12 +12,13 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
-import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.form.fields.events.IconClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.IconClickHandler;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBorrowDS;
@@ -94,6 +95,39 @@ public class BorrowEditWindow  extends Window {
 		FormItemIcon borrowBut = new FormItemIcon();
 		borrowBut.setSrc("/images/actions/approve.png");
 		borrowIdItem.setIcons(borrowBut);
+		borrowIdItem.addKeyPressHandler(new KeyPressHandler() {
+			
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName().equals("Enter")) {
+					new RPCCall<SLBorrow>() {
+
+						@Override
+						public void onFailure(Throwable caught) {
+							SC.say("通信失败，请检查您的网络连接！");
+						}
+
+						@Override
+						public void onSuccess(SLBorrow result) {
+							if (result == null) {
+								SC.say("输入错误");
+								return;
+							}
+							setTitle("借阅记录"+result.getTheBook().getBookName());
+							theRecord = result.getRecord();
+							theDataSource.addData(theRecord);
+							boorowForm1.selectRecord(theRecord);
+							boorowForm1.fetchData();
+						}
+
+						@Override
+						protected void callService(AsyncCallback<SLBorrow> cb) {
+							borrowService.getBorrowInfo(Integer.parseInt(borrowIdItem.getValueAsString()), cb);
+						}
+					}.retry(3);
+				}
+			}
+		});
 		borrowIdItem.addIconClickHandler(new IconClickHandler() {
 			
 			@Override
