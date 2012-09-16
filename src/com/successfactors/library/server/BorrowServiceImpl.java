@@ -132,8 +132,8 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	}
 
 	@Override
-	public BorrowPage searchBorrowList(String searchType, String searchValue,
-			int itemsPerPage, int pageNum) {
+	public BorrowPage searchBorrowList(String borrowType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		return null;
 	}

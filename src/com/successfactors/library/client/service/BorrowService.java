@@ -30,9 +30,7 @@ public interface BorrowService extends RemoteService {
 	// strType = "history","now","all","overDue"
 	BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum);
 
-	// 搜索图书
-	// searchType = "bookName","bookAuthor","userName",
-	//				"bookPublisher","bookIntro",
-	//				"bookContributor","bookClass","bookLanguage"
-	BorrowPage searchBorrowList(String searchType, String searchValue, int itemsPerPage, int pageNum);
+	// borrowType = "history","now","all","overDue"
+	BorrowPage searchBorrowList(String borrowType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum);
 }

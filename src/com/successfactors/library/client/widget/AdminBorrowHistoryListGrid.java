@@ -16,7 +16,7 @@ import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
-public class AdminBorrowManagementListGrid extends ListGrid {
+public class AdminBorrowHistoryListGrid extends ListGrid {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -30,11 +30,11 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 	private int pageNowNum = 1;
 	private int pageTotalNum = 1;
 	
-	public AdminBorrowManagementListGrid(Refreshable jumpbar) {
+	public AdminBorrowHistoryListGrid(Refreshable jumpbar) {
 		super();
 		jumpBar = jumpbar;
 		
-		GWT.log("初始化: AdminBorrowManagementListGrid");
+		GWT.log("初始化: AdminBorrowHistoryListGrid");
 		
 		this.setShowAllRecords(true);
 		this.setSortField("bookClass");
@@ -54,10 +54,6 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 		ListGridField borrowDateField = new ListGridField("borrowDate", "借书日期");
 		ListGridField shouldReturnDateField = new ListGridField("shouldReturnDate", "应还日期");
 		
-		ListGridField inStoreField = new ListGridField("inStore", "是否已取");
-		ListGridField overdueField = new ListGridField("overdue", "是否超期");
-		ListGridField statusField = new ListGridField("status", "状态");
-		
 		this.setFields(
 				bookPicUrlField,
 				borrowIdField,
@@ -65,10 +61,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				bookISBNField,
 				userNameField,
 				borrowDateField,
-				shouldReturnDateField,
-				inStoreField,
-				overdueField,
-				statusField
+				shouldReturnDateField
 				);
 		
 		updateDS(DEFAULT_RECORDS_EACH_PAGE, 1);
@@ -111,7 +104,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("now", itemsPerPage, pageNum, cb);
+				borrowService.getBorrowList("history", itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -143,7 +136,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
+				borrowService.searchBorrowList("history", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
 			}
 		}.retry(3);
 		
@@ -183,7 +176,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.searchBorrowList("history", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 			
@@ -209,7 +202,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.getBorrowList("history", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		}
@@ -250,7 +243,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.searchBorrowList("history", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 			
