@@ -8,15 +8,12 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.JumpBar;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ReaderBorrowListGrid;
-import com.successfactors.library.client.widget.ToolBarWithBorrowSearch;
-import com.successfactors.library.client.widget.ToolBarWithBorrowSearch.ToolbarButtonType;
 
 public class ReaderBorrowView extends VLayout {
 	
-	private static final String DESCRIPTION = "我的借阅";
+	private static final String DESCRIPTION = "我的当前借阅";
 	private static final String CONTEXT_AREA_WIDTH = "*";
 
-	private ToolBarWithBorrowSearch theToolbar;
 	private ReaderBorrowListGrid theListGrid;
 	private JumpBar theJumpBar;
 
@@ -28,11 +25,10 @@ public class ReaderBorrowView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(false, false, false);
 		theJumpBar = new JumpBar();
 		theListGrid = new ReaderBorrowListGrid(theJumpBar);
 		
-		this.setMembers(theToolbar, theListGrid, theJumpBar);
+		this.setMembers(theListGrid, theJumpBar);
 		bind();
 		
 	}

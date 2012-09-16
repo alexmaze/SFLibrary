@@ -37,6 +37,7 @@ public class BorrowEditWindow  extends Window {
 	private SLBorrowDS theDataSource;
 	
 	private IButton returnButton;
+	private IButton outStoreButton;
 	
 	public BorrowEditWindow() {
 		super();
@@ -229,9 +230,11 @@ public class BorrowEditWindow  extends Window {
 				
 		//buttonLayout --------------------------------------------------------------------------------------
 		HLayout buttonLayout = new HLayout();
+		outStoreButton = new IButton("出库");
 		returnButton = new IButton("归还");
-		buttonLayout.setMembers(returnButton);
+		buttonLayout.setMembers(outStoreButton, returnButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
+		
 		
 		vLayout.setMembers(boorowForm1, buttonLayout);
 		
@@ -346,8 +349,9 @@ public class BorrowEditWindow  extends Window {
 		
 		//buttonLayout --------------------------------------------------------------------------------------
 		HLayout buttonLayout = new HLayout();
+		outStoreButton = new IButton("出库");
 		returnButton = new IButton("归还");
-		buttonLayout.setMembers(returnButton);
+		buttonLayout.setMembers(outStoreButton, returnButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
 		vLayout.setMembers(hLayout, buttonLayout);
@@ -359,6 +363,19 @@ public class BorrowEditWindow  extends Window {
 	}
 	
 	private void bind() {
+		
+		outStoreButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if (theRecord == null || !theRecord.getAttributeAsBoolean("inStore")) {
+					return;
+				}
+				
+				SC.say("图书出库"+theRecord.getAttribute("bookName") );
+			}
+		});
+		
 		returnButton.addClickHandler(new ClickHandler() {
 			
 			@Override

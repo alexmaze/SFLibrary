@@ -6,7 +6,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 
 public class ReaderOrderView extends VLayout {
 	
-	private static final String DESCRIPTION = "我的预订";
+	private static final String DESCRIPTION = "我的当前预订";
 	private static final String CONTEXT_AREA_WIDTH = "*";
 
 	public ReaderOrderView() {
