@@ -34,6 +34,7 @@ public class BorrowNeedReturnWindow  extends Window {
 		theListGrid = new BorrowNeedReturnListGrid(theJumpBar);
 		
 		vLayout.setMembers(theListGrid, theJumpBar);
+		vLayout.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		
 		this.addItem(vLayout);
 

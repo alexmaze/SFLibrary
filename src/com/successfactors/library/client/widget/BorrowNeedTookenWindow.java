@@ -35,6 +35,7 @@ public class BorrowNeedTookenWindow  extends Window {
 		
 		vLayout.setMembers(theListGrid, theJumpBar);
 		
+		vLayout.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.addItem(vLayout);
 
 		bind();

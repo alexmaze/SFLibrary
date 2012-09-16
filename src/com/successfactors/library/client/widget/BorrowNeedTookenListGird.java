@@ -18,7 +18,7 @@ import com.successfactors.library.shared.model.SLBorrow;
 
 public class BorrowNeedTookenListGird extends ListGrid {
 	
-	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
+	public static final int DEFAULT_RECORDS_EACH_PAGE = 7;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
 	public static final int DEFAULT_IMG_WIDTH = 28;
 
