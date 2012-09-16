@@ -39,7 +39,7 @@ public class ToolBarWithBorrowSearch extends ToolStrip {
 
 	private DynamicForm searchForm;
 
-	public ToolBarWithBorrowSearch(boolean canEdit) {
+	public ToolBarWithBorrowSearch(boolean canEdit, boolean canSearch) {
 		super();
 
 		GWT.log("初始化：Toolbar", null);
@@ -48,47 +48,46 @@ public class ToolBarWithBorrowSearch extends ToolStrip {
 		this.setWidth(TOOLSTRIP_WIDTH);
 
 		if (canEdit) {
-			
 			updateButton = new ToolStripButton();
 			updateButton.setIcon(APPLY_BUTTON);
 			updateButton.setTitle(UPDATE_BUTTON_DISPLAY_NAME);
 			this.addButton(updateButton);
-
-			this.addSeparator();
-			
 		}
 		
 		//---------------------------------------------------
 		// search part
-		searchForm = new DynamicForm();
-		searchForm.setWidth("300px");
-		searchForm.setColWidths(100,"*",50,"*");
-		searchForm.setNumCols(4);
-		searchForm.setColWidths(100,100,100,100);
-		TextItem searchKeyWordItem = new TextItem("searchKeyWord", "关键字");
-		SelectItem searchClassItem = new SelectItem("searchClass", "分类");
-		searchClassItem.setValueMap(
-				"全部",
-				"书名",
-				"作者",
-				"借书人",
-				"类别",
-				"语言",
-				"出版社",
-				"贡献者"
-				);
-		searchClassItem.setDefaultValue("全部");
-		searchKeyWordItem.setWidth(100);
-		searchKeyWordItem.setHeight(20);
-		searchClassItem.setHeight(20);
-		searchClassItem.setWidth(100);
-		searchForm.setFields(searchKeyWordItem, searchClassItem);
-		this.addMember(searchForm);
-		
-		searchButton = new ToolStripButton();
-		searchButton.setIcon(SEARCH_BUTTON);
-		searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
-		this.addButton(searchButton);
+		if (canSearch) {
+			this.addSeparator();
+			searchForm = new DynamicForm();
+			searchForm.setWidth("300px");
+			searchForm.setColWidths(100,"*",50,"*");
+			searchForm.setNumCols(4);
+			searchForm.setColWidths(100,100,100,100);
+			TextItem searchKeyWordItem = new TextItem("searchKeyWord", "关键字");
+			SelectItem searchClassItem = new SelectItem("searchClass", "分类");
+			searchClassItem.setValueMap(
+					"全部",
+					"书名",
+					"作者",
+					"借书人",
+					"类别",
+					"语言",
+					"出版社",
+					"贡献者"
+					);
+			searchClassItem.setDefaultValue("全部");
+			searchKeyWordItem.setWidth(100);
+			searchKeyWordItem.setHeight(20);
+			searchClassItem.setHeight(20);
+			searchClassItem.setWidth(100);
+			searchForm.setFields(searchKeyWordItem, searchClassItem);
+			this.addMember(searchForm);
+			
+			searchButton = new ToolStripButton();
+			searchButton.setIcon(SEARCH_BUTTON);
+			searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
+			this.addButton(searchButton);
+		}
 
 		//---------------------------------------------------
 		this.addSeparator();
