@@ -54,7 +54,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 		ListGridField borrowDateField = new ListGridField("borrowDate", "借书日期");
 		ListGridField shouldReturnDateField = new ListGridField("shouldReturnDate", "应还日期");
 		
-		ListGridField inStoreField = new ListGridField("inStore", "是否已取");
+		ListGridField inStoreField = new ListGridField("inStore", "需要领取");
 		ListGridField overdueField = new ListGridField("overdue", "是否超期");
 		ListGridField statusField = new ListGridField("status", "状态");
 		
