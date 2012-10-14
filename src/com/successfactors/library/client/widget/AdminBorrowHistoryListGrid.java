@@ -77,8 +77,8 @@ public class AdminBorrowHistoryListGrid extends ListGrid {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				BorrowEditWindow borrowEditWindow = new BorrowEditWindow(getSelectedRecord());
-				borrowEditWindow.show();
+				BorrowDisplayWindow borrowDisplayWindow = new BorrowDisplayWindow(getSelectedRecord());
+				borrowDisplayWindow.show();
 			}
 		});
 	}

@@ -1,6 +1,6 @@
 package com.successfactors.library.client.widget;
 
-import static com.successfactors.library.client.SFLibrary.borrowService;
+import static com.successfactors.library.client.SFLibrary.orderService;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -12,12 +12,12 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.SFLibrary;
-import com.successfactors.library.client.datasource.SLBorrowDS;
+import com.successfactors.library.client.datasource.SLOrderDS;
 import com.successfactors.library.client.helper.RPCCall;
-import com.successfactors.library.shared.model.BorrowPage;
-import com.successfactors.library.shared.model.SLBorrow;
+import com.successfactors.library.shared.model.OrderPage;
+import com.successfactors.library.shared.model.SLOrder;
 
-public class ReaderBorrowHistoryListGrid extends ListGrid {
+public class ReaderOrderListGrid extends ListGrid {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -27,15 +27,15 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 	
 	private Refreshable jumpBar;
 	
-	private SLBorrowDS slBorrowDS = new SLBorrowDS();
+	private SLOrderDS slOrderDS = new SLOrderDS();
 	private int pageNowNum = 1;
 	private int pageTotalNum = 1;
 	
-	public ReaderBorrowHistoryListGrid(Refreshable jumpbar) {
+	public ReaderOrderListGrid(Refreshable jumpbar) {
 		super();
 		jumpBar = jumpbar;
 		
-		GWT.log("初始化: ReaderBorrowHistoryListGrid");
+		GWT.log("初始化: ReaderOrderListGrid");
 		
 		this.setShowAllRecords(true);
 		this.setSortField("bookClass");
@@ -47,26 +47,26 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
 		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);
 
-		ListGridField borrowIdField = new ListGridField("borrowId", "借阅编号");
+		ListGridField orderIdField = new ListGridField("orderId", "借阅编号");
 		ListGridField bookNameField = new ListGridField("bookName", "书名");
 		ListGridField bookISBNField = new ListGridField("bookISBN", "ISBN");
-		ListGridField userNameField = new ListGridField("userName", "借书人");
+		ListGridField userNameField = new ListGridField("userName", "预订人");
 		
-		ListGridField borrowDateField = new ListGridField("borrowDate", "借书日期");
-		ListGridField shouldReturnDateField = new ListGridField("shouldReturnDate", "应还日期");
+		ListGridField orderDateField = new ListGridField("orderDate", "预订日期");
+		ListGridField statusField = new ListGridField("status", "状态");
 		
 		this.setFields(
 				bookPicUrlField,
-				borrowIdField,
+				orderIdField,
 				bookNameField,
 				bookISBNField,
 				userNameField,
-				borrowDateField,
-				shouldReturnDateField
+				orderDateField,
+				statusField
 				);
 		
 		updateDS(DEFAULT_RECORDS_EACH_PAGE, 1);
-		this.setDataSource(slBorrowDS);
+		this.setDataSource(slOrderDS);
 		this.setAutoFetchData(true);
 		
 		bind();
@@ -78,34 +78,34 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				BorrowDisplayWindow borrowDisplayWindow = new BorrowDisplayWindow(getSelectedRecord());
-				borrowDisplayWindow.show();
+				OrderEditWindow orderEditWindow = new OrderEditWindow(getSelectedRecord());
+				orderEditWindow.show();
 			}
 		});
 	}
 	
 	private void updateDS(final int itemsPerPage, final int pageNum) {
-		new RPCCall<BorrowPage>() {
+		new RPCCall<OrderPage>() {
 			@Override
 			public void onFailure(Throwable caught) {
 				SC.say("通信失败，请检查您的网络连接！");
 			}
 			@Override
-			public void onSuccess(BorrowPage result) {
+			public void onSuccess(OrderPage result) {
 				if (result == null) {
 					SC.say("暂无资料。。。囧rz");
 					return;
 				}
-				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+				for (SLOrder order : result.getTheOrders()) {
+					slOrderDS.addData(order.getRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
 				jumpBar.refreshView(pageNowNum, pageTotalNum);
 			}
 			@Override
-			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("history", SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
+			protected void callService(AsyncCallback<OrderPage> cb) {
+				orderService.getOrderList("now", SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -118,34 +118,34 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 		}
 		
 		for (Record record : this.getRecords()) {
-			slBorrowDS.removeData(record);
+			slOrderDS.removeData(record);
 		}
 		
-			new RPCCall<BorrowPage>() {
+			new RPCCall<OrderPage>() {
 				@Override
 				public void onFailure(Throwable caught) {
 					SC.say("通信失败，请检查您的网络连接！");
 				}
 				@Override
-				public void onSuccess(BorrowPage result) {
-					
+				public void onSuccess(OrderPage result) {
 					if (result == null) {
 						SC.say("暂无资料。。。囧rz");
 						return;
 					}
-					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+					for (SLOrder order : result.getTheOrders()) {
+						slOrderDS.addData(order.getRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
-				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("history", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+				protected void callService(AsyncCallback<OrderPage> cb) {
+					orderService.getOrderList("now", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
-		}
+		
+	}
 
 	public void doPrePage() {
 
@@ -155,31 +155,30 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 		}
 		
 		for (Record record : this.getRecords()) {
-			slBorrowDS.removeData(record);
+			slOrderDS.removeData(record);
 		}
-			
-			new RPCCall<BorrowPage>() {
+		
+			new RPCCall<OrderPage>() {
 				@Override
 				public void onFailure(Throwable caught) {
 					SC.say("通信失败，请检查您的网络连接！");
 				}
 				@Override
-				public void onSuccess(BorrowPage result) {
-					
+				public void onSuccess(OrderPage result) {
 					if (result == null) {
 						SC.say("暂无资料。。。囧rz");
 						return;
 					}
-					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+					for (SLOrder order : result.getTheOrders()) {
+						slOrderDS.addData(order.getRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
 					jumpBar.refreshView(pageNowNum, pageTotalNum);
 				}
 				@Override
-				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("history", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+				protected void callService(AsyncCallback<OrderPage> cb) {
+					orderService.getOrderList("now", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}

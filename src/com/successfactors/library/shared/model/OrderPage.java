@@ -25,6 +25,9 @@ public class OrderPage implements Serializable {
 	public ArrayList<SLOrder> getTheOrders() {
 		return theOrders;
 	}
+	public void setTheOrders(ArrayList<SLOrder> theOrders) {
+		this.theOrders = theOrders;
+	}
 	public int getItemsNumPerPage() {
 		return itemsNumPerPage;
 	}

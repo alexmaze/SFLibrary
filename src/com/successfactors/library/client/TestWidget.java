@@ -10,7 +10,11 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.BookDisplayWindow;
 import com.successfactors.library.client.widget.BookEditWindow;
 import com.successfactors.library.client.widget.BorrowDisplayWindow;
+import com.successfactors.library.client.widget.BorrowEditWindow;
+import com.successfactors.library.client.widget.BorrowNeedReturnWindow;
+import com.successfactors.library.client.widget.BorrowNeedTookenWindow;
 import com.successfactors.library.client.widget.OrderDisplayWindow;
+import com.successfactors.library.client.widget.OrderEditWindow;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
@@ -32,12 +36,15 @@ public class TestWidget {
 		
 		IButton but7 = new IButton("查看预定信息");
 		IButton but8 = new IButton("修改预定信息-更新");
-		IButton but9 = new IButton("修改预定信息-新建");
+
+		IButton but9 = new IButton("未取窗口");
+		IButton but10 = new IButton("超期窗口");
 		
 		hLayout.setMembers(
 				but1, but2, but3,
 				but4, but5, but6,
-				but7, but8, but9);
+				but7, but8,
+				but9, but10);
 		hLayout.draw();
 		
 		final SLBook temp = new SLBook();
@@ -137,7 +144,8 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				
+				BorrowEditWindow borrowDisplayWindow = new BorrowEditWindow(borrow.getRecord());
+				borrowDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
 		});
@@ -146,7 +154,8 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				
+				BorrowEditWindow borrowDisplayWindow = new BorrowEditWindow();
+				borrowDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
 		});
@@ -168,16 +177,30 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				
+				OrderEditWindow orderDisplayWindow = new OrderEditWindow(order.getRecord());
+				orderDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
 		});
+		//----------------------------------------------------------------------------------------------------------------------
+
 		but9.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				
+				BorrowNeedTookenWindow orderDisplayWindow = new BorrowNeedTookenWindow();
+				orderDisplayWindow.show();
+				GWT.log("***********  Test Widget End  *************");
+			}
+		});
+		but10.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				GWT.log("*********** Test Widget Start *************");
+				BorrowNeedReturnWindow orderDisplayWindow = new BorrowNeedReturnWindow();
+				orderDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
 		});

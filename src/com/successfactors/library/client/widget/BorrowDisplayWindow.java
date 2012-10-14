@@ -4,6 +4,7 @@ import com.smartgwt.client.data.Record;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
@@ -107,15 +108,17 @@ public class BorrowDisplayWindow  extends Window {
 		returnDateItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		returnDateItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 
-		StaticTextItem inStoreItem = new StaticTextItem("inStore", "需要领取");
+		CheckboxItem inStoreItem = new CheckboxItem("inStore", "需要领取");
 //		inStoreItem.setColSpan(2);
 		inStoreItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		inStoreItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		inStoreItem.setCanEdit(false);
 
-		StaticTextItem overdueItem = new StaticTextItem("overdue", "是否超期");
+		CheckboxItem overdueItem = new CheckboxItem("overdue", "是否超期");
 //		overdueItem.setColSpan(2);
 		overdueItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		overdueItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		overdueItem.setCanEdit(false);
 
 		StaticTextItem statusItem = new StaticTextItem("status", "借阅状态");
 //		statusItem.setColSpan(2);

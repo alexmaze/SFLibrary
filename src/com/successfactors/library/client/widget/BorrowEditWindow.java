@@ -12,6 +12,7 @@ import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.CheckboxItem;
 import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
@@ -36,6 +37,7 @@ public class BorrowEditWindow  extends Window {
 	private SLBorrowDS theDataSource;
 	
 	private IButton returnButton;
+	private IButton outStoreButton;
 	
 	public BorrowEditWindow() {
 		super();
@@ -196,15 +198,17 @@ public class BorrowEditWindow  extends Window {
 		returnDateItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		returnDateItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 
-		StaticTextItem inStoreItem = new StaticTextItem("inStore", "需要领取");
+		CheckboxItem inStoreItem = new CheckboxItem("inStore", "需要领取");
 //		inStoreItem.setColSpan(2);
 		inStoreItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		inStoreItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		inStoreItem.setCanEdit(false);
 
-		StaticTextItem overdueItem = new StaticTextItem("overdue", "是否超期");
+		CheckboxItem overdueItem = new CheckboxItem("overdue", "是否超期");
 //		overdueItem.setColSpan(2);
 		overdueItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		overdueItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		overdueItem.setCanEdit(false);
 
 		StaticTextItem statusItem = new StaticTextItem("status", "借阅状态");
 //		statusItem.setColSpan(2);
@@ -226,9 +230,11 @@ public class BorrowEditWindow  extends Window {
 				
 		//buttonLayout --------------------------------------------------------------------------------------
 		HLayout buttonLayout = new HLayout();
+		outStoreButton = new IButton("出库");
 		returnButton = new IButton("归还");
-		buttonLayout.setMembers(returnButton);
+		buttonLayout.setMembers(outStoreButton, returnButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
+		
 		
 		vLayout.setMembers(boorowForm1, buttonLayout);
 		
@@ -343,8 +349,9 @@ public class BorrowEditWindow  extends Window {
 		
 		//buttonLayout --------------------------------------------------------------------------------------
 		HLayout buttonLayout = new HLayout();
+		outStoreButton = new IButton("出库");
 		returnButton = new IButton("归还");
-		buttonLayout.setMembers(returnButton);
+		buttonLayout.setMembers(outStoreButton, returnButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
 		vLayout.setMembers(hLayout, buttonLayout);
@@ -356,6 +363,19 @@ public class BorrowEditWindow  extends Window {
 	}
 	
 	private void bind() {
+		
+		outStoreButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				if (theRecord == null || !theRecord.getAttributeAsBoolean("inStore")) {
+					return;
+				}
+				
+				SC.say("图书出库"+theRecord.getAttribute("bookName") );
+			}
+		});
+		
 		returnButton.addClickHandler(new ClickHandler() {
 			
 			@Override

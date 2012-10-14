@@ -30,7 +30,7 @@ public class AdminBorrowManagementView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(true, true);
+		theToolbar = new ToolBarWithBorrowSearch(true, true, true);
 		theJumpBar = new JumpBar();
 		theListGrid = new AdminBorrowManagementListGrid(theJumpBar);
 		

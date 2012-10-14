@@ -30,7 +30,7 @@ public class AdminBorrowHistoryView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
-		theToolbar = new ToolBarWithBorrowSearch(false, false);
+		theToolbar = new ToolBarWithBorrowSearch(false, true, false);
 		theJumpBar = new JumpBar();
 		theListGrid = new AdminBorrowHistoryListGrid(theJumpBar);
 		

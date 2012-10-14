@@ -55,7 +55,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 		ListGridField borrowDateField = new ListGridField("borrowDate", "借书日期");
 		ListGridField shouldReturnDateField = new ListGridField("shouldReturnDate", "应还日期");
 		
-		ListGridField inStoreField = new ListGridField("inStore", "是否已取");
+		ListGridField inStoreField = new ListGridField("inStore", "需要领取");
 		ListGridField overdueField = new ListGridField("overdue", "是否超期");
 		ListGridField statusField = new ListGridField("status", "状态");
 		
@@ -117,7 +117,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 		}.retry(3);
 	}
 
-	public void doNextPage(final String[] searchInfo) {
+	public void doNextPage() {
 		
 		if (pageNowNum >= pageTotalNum) {
 			SC.say("已到最后一页！");
@@ -154,7 +154,7 @@ public class ReaderBorrowListGrid extends ListGrid {
 			}.retry(3);
 		}
 
-	public void doPrePage(final String[] searchInfo) {
+	public void doPrePage() {
 
 		if (pageNowNum <= 1) {
 			SC.say("已到第一页！");

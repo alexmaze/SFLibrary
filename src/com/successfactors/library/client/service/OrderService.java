@@ -27,4 +27,8 @@ public interface OrderService extends RemoteService {
 	
 	// 获取某预定信息
 	SLOrder getOrderInfo(int orderId);
+	
+	// borrowType = "history","now","all"
+	OrderPage searchOrderList(String orderType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum);
 }
