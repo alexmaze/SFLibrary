@@ -48,19 +48,6 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 			slBorrow.setOverdue(false);
 			slBorrow.setStatus("未归还");
 			mysqlBorrowDao.save(slBorrow);
-//			private int borrowId;
-//			private String userEmail;
-//			private String bookISBN;
-//			private Date borrowDate;
-//			private Date shouldReturnDate;
-//			private Date returnDate;
-//			private boolean inStore;
-//			private boolean overdue;
-//			private String status;
-//
-//			//关联实体
-//			private SLBook theBook;
-//			private SLUser theUser;
 			return true;
 		}else{
 			return false;
@@ -140,7 +127,19 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 
 	@Override
 	public BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
+		String status = "";
+		if(strType == "history"){
+			status = "已归还";
+		}else if(strType == "now"){
+			status = "未归还";
+		}else if(strType == "all"){
+			
+		}else if(strType == "overDue"){
+			status = "已超期";
+		}
+		String qString = "from SLBorrow as model" +
+				"where model.str";
+		mysqlBorrowDao.executeQuery(qString, itemsPerPage, pageNum);
 		
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 		ArrayList<SLBorrow> ret = new ArrayList<SLBorrow>();

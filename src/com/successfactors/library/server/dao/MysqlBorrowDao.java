@@ -183,5 +183,27 @@ public class MysqlBorrowDao {
 		
 		return false;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<SLBorrow> executeQuery(String qString, int itemsPerPage, int pageNum){
+		session = HibernateSessionFactory.getSession();
+		Transaction tran = null;
+		List<SLBorrow> result = null;
+		try{
+			tran = session.beginTransaction();
+			Query q = session.createQuery(qString);
+			q.setFirstResult(itemsPerPage*pageNum);
+			q.setMaxResults(itemsPerPage);
+			result = q.list();
+		}catch(RuntimeException re){
+			try{
+				if(tran != null)
+					tran.rollback();
+			}catch (HibernateException he) {
+				return null;
+			}
+		}
+		return result;
+	}
 
 }

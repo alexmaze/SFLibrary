@@ -28,6 +28,7 @@ public interface BorrowService extends RemoteService {
 	
 	// 获取所有用户借阅列表
 	// strType = "history","now","all","overDue"
+	//"未归还"，"已归还","已超期"
 	BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum);
 
 	// borrowType = "history","now","all","overDue"
