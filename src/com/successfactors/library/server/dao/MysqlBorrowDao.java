@@ -1,5 +1,6 @@
 package com.successfactors.library.server.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -116,27 +117,6 @@ public class MysqlBorrowDao {
 		return slBorrow;
 	}
 
-//	/**
-//	 * 
-//	 */
-//	public SLBorrow getBorrowByName(String userName) {
-//
-//		log.debug("getting SmsUser instance with userName: " + userName);
-//		session = HibernateSessionFactory.getSession();
-//		SLBorrow smsUser = null;
-//		try {
-//			
-//			List<SLBorrow> result = this.findByProperty("userName", userName);
-//			if (result.size() != 0) {
-//				smsUser = result.get(0);
-//			}
-//			return smsUser;
-//		} catch (RuntimeException re) {
-//			log.error("get failed", re);
-//			throw re;
-//		}
-//
-//	}
 
 	@SuppressWarnings("unchecked")
 	public List<SLBorrow> findByProperty(String propertyName, Object value) {
@@ -185,16 +165,16 @@ public class MysqlBorrowDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<SLBorrow> executeQuery(String qString, int itemsPerPage, int pageNum){
+	public ArrayList<SLBorrow> executeQuery(String qString, int itemsPerPage, int pageNum){
 		session = HibernateSessionFactory.getSession();
 		Transaction tran = null;
-		List<SLBorrow> result = null;
+		ArrayList<SLBorrow> result = null;
 		try{
 			tran = session.beginTransaction();
 			Query q = session.createQuery(qString);
 			q.setFirstResult(itemsPerPage*pageNum);
 			q.setMaxResults(itemsPerPage);
-			result = q.list();
+			result = (ArrayList<SLBorrow>) q.list();
 		}catch(RuntimeException re){
 			try{
 				if(tran != null)
