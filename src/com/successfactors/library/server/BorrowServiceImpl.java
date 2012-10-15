@@ -81,7 +81,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	public SLBorrow getBorrowInfo(int borrowId) {
 		SLBorrow slBorrow = mysqlBorrowDao.getBorrowById(borrowId);
 		SLBook slBook = new BookServiceImpl().getBookByISBN(slBorrow.getBookISBN());
-		SLUser slUser = new UserServiceImpl().getUserById(slBorrow.getUserEmail());
+		SLUser slUser = new UserServiceImpl().getUserByEmail(slBorrow.getUserEmail());
 		slBorrow.setTheBook(slBook);
 		slBorrow.setTheUser(slUser);
 		return slBorrow;
@@ -156,7 +156,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 			slBorrow.setTheBook(new BookServiceImpl()
 				.getBookByISBN(slBorrow.getBookISBN()));
 			slBorrow.setTheUser(new UserServiceImpl().
-					getUserById(slBorrow.getUserEmail()));
+					getUserByEmail(slBorrow.getUserEmail()));
 			ret.set(i, slBorrow);
 		}
 		page.setTheBorrows(ret);
@@ -196,7 +196,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 			slBorrow.setTheBook(new BookServiceImpl()
 				.getBookByISBN(slBorrow.getBookISBN()));
 			slBorrow.setTheUser(new UserServiceImpl().
-					getUserById(slBorrow.getUserEmail()));
+					getUserByEmail(slBorrow.getUserEmail()));
 			ret.set(i, slBorrow);
 		}
 		page.setTheBorrows(ret);

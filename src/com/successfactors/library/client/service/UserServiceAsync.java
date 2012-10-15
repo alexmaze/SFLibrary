@@ -13,9 +13,9 @@ public interface UserServiceAsync {
 
 	void logout(AsyncCallback<Boolean> callback);
 
-	void deleteUserById(String userEmail, AsyncCallback<Boolean> callback);
+	void deleteUserByEmail(String userEmail, AsyncCallback<Boolean> callback);
 
-	void getUserById(String userEmail, AsyncCallback<SLUser> callback);
+	void getUserByEmail(String userEmail, AsyncCallback<SLUser> callback);
 
 	void register(SLUser newUser, AsyncCallback<SLUser> callback);
 

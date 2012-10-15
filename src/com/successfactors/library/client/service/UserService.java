@@ -25,10 +25,10 @@ public interface UserService extends RemoteService {
 	boolean saveUserInfo(SLUser slUser);
 	
 	// 通过Email获取用户
-	SLUser getUserById(String userEmail);
+	SLUser getUserByEmail(String userEmail);
 	
 	// 通过Email删除用户
-	boolean deleteUserById(String userEmail);
+	boolean deleteUserByEmail(String userEmail);
 	
 	// 获取所有用户列表
 	ArrayList<SLUser> getUserList(int itemsPerPage, int pageNum);
