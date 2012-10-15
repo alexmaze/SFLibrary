@@ -36,9 +36,7 @@ public class MysqlBorrowDao {
 	}
 
 	/**
-	 * @Author:Icelure
-	 * @Date:2012年4月28日 22:00:15
-	 * @保存用户实体
+	 * @Author:icelure
 	 */
 	public boolean save(SLBorrow slBorrow) {
 		log.info("MysqlBorrowDao save is running");
