@@ -14,14 +14,17 @@ public interface OrderServiceAsync {
 
 	void orderBook(String bookISBN, AsyncCallback<Boolean> callback);
 
-	void getOrderList(String strType, String userEmail, int itemsPerPage, int pageNum,
+	void searchOrderList(String firstType, String firstValue,
+			String secondType, String secondValue, int itemsPerPage, int pageNum,
+			AsyncCallback<OrderPage> callback);
+	
+	void searchOrderList(String searchType, String searchValue, int itemsPerPage, int pageNum,
 			AsyncCallback<OrderPage> callback);
 
-	void getOrderList(String strType, int itemsPerPage, int pageNum,
+	void searchAllOrderList(int itemsPerPage, int pageNum,
 			AsyncCallback<OrderPage> callback);
 
-	void searchOrderList(String orderType, String searchType,
-			String searchValue, int itemsPerPage, int pageNum,
-			AsyncCallback<OrderPage> callback);
+	void updateStatusAfterBorrowBook(int orderId,
+			AsyncCallback<Boolean> callback);
 
 }
