@@ -4,12 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
+import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 
@@ -46,7 +49,6 @@ public class MysqlBorrowDao {
 		try {
 			
 			tran = session.beginTransaction();
-		//	smsUser.setUserId(KeyGenerator.getKey("USR", 0));
 			session.save(slBorrow);
 			tran.commit();
 			flag = true;
@@ -105,7 +107,9 @@ public class MysqlBorrowDao {
 	}
 
 	/**
-	 * 
+	 * Get the borrow instance
+	 * @param borrowId
+	 * @return null if there is no borrow instance with this borrowId
 	 */
 	public SLBorrow getBorrowById(int borrowId) {
 		log.debug("getting SLBorrow instance with borrowId: "  + borrowId);
@@ -129,7 +133,6 @@ public class MysqlBorrowDao {
 			Query q = session.createQuery(queryString);
 			result = q.list();
 			return result;
-			// return getHibernateTemplate().find(queryString, value);
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
@@ -182,6 +185,27 @@ public class MysqlBorrowDao {
 			}
 		}
 		return result;
+	}
+	
+	public List<SLBorrow> searchBorrowList(String borrowType, String searchType,
+			String searchValue, int itemsPerPage, int pageNum) {
+		session = HibernateSessionFactory.getSession();
+		List<SLBorrow> result = null;
+		try{
+			Criteria criteria=session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("status",borrowType));//eq是等于，gt是大于，lt是小于,or是或
+			criteria.add(Restrictions.eq(searchType, searchValue));
+			if (itemsPerPage > 0 && pageNum > 0) {
+				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
+				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+			}
+			List<SLBorrow> list=criteria.list();
+		}catch(RuntimeException re){
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return result;
+
 	}
 
 }
