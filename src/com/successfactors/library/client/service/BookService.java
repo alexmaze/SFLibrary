@@ -2,7 +2,7 @@ package com.successfactors.library.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.successfactors.library.shared.SearchType;
+import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -37,5 +37,5 @@ public interface BookService extends RemoteService {
 	// searchType = "bookName","bookAuthor",
 	//				"bookPublisher","bookIntro",
 	//				"bookContributor","bookClass","bookLanguage"
-	BookPage searchBookList(SearchType searchType, String searchValue, int itemsPerPage, int pageNum);
+	BookPage searchBookList(BookSearchType searchType, String searchValue, int itemsPerPage, int pageNum);
 }

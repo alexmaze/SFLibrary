@@ -13,7 +13,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
-import com.successfactors.library.shared.SearchType;
+import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.SLBook;
 
 public class MysqlBookDao {
@@ -87,7 +87,7 @@ public class MysqlBookDao {
       HibernateSessionFactory.closeSession();
     }
   }
-  public List<SLBook> queryByCustomField(SearchType searchType,
+  public List<SLBook> queryByCustomField(BookSearchType searchType,
       String searchValue, int pageSize, int pageNo) {
     try {
       session = HibernateSessionFactory.getSession();
@@ -153,7 +153,7 @@ public class MysqlBookDao {
       HibernateSessionFactory.closeSession();
     }
   }
-  public long getCountByCustomField(SearchType searchType,String searchValue){
+  public long getCountByCustomField(BookSearchType searchType,String searchValue){
     try {
       session = HibernateSessionFactory.getSession();
       String hql = null;

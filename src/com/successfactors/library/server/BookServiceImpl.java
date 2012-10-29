@@ -7,7 +7,7 @@ import java.util.List;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BookService;
 import com.successfactors.library.server.dao.MysqlBookDao;
-import com.successfactors.library.shared.SearchType;
+import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -53,7 +53,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 	}
 
 	@Override
-	public BookPage searchBookList(SearchType searchType,
+	public BookPage searchBookList(BookSearchType searchType,
 			String searchValue, int itemsPerPage, int pageNum) {
 		// TODO Auto-generated method stub
 		ArrayList<SLBook> listBooks=(ArrayList<SLBook>)dao.queryByCustomField(searchType,searchValue,itemsPerPage,pageNum);
