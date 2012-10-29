@@ -1,5 +1,7 @@
 package com.successfactors.library.client.service;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.successfactors.library.shared.BorrowSearchType;
@@ -56,4 +58,8 @@ public interface BorrowService extends RemoteService {
 	 * */
 	BorrowPage searchBorrowList(BorrowStatusType statusType, BorrowSearchType searchType, String searchValue, int itemsPerPage, int pageNum);
 
+	/**
+	 * 获取所有超期借阅记录
+	 * */
+	ArrayList<SLBorrow> getOverdueBorrowList();
 }

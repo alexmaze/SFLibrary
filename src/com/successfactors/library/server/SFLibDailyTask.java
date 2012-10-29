@@ -1,9 +1,13 @@
 package com.successfactors.library.server;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContext;
+
+import com.successfactors.library.shared.SLEmailUtil;
+import com.successfactors.library.shared.model.SLBorrow;
 
 public class SFLibDailyTask extends TimerTask {
 
@@ -12,6 +16,8 @@ public class SFLibDailyTask extends TimerTask {
 	
 	private static boolean isRunning = false;
 	private ServletContext context = null;
+	
+	private SLEmailUtil emailUtil = new SLEmailUtil();
 
 	public SFLibDailyTask(ServletContext context) {
 		this.context = context;
@@ -37,8 +43,29 @@ public class SFLibDailyTask extends TimerTask {
 
 	// 执行任务
 	private void doTask() {
-		// TODO Auto-generated method stub
+		//  借书超期处理
+		BorrowServiceImpl bookService = new BorrowServiceImpl();
+		ArrayList<SLBorrow> overdueList = bookService.getOverdueBorrowList();
+		
+		for (SLBorrow slBorrow : overdueList) {
+			sendOverdueEmail(slBorrow);
+		}
 		
 	}
+
+	private void sendOverdueEmail(SLBorrow slBorrow) {
+		// TODO 发送超期邮件
+		
+		String toEmail = slBorrow.getUserEmail();
+		String strTitle = "[Minerva's Book Lib]借书超期提醒";
+		String strContent = "亲爱的"+slBorrow.getTheUser().getUserName()+"，\n"
+				+ "您于" + slBorrow.getBorrowDate()+ "借阅的" + "《" + slBorrow.getTheBook().getBookName() + "》\n"
+				+ "已超过借阅期限，请尽快归还！\n"
+				+ "感谢您的支持！\n"
+				+ "Minerva's Book Lib\n";
+		
+		emailUtil.sendEmail(toEmail, strTitle, strContent);
+	}
+
 
 }

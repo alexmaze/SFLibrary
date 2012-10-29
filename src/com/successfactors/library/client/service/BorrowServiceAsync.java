@@ -1,5 +1,7 @@
 package com.successfactors.library.client.service;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
@@ -33,5 +35,7 @@ public interface BorrowServiceAsync {
 	void searchBorrowList(BorrowStatusType statusType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum, AsyncCallback<BorrowPage> callback);
+
+	void getOverdueBorrowList(AsyncCallback<ArrayList<SLBorrow>> callback);
 
 }
