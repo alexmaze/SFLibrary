@@ -193,7 +193,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		for (int i = 0;i < 10;i++) {
 			SLBorrow slBorrow = ret.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			slB	/**
+			 * 获取某种状态下的，某用户的所有借阅信息
+			 * @param statusType 借阅状态
+			 * @param userEmail 用户邮箱地址，注：当userEmail==null时，对所有用户
+			 * @param itemsPerPage
+			 * @param pageNum
+			 */orrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
 			ret.set(i, slBorrow);
 		}
 		page.setTheBorrows(ret);

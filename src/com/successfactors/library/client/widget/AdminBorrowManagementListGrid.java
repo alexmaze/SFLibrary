@@ -13,6 +13,8 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.datasource.SLBorrowDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.BorrowSearchType;
+import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
@@ -111,7 +113,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("now", itemsPerPage, pageNum, cb);
+				borrowService.getBorrowList(BorrowStatusType.NOW, null, itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -143,7 +145,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
+				borrowService.searchBorrowList(BorrowStatusType.NOW, BorrowSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
 			}
 		}.retry(3);
 		
@@ -183,7 +185,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.searchBorrowList(BorrowStatusType.NOW, BorrowSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 			
@@ -209,7 +211,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.getBorrowList(BorrowStatusType.NOW, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		}
@@ -250,7 +252,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.searchBorrowList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.searchBorrowList(BorrowStatusType.NOW, BorrowSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 			
@@ -277,7 +279,7 @@ public class AdminBorrowManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.getBorrowList(BorrowStatusType.NOW, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}
