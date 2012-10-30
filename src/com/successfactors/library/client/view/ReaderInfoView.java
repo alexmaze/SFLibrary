@@ -223,7 +223,7 @@ public class ReaderInfoView extends VLayout {
 				String strNewPw = changePWForm.getValueAsString("newPw");
 				String strReNewPw = changePWForm.getValueAsString("reNewPw");
 				
-				if (!userInfo.getUserPassword().equals(strOldPw)) {
+				if (!userInfo.getUserPassword().equals(CipherUtil.generatePassword(strOldPw))) {
 					SC.say("原密码输入不正确！");
 					return;
 				} else if (!isPasswordValid(strNewPw)) {

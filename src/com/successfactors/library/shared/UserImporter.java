@@ -52,6 +52,7 @@ public class UserImporter {
 				break;
 			}
 		}
+		System.out.println("导入成功");
 	}
 
 	public static void main(String[] args) {
