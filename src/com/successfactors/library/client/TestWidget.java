@@ -112,7 +112,7 @@ public class TestWidget {
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
 				
-				BookEditWindow bookEditWindow = new BookEditWindow(temp);
+				BookEditWindow bookEditWindow = new BookEditWindow(temp, null);
 				bookEditWindow.draw();
 				
 				GWT.log("***********  Test Widget End  *************");
@@ -124,7 +124,7 @@ public class TestWidget {
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
 				
-				BookEditWindow bookEditWindow = new BookEditWindow();
+				BookEditWindow bookEditWindow = new BookEditWindow(null);
 				bookEditWindow.draw();
 				
 				GWT.log("***********  Test Widget End  *************");

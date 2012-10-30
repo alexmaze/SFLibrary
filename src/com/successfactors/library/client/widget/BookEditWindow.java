@@ -1,7 +1,10 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.bookService;
+
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.TitleOrientation;
@@ -11,8 +14,6 @@ import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
-import com.smartgwt.client.widgets.events.CloseClickEvent;
-import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -22,10 +23,15 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
+import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.shared.model.SLBook;
 
 public class BookEditWindow extends Window implements UploadImageWindow.FinishUploadOperatable{
 
+	public interface FinishEditBook {
+		void doRefreshPage();
+	}
+	
 	private static final String WINDOW_WIDTH = "620px";
 	private static final String WINDOW_HEIGHT = "360px";
 	private static final int IMG_HEIGHT = 165;
@@ -45,26 +51,26 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 
 	String strBookPicUrl = "nopic.jpg";
 	
-	private BookEditWindow selfPoint;
+	private FinishEditBook finishEdit;
 	
-	public BookEditWindow() {
+	public BookEditWindow(FinishEditBook finish) {
 		super();
 		theBook = new SLBook();
-		selfPoint = this;
+		finishEdit = finish;
 		initNewWindow();
 	}
 	
-	public BookEditWindow(SLBook slBook) {
+	public BookEditWindow(SLBook slBook, FinishEditBook finish) {
 		super();
 		theBook = slBook;
-		selfPoint = this;
+		finishEdit = finish;
 		initEditWindow();
 	}
 	
-	public BookEditWindow(Record slBookRc) {
+	public BookEditWindow(Record slBookRc, FinishEditBook finish) {
 		super();
 		theBook = SLBook.parse(slBookRc);
-		selfPoint = this;
+		finishEdit = finish;
 		initEditWindow();
 	}
 	
@@ -487,9 +493,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交图书信息按钮事件
 				updateBookInfo();
-				SC.say("提交修改");
+				//SC.say("提交修改");
+				doUpdateBook();
 			}
 		});
 		if (newButton != null)
@@ -497,9 +503,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交新图书信息按钮事件
 				updateBookInfo();
-				SC.say("添加图书");
+				//SC.say("添加图书");
+				doAddBook();
 			}
 		});
 		if (uploadPicButton != null)
@@ -507,14 +513,56 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交图书信息按钮事件
 				//SC.say("上传图片");
-				UploadImageWindow uploadWindow = new UploadImageWindow(selfPoint);
+				UploadImageWindow uploadWindow = new UploadImageWindow(getSelf());
 				uploadWindow.show();
 			}
 		});
 	}
 	
+	protected void doAddBook() {
+		new RPCCall<SLBook>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(SLBook result) {
+				if (result == null) {
+					SC.say("添加失败，请稍后重试！");
+					return;
+				}
+				finishEdit.doRefreshPage();
+				
+			}
+			@Override
+			protected void callService(AsyncCallback<SLBook> cb) {
+				bookService.addBook(theBook, cb);
+			}
+		}.retry(3);
+	}
+
+	protected void doUpdateBook() {
+		new RPCCall<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(Boolean result) {
+				if (!result) {
+					SC.say("更新失败，请稍后重试！");
+					return;
+				}
+				finishEdit.doRefreshPage();
+			}
+			@Override
+			protected void callService(AsyncCallback<Boolean> cb) {
+				bookService.updateBook(theBook, cb);
+			}
+		}.retry(3);
+	}
+
 	private void updateBookInfo() {
 		
 		theBook.setBookName(bookForm1.getValueAsString("bookName"));
@@ -537,11 +585,12 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 
 	@Override
 	public void doAfterFinishUpload(String picName) {
-		// TODO Auto-generated method stub
-
 		strBookPicUrl = picName;
 		bookPicUrlItem.setSrc("/images/upload/"+strBookPicUrl);
 		
 	}
 	
+	private BookEditWindow getSelf() {
+		return this;
+	}
 }
