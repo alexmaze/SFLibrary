@@ -21,6 +21,8 @@ import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLUser;
 
 
+
+
 @SuppressWarnings("serial")
 public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowService {
 
@@ -121,150 +123,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		return slBorrow;
 	}
 
-//	@Override
-//	public BorrowPage getBorrowList(String strType, String userEmail, int itemsPerPage, int pageNum) {
-//
-//
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("from SLBorrow as model");
-//		String status = "";
-//		if(!strType.equals("all")){
-//			
-//		}else{
-//			if(strType.equals("history")){BORROW_RETURNED
-//				status = "已归还";
-//			}else if(strType.equals("now")){
-//				status = "未归还";
-//			}
-//			else if(strType.equals("overDue")){
-//				status = "已超期";
-//			}
-//			sb.append("where model.status=");
-//			sb.append(status);
-//		}
-//	
-//		if(userEmail != null){
-//			sb.append("and model.userEmail=");
-//			sb.append(userEmail);
-//		}
-//		
-//		ArrayList<SLBorrow> ret = borrowDao.executeQuery(sb.toString(), itemsPerPage, pageNum);
-//		
-//		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-//		
-//		for (int i = 0;i < 10;i++) {
-//			SLBorrow slBorrow = ret.get(i);
-//			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-//			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
-//			ret.set(i, slBorrow);
-//		}
-//		page.setTheBorrows(ret);
-//		page.setTotalPageNum(pageNum);
-//		return page;
-//	}
-//
-//	@Override
-//	public BorrowPage getBorrowList(String strType, int itemsPerPage, int pageNum) {
-//
-//
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("from SLBorrow as model");
-//		String status = "";
-//		if(!strType.equals("all")){
-//			
-//		}else{
-//			if(strType.equals("history")){
-//				status = "已归还";
-//			}else if(strType.equals("now")){
-//				status = "未归还";
-//			}
-//			else if(strType.equals("overDue")){
-//				status = "已超期";
-//			}
-//			sb.append("where model.status=");
-//			sb.append(status);
-//		}
-//	
-//		
-//		ArrayList<SLBorrow> ret = borrowDao.executeQuery(sb.toString(), itemsPerPage, pageNum);
-//		
-//		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-//		
-//		for (int i = 0;i < 10;i++) {
-//			SLBorrow slBorrow = ret.get(i);
-//			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-//			slB	/**
-//			 * 获取某种状态下的，某用户的所有借阅信息
-//			 * @param statusType 借阅状态
-//			 * @param userEmail 用户邮箱地址，注：当userEmail==null时，对所有用户
-//			 * @param itemsPerPage
-//			 * @param pageNum
-//			 */orrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
-//			ret.set(i, slBorrow);
-//		}
-//		page.setTheBorrows(ret);BORROW_RETURNED
-//		page.setTotalPageNum(pageNum);
-//		return page;
-//	}
-//
-//	@Override
-//	public BorrowPage searchBorrowList(String borrowType, String searchType,
-//			String searchValue, int itemsPerPage, int pageNum) {
-//		List<SLBorrow> result = borrowDao.searchBorrowList(borrowType,searchType,
-//				searchValue,itemsPerPage,pageNum);
-//
-//		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-//		
-//		for (int i = 0;i < 10;i++) {
-//			SLBorrow slBorrow = result.get(i);
-//			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-//			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
-//			result.set(i, slBorrow);
-//		}
-//		page.setTheBorrows((ArrayList<SLBorrow>)result);
-//		page.setTotalPageNum(pageNum);
-//		return page;
-//	}
 
-<<<<<<< HEAD
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("from SLBorrow as model");
-//		String status = "";
-//		if(!strType.equals("all")){
-//			
-//		}else{
-//			if(strType.equals("history")){
-//				status = "已归还";
-//			}else if(strType.equals("now")){
-//				status = "未归还";
-//			}
-//			else if(strType.equals("overDue")){
-//				status = "已超期";
-//			}
-//			sb.append("where model.status=");
-//			sb.append(status);
-//		}
-//	
-//		if(userEmail != null){
-//			sb.append("and model.userEmail=");
-//			sb.append(userEmail);
-//		}
-//		
-//		ArrayList<SLBorrow> ret = borrowDao.executeQuery(sb.toString(), itemsPerPage, pageNum);
-//		
-//		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-//		
-//		for (int i = 0;i < 10;i++) {
-//			SLBorrow slBorrow = ret.get(i);
-//			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-//			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
-//			ret.set(i, slBorrow);
-//		}
-//		page.setTheBorrows(ret);
-//		page.setTotalPageNum(pageNum);
-//		return page;
-		List<SLBorrow> result = borrowDao.searchBorrowList(strType,userEmail,itemsPerPage, pageNum);
-=======
 	/**
 	 * 获取某种状态下的，某用户的所有借阅信息
 	 * @param statusType 借阅状态
@@ -275,42 +134,19 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	@Override
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
-		StringBuffer sb = new StringBuffer();
-		sb.append("from SLBorrow as model");
-		String status = "";
-		if(!statusType.equals(BorrowStatusType.BORROW_RETURNED)){
-			
-		}else{
-			if(statusType.equals(BorrowStatusType.BORROW_RETURNED)){
-				status = "已归还";
-			}else if(statusType.equals(BorrowStatusType.BORROW_NOT_RETURNED)){
-				status = "未归还";
-			}
-			else if(statusType.equals(BorrowStatusType.BORROW_OVERDUE)){
-				status = "已超期";
-			}
-			sb.append("where model.status=");
-			sb.append(status);
-		}
-	
-		if(userEmail != null){
-			sb.append("and model.userEmail=");
-			sb.append(userEmail);
-		}
-		
-		ArrayList<SLBorrow> ret = borrowDao.executeQuery(sb.toString(), itemsPerPage, pageNum);
->>>>>>> 592673f9e2ff046d938f02054747184b65e19ce4
-		
+		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,itemsPerPage,pageNum);
+
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 		
-		for (SLBorrow slBorrow : result) {
+		for (int i = 0;i < 10;i++) {
+			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
 			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			result.set(i, slBorrow);
 		}
 		page.setTheBorrows((ArrayList<SLBorrow>)result);
 		page.setTotalPageNum(pageNum);
 		return page;
-		return null;
 	}
 
 	/**
@@ -329,56 +165,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,searchType,
 		searchValue,itemsPerPage,pageNum);
 
-<<<<<<< HEAD
-//		StringBuffer sb = new StringBuffer();
-//		sb.append("from SLBorrow as model");
-//		String status = "";
-//		if(!strType.equals("all")){
-//			
-//		}else{
-//			if(strType.equals("history")){
-//				status = "已归还";
-//			}else if(strType.equals("now")){
-//				status = "未归还";
-//			}
-//			else if(strType.equals("overDue")){
-//				status = "已超期";
-//			}
-//			sb.append("where model.status=");
-//			sb.append(status);
-//		}
-	
-		
-		List<SLBorrow> result = borrowDao.searchBorrowList(strType, itemsPerPage, pageNum);
-		
-		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-		
-		for (SLBorrow slBorrow : result) {
-			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
-		}
-		page.setTheBorrows((ArrayList<SLBorrow>)result);
-		page.setTotalPageNum(pageNum);
-		return page;
-	}
-
-	@Override
-	public BorrowPage searchBorrowList(String borrowType, String searchType,
-			String searchValue, int itemsPerPage, int pageNum) {
-		List<SLBorrow> result = borrowDao.searchBorrowList(borrowType,searchType,
-				searchValue,itemsPerPage,pageNum);
-
-		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-		
-		for (SLBorrow slBorrow : result) {
-=======
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 
 		for (int i = 0;i < 10;i++) {
 			SLBorrow slBorrow = result.get(i);
->>>>>>> 592673f9e2ff046d938f02054747184b65e19ce4
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
 			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			result.set(i, slBorrow);
 		}
 		page.setTheBorrows((ArrayList<SLBorrow>)result);
 		page.setTotalPageNum(pageNum);
@@ -390,8 +183,17 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	 * */
 	@Override
 	public ArrayList<SLBorrow> getOverdueBorrowList() {
-		// TODO Auto-generated method stub
-		return null;
+		BorrowStatusType statusType = BorrowStatusType.parse("已超期");
+		List<SLBorrow> result = borrowDao.searchBorrowList(statusType);
+
+
+		for (int i = 0;i < 10;i++) {
+			SLBorrow slBorrow = result.get(i);
+			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			result.set(i, slBorrow);
+		}
+		return (ArrayList<SLBorrow>)result;
 	}
 
 }
