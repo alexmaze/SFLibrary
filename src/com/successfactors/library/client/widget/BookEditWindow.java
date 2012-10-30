@@ -11,6 +11,8 @@ import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
+import com.smartgwt.client.widgets.events.CloseClickEvent;
+import com.smartgwt.client.widgets.events.CloseClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
@@ -22,13 +24,13 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.shared.model.SLBook;
 
-public class BookEditWindow  extends Window {
+public class BookEditWindow extends Window implements UploadImageWindow.FinishUploadOperatable{
 
 	private static final String WINDOW_WIDTH = "620px";
 	private static final String WINDOW_HEIGHT = "360px";
 	private static final int IMG_HEIGHT = 165;
 	private static final int IMG_WIDTH = 116;
-	
+
 	private SLBook theBook;
 
 	private DynamicForm bookForm1;
@@ -38,21 +40,31 @@ public class BookEditWindow  extends Window {
 	private IButton newButton;
 	private IButton uploadPicButton;
 	
+	private Img bookPicUrlItem;
+	private VLayout imgVLayout;
+
+	String strBookPicUrl = "nopic.jpg";
+	
+	private BookEditWindow selfPoint;
+	
 	public BookEditWindow() {
 		super();
 		theBook = new SLBook();
+		selfPoint = this;
 		initNewWindow();
 	}
 	
 	public BookEditWindow(SLBook slBook) {
 		super();
 		theBook = slBook;
+		selfPoint = this;
 		initEditWindow();
 	}
 	
 	public BookEditWindow(Record slBookRc) {
 		super();
 		theBook = SLBook.parse(slBookRc);
+		selfPoint = this;
 		initEditWindow();
 	}
 	
@@ -83,9 +95,11 @@ public class BookEditWindow  extends Window {
 
 		//HLayout ---------------------------------------------------------------------------------------
 		String strBookPicUrl = theBook.getBookPicUrl();
-		VLayout imgVLayout = new VLayout();
+		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem.setPrefix("/images/upload/");
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
@@ -285,10 +299,11 @@ public class BookEditWindow  extends Window {
 		hLayout.setWidth(WINDOW_WIDTH);
 
 		//HLayout ---------------------------------------------------------------------------------------
-		String strBookPicUrl = "nopic.jpg";
-		VLayout imgVLayout = new VLayout();
+		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem.setPrefix("/images/upload/");
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
@@ -493,7 +508,9 @@ public class BookEditWindow  extends Window {
 			@Override
 			public void onClick(ClickEvent event) {
 				// TODO 前端：提交图书信息按钮事件
-				SC.say("上传图片");
+				//SC.say("上传图片");
+				UploadImageWindow uploadWindow = new UploadImageWindow(selfPoint);
+				uploadWindow.show();
 			}
 		});
 	}
@@ -513,6 +530,17 @@ public class BookEditWindow  extends Window {
 		theBook.setBookTotalQuantity(Integer.parseInt(bookForm2.getValueAsString("bookTotalQuantity")));
 		theBook.setBookInStoreQuantity(Integer.parseInt(bookForm2.getValueAsString("bookInStoreQuantity")));
 		theBook.setBookAvailableQuantity(Integer.parseInt(bookForm2.getValueAsString("bookAvailableQuantity")));
+		
+		theBook.setBookPicUrl(strBookPicUrl);
+		
+	}
+
+	@Override
+	public void doAfterFinishUpload(String picName) {
+		// TODO Auto-generated method stub
+
+		strBookPicUrl = picName;
+		bookPicUrlItem.setSrc("/images/upload/"+strBookPicUrl);
 		
 	}
 	

@@ -584,3 +584,7 @@ letter-spacing: 1px;
 	font-weight: bold;
 	text-decoration:underline;
 }
+
+.alex_upload_panel {
+	margin: 40px 0px 0px 30px;
+}
