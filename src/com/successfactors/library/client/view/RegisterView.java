@@ -20,8 +20,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.AppController;
 import com.successfactors.library.client.SFLibrary;
 import com.successfactors.library.client.event.LoginSucceedEvent;
-import com.successfactors.library.client.helper.CipherUtil;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.CipherUtil;
 import com.successfactors.library.shared.model.SLUser;
 
 /**

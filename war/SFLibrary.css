@@ -519,20 +519,20 @@ letter-spacing: 2px;
 }
 /*---------------------------Alex Styles End---------------------------*/
 
-.alex_bookdisplaywindow_form_text_title,.alex_bookdisplaywindow_form_text_titleFocused{
+.alex_bookdisplaywindow_form_text_title,.alex_bookdisplaywindow_form_text_titleFocused,.alex_bookdisplaywindow_form_text_titleDisabled{
 color: #003066;
 font-family: Arial, Verdana, sans-serif;
 font-size: 14px;
 font-weight: bold;
 letter-spacing: 1px;
 }
-.alex_bookdisplaywindow_form_text_content,.alex_bookdisplaywindow_form_text_contentFocused{
+.alex_bookdisplaywindow_form_text_content,.alex_bookdisplaywindow_form_text_contentFocused,.alex_bookdisplaywindow_form_text_contentDisabled{
 color: black;
 font-family: Arial, Verdana, sans-serif;
 font-size: 14px;
 letter-spacing: 1px;
 }
-.alex_bookdisplaywindow_form_intro_content,.alex_bookdisplaywindow_form_intro_contentFocused{
+.alex_bookdisplaywindow_form_intro_content,.alex_bookdisplaywindow_form_intro_contentFocused,.alex_bookdisplaywindow_form_intro_contentDisabled{
 color: black;
 font-family: Arial, Verdana, sans-serif;
 font-size: 14px;
@@ -583,4 +583,8 @@ letter-spacing: 1px;
 	cursor: pointer;
 	font-weight: bold;
 	text-decoration:underline;
+}
+
+.alex_upload_panel {
+	margin: 40px 0px 0px 30px;
 }

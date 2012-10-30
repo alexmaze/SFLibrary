@@ -13,6 +13,7 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.datasource.SLBorrowDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
@@ -101,7 +102,7 @@ public class BorrowNeedReturnListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("overdue", itemsPerPage, pageNum, cb);
+				borrowService.getBorrowList(BorrowStatusType.BORROW_OVERDUE, null, itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -139,7 +140,7 @@ public class BorrowNeedReturnListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("overdue", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.getBorrowList(BorrowStatusType.BORROW_OVERDUE, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		
@@ -177,7 +178,7 @@ public class BorrowNeedReturnListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("overdue", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.getBorrowList(BorrowStatusType.BORROW_OVERDUE, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 	}

@@ -13,6 +13,8 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.datasource.SLOrderDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.OrderSearchType;
+import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
@@ -104,7 +106,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<OrderPage> cb) {
-				orderService.getOrderList("now", itemsPerPage, pageNum, cb);
+				orderService.getOrderList(OrderStatusType.NOW, null, itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -135,7 +137,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<OrderPage> cb) {
-				orderService.searchOrderList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
+				orderService.searchOrderList(OrderStatusType.NOW, OrderSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
 			}
 		}.retry(3);
 		
@@ -174,7 +176,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.searchOrderList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					orderService.searchOrderList(OrderStatusType.NOW, OrderSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 			
@@ -199,7 +201,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.getOrderList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					orderService.getOrderList(OrderStatusType.NOW, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		}
@@ -239,7 +241,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.searchOrderList("now", searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					orderService.searchOrderList(OrderStatusType.NOW, OrderSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 			
@@ -265,7 +267,7 @@ public class AdminOrderManagementListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.getOrderList("now", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					orderService.getOrderList(OrderStatusType.NOW, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}

@@ -12,6 +12,7 @@ import com.successfactors.library.client.event.LoginSucceedEvent;
 import com.successfactors.library.client.event.LoginSucceedEventHandler;
 import com.successfactors.library.client.helper.MyToolsInClient;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.CipherUtil;
 import com.successfactors.library.shared.FieldVerifier;
 import com.successfactors.library.shared.model.SLUser;
 
@@ -69,7 +70,7 @@ public class AppController {
 
 			@Override
 			protected void callService(AsyncCallback<SLUser> cb) {
-				userService.login(strEmail, strPwd, cb);
+				userService.login(strEmail, CipherUtil.generatePassword(strPwd), cb);
 			}
 			
 		}.retry(3);

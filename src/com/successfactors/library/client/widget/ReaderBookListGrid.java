@@ -13,6 +13,7 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickEvent;
 import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -141,7 +142,7 @@ public class ReaderBookListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BookPage> cb) {
-				bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
+				bookService.searchBookList(BookSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, 1, cb);
 			}
 		}.retry(3);
 		
@@ -182,7 +183,7 @@ public class ReaderBookListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					bookService.searchBookList(BookSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 			
@@ -249,7 +250,7 @@ public class ReaderBookListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BookPage> cb) {
-					bookService.searchBookList(searchInfo[1], searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					bookService.searchBookList(BookSearchType.parse(searchInfo[1]), searchInfo[0], DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 			

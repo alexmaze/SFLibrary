@@ -14,6 +14,7 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.SFLibrary;
 import com.successfactors.library.client.datasource.SLBorrowDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
@@ -105,7 +106,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<BorrowPage> cb) {
-				borrowService.getBorrowList("history", SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
+				borrowService.getBorrowList(BorrowStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -142,7 +143,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("history", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					borrowService.getBorrowList(BorrowStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		}
@@ -179,7 +180,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<BorrowPage> cb) {
-					borrowService.getBorrowList("history", DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					borrowService.getBorrowList(BorrowStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}

@@ -80,7 +80,6 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		TextItem searchKeyWordItem = new TextItem("searchKeyWord", "关键字");
 		SelectItem searchClassItem = new SelectItem("searchClass", "分类");
 		searchClassItem.setValueMap(
-				"全部",
 				"书名",
 				"作者",
 				"类别",
@@ -88,7 +87,7 @@ public class ToolbarWithBookSearch extends ToolStrip {
 				"出版社",
 				"贡献者"
 				);
-		searchClassItem.setDefaultValue("全部");
+		searchClassItem.setDefaultValue("书名");
 		searchKeyWordItem.setWidth(100);
 		searchKeyWordItem.setHeight(20);
 		searchClassItem.setHeight(20);

@@ -43,16 +43,12 @@ public class ToolBarWithOrderSearch extends ToolStrip {
 			TextItem searchKeyWordItem = new TextItem("searchKeyWord", "关键字");
 			SelectItem searchClassItem = new SelectItem("searchClass", "分类");
 			searchClassItem.setValueMap(
-					"全部",
-					"书名",
-					"作者",
-					"预订人",
-					"类别",
-					"语言",
-					"出版社",
-					"贡献者"
+					"预定编号",
+					"用户邮箱",
+					"书籍ISBN",
+					"预定状态"
 					);
-			searchClassItem.setDefaultValue("全部");
+			searchClassItem.setDefaultValue("预定编号");
 			searchKeyWordItem.setWidth(100);
 			searchKeyWordItem.setHeight(20);
 			searchClassItem.setHeight(20);

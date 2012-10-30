@@ -1,7 +1,10 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.bookService;
+
 import java.util.Date;
 
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.TitleOrientation;
@@ -20,15 +23,21 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
+import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.FieldVerifier;
 import com.successfactors.library.shared.model.SLBook;
 
-public class BookEditWindow  extends Window {
+public class BookEditWindow extends Window implements UploadImageWindow.FinishUploadOperatable{
 
+	public interface FinishEditBook {
+		void doRefreshPage();
+	}
+	
 	private static final String WINDOW_WIDTH = "620px";
 	private static final String WINDOW_HEIGHT = "360px";
 	private static final int IMG_HEIGHT = 165;
 	private static final int IMG_WIDTH = 116;
-	
+
 	private SLBook theBook;
 
 	private DynamicForm bookForm1;
@@ -38,21 +47,31 @@ public class BookEditWindow  extends Window {
 	private IButton newButton;
 	private IButton uploadPicButton;
 	
-	public BookEditWindow() {
+	private Img bookPicUrlItem;
+	private VLayout imgVLayout;
+
+	String strBookPicUrl = "nopic.jpg";
+	
+	private FinishEditBook finishEdit;
+	
+	public BookEditWindow(FinishEditBook finish) {
 		super();
 		theBook = new SLBook();
+		finishEdit = finish;
 		initNewWindow();
 	}
 	
-	public BookEditWindow(SLBook slBook) {
+	public BookEditWindow(SLBook slBook, FinishEditBook finish) {
 		super();
 		theBook = slBook;
+		finishEdit = finish;
 		initEditWindow();
 	}
 	
-	public BookEditWindow(Record slBookRc) {
+	public BookEditWindow(Record slBookRc, FinishEditBook finish) {
 		super();
 		theBook = SLBook.parse(slBookRc);
+		finishEdit = finish;
 		initEditWindow();
 	}
 	
@@ -82,10 +101,12 @@ public class BookEditWindow  extends Window {
 		hLayout.setWidth(WINDOW_WIDTH);
 
 		//HLayout ---------------------------------------------------------------------------------------
-		String strBookPicUrl = theBook.getBookPicUrl();
-		VLayout imgVLayout = new VLayout();
+		strBookPicUrl = theBook.getBookPicUrl();
+		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem.setPrefix("/images/upload/");
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
@@ -123,6 +144,7 @@ public class BookEditWindow  extends Window {
 		bookISBNItem.setWidth("100%");
 		bookISBNItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookISBNItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		bookISBNItem.setDisabled(true);
 		
 		TextItem bookPublisherItem = new TextItem("bookPublisher", "出版社");
 		bookPublisherItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
@@ -285,10 +307,11 @@ public class BookEditWindow  extends Window {
 		hLayout.setWidth(WINDOW_WIDTH);
 
 		//HLayout ---------------------------------------------------------------------------------------
-		String strBookPicUrl = "nopic.jpg";
-		VLayout imgVLayout = new VLayout();
+		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+//		bookPicUrlItem.setPrefix("/images/upload/");
 		
 		uploadPicButton = new IButton("上传封面");
 		uploadPicButton.setIcon("actions/plus.png");
@@ -450,10 +473,11 @@ public class BookEditWindow  extends Window {
 		bookForm1.setValue("bookClass", "计算机/网络");
 		bookForm1.setValue("bookLanguage", "中文");
 		bookForm1.setValue("bookPrice", "0.00");
+		bookForm1.setValue("bookContributor", "公司采购");
 		
-		bookForm2.setValue("bookTotalQuantity", "0");
-		bookForm2.setValue("bookInStoreQuantity", "0");
-		bookForm2.setValue("bookAvailableQuantity", "0");
+		bookForm2.setValue("bookTotalQuantity", "1");
+		bookForm2.setValue("bookInStoreQuantity", "1");
+		bookForm2.setValue("bookAvailableQuantity", "1");
 		
 		bookForm2.setValue("bookTotalQuantityTitle", "总数");
 		bookForm2.setValue("bookInStoreQuantityTitle", "库中数量");
@@ -472,9 +496,11 @@ public class BookEditWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交图书信息按钮事件
-				updateBookInfo();
-				SC.say("提交修改");
+				if (!updateBookInfo()) {
+					return;
+				}
+				//SC.say("提交修改");
+				doUpdateBook();
 			}
 		});
 		if (newButton != null)
@@ -482,9 +508,11 @@ public class BookEditWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交新图书信息按钮事件
-				updateBookInfo();
-				SC.say("添加图书");
+				if (!updateBookInfo()) {
+					return;
+				}
+				//SC.say("添加图书");
+				doAddBook();
 			}
 		});
 		if (uploadPicButton != null)
@@ -492,13 +520,57 @@ public class BookEditWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：提交图书信息按钮事件
-				SC.say("上传图片");
+				//SC.say("上传图片");
+				UploadImageWindow uploadWindow = new UploadImageWindow(getSelf());
+				uploadWindow.show();
 			}
 		});
 	}
 	
-	private void updateBookInfo() {
+	protected void doAddBook() {
+		new RPCCall<SLBook>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(SLBook result) {
+				if (result == null) {
+					SC.say("添加失败，请稍后重试！");
+					return;
+				}
+				finishEdit.doRefreshPage();
+				
+			}
+			@Override
+			protected void callService(AsyncCallback<SLBook> cb) {
+				bookService.addBook(theBook, cb);
+			}
+		}.retry(3);
+	}
+
+	protected void doUpdateBook() {
+		new RPCCall<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(Boolean result) {
+				if (!result) {
+					SC.say("更新失败，请稍后重试！");
+					return;
+				}
+				finishEdit.doRefreshPage();
+			}
+			@Override
+			protected void callService(AsyncCallback<Boolean> cb) {
+				bookService.updateBook(theBook, cb);
+			}
+		}.retry(3);
+	}
+
+	private boolean updateBookInfo() {
 		
 		theBook.setBookName(bookForm1.getValueAsString("bookName"));
 		theBook.setBookAuthor(bookForm1.getValueAsString("bookAuthor"));
@@ -514,6 +586,48 @@ public class BookEditWindow  extends Window {
 		theBook.setBookInStoreQuantity(Integer.parseInt(bookForm2.getValueAsString("bookInStoreQuantity")));
 		theBook.setBookAvailableQuantity(Integer.parseInt(bookForm2.getValueAsString("bookAvailableQuantity")));
 		
+		theBook.setBookPicUrl(strBookPicUrl);
+		
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookName())) {
+			SC.say("请输入书名！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookAuthor())) {
+			SC.say("请输入作者！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookISBN())) {
+			SC.say("请输入书籍ISBN！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookPublisher())) {
+			SC.say("请输入出版商名称！");
+			return false;
+		}
+		if (theBook.getBookPublishDate() == null) {
+			SC.say("请输入出版日期！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookLanguage())) {
+			SC.say("请输入语言种类！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookContributor())) {
+			SC.say("请输入贡献者！");
+			return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public void doAfterFinishUpload(String picName) {
+		strBookPicUrl = picName;
+		bookPicUrlItem.setSrc("/images/upload/"+strBookPicUrl);
+		
 	}
 	
+	private BookEditWindow getSelf() {
+		return this;
+	}
 }

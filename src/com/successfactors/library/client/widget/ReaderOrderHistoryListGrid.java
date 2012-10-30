@@ -14,6 +14,7 @@ import com.smartgwt.client.widgets.grid.events.CellDoubleClickHandler;
 import com.successfactors.library.client.SFLibrary;
 import com.successfactors.library.client.datasource.SLOrderDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
@@ -105,7 +106,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 			}
 			@Override
 			protected void callService(AsyncCallback<OrderPage> cb) {
-				orderService.getOrderList("history", SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
+				orderService.getOrderList(OrderStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), itemsPerPage, pageNum, cb);
 			}
 		}.retry(3);
 	}
@@ -141,7 +142,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.getOrderList("history", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
+					orderService.getOrderList(OrderStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum+1, cb);
 				}
 			}.retry(3);
 		
@@ -178,7 +179,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 				}
 				@Override
 				protected void callService(AsyncCallback<OrderPage> cb) {
-					orderService.getOrderList("history", SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
+					orderService.getOrderList(OrderStatusType.HISTORY, SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum-1, cb);
 				}
 			}.retry(3);
 		}

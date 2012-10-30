@@ -1,7 +1,7 @@
 package com.successfactors.library.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.successfactors.library.shared.SearchType;
+import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -18,7 +18,7 @@ public interface BookServiceAsync {
 
 	void getBookByISBN(String bookISBN, AsyncCallback<SLBook> callback);
 
-	void searchBookList(SearchType searchType, String searchValue, int itemsPerPage, int pageNum, AsyncCallback<BookPage> callback);
+	void searchBookList(BookSearchType searchType, String searchValue, int itemsPerPage, int pageNum, AsyncCallback<BookPage> callback);
 
 	void updateBook(SLBook updateBook, AsyncCallback<Boolean> callback);
 
