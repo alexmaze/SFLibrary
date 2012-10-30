@@ -9,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
@@ -213,7 +214,7 @@ public class MysqlBorrowDao {
 			Criteria criteria=session.createCriteria(SLBorrow.class);
 			criteria.add(Restrictions.eq("status",strStatus));//eq是等于，gt是大于，lt是小于,or是或
 			criteria.add(Restrictions.eq("userEmail", userEmail));
-			//criteria.add(Restrictions.eq(searchType, searchValue));
+			criteria.addOrder(Order.desc("borrowDate")); 
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
@@ -242,7 +243,7 @@ public class MysqlBorrowDao {
 			String strStatus = BorrowStatusType.parse(borrowType); 
 			Criteria criteria=session.createCriteria(SLBorrow.class);
 			criteria.add(Restrictions.eq("status",strStatus));//eq是等于，gt是大于，lt是小于,or是或
-			//criteria.add(Restrictions.eq(searchType, searchValue));
+			criteria.addOrder(Order.desc("borrowDate")); 
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
@@ -277,6 +278,7 @@ public class MysqlBorrowDao {
 			Criteria criteria=session.createCriteria(SLBorrow.class);
 			criteria.add(Restrictions.eq("status",strStatus));//eq是等于，gt是大于，lt是小于,or是或
 			criteria.add(Restrictions.eq(strSearch, searchValue));
+			criteria.addOrder(Order.desc("borrowDate")); 
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
@@ -297,6 +299,7 @@ public class MysqlBorrowDao {
 			String strStatus = BorrowStatusType.parse(statusType);
 			Criteria criteria=session.createCriteria(SLBorrow.class);
 			criteria.add(Restrictions.eq("status",strStatus));//eq是等于，gt是大于，lt是小于,or是或
+			criteria.addOrder(Order.desc("borrowDate")); 
 			result = criteria.list();
 		}catch(RuntimeException re){
 			log.error("searchBorrowList execute error",re);
