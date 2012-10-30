@@ -18,7 +18,7 @@ import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
-public class AdminBorrowHistoryListGrid extends ListGrid {
+public class AdminBorrowHistoryListGrid extends ListGrid implements BorrowEditWindow.FinishEditBorrow{
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -289,8 +289,43 @@ public class AdminBorrowHistoryListGrid extends ListGrid {
 	}
 
 	public void doReturnBook() {
-		BorrowEditWindow borrowEditWindow = new BorrowEditWindow();
+		BorrowEditWindow borrowEditWindow = new BorrowEditWindow(getSelf());
 		borrowEditWindow.show();
 	}
+
+	@Override
+	public void doRefreshPage() {
+		for (Record record : this.getRecords()) {
+			slBorrowDS.removeData(record);
+		}
+
+		new RPCCall<BorrowPage>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(BorrowPage result) {
+				
+				if (result == null) {
+					SC.say("暂无资料。。。囧rz");
+					return;
+				}
+				for (SLBorrow borrow : result.getTheBorrows()) {
+					slBorrowDS.addData(borrow.getRecord());
+				}
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
+				jumpBar.refreshView(pageNowNum, pageTotalNum);
+			}
+			@Override
+			protected void callService(AsyncCallback<BorrowPage> cb) {
+				borrowService.getBorrowList(BorrowStatusType.HISTORY, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum, cb);
+			}
+		}.retry(3);
+	}
 	
+	private AdminBorrowHistoryListGrid getSelf() {
+		return this;
+	}
 }

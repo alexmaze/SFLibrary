@@ -28,6 +28,10 @@ import com.successfactors.library.shared.model.SLBorrow;
 
 public class BorrowEditWindow  extends Window {
 
+	public interface FinishEditBorrow {
+		void doRefreshPage();
+	}
+	
 	private static final String WINDOW_WIDTH = "520px";
 	private static final String WINDOW_HEIGHT = "240px";
 	private static final int IMG_HEIGHT = 180;
@@ -39,27 +43,32 @@ public class BorrowEditWindow  extends Window {
 	private IButton returnButton;
 	private IButton outStoreButton;
 	
-	public BorrowEditWindow() {
+	private FinishEditBorrow finishEdit;
+	
+	public BorrowEditWindow(FinishEditBorrow finish) {
 		super();
 //		this.theRecord = borrowRec.getRecord();
 		this.theDataSource = new SLBorrowDS();
 //		this.theDataSource.addData(theRecord);
+		this.finishEdit = finish;
 		initNewWindow();
 	}
 
-	public BorrowEditWindow(SLBorrow borrowRec) {
+	public BorrowEditWindow(SLBorrow borrowRec, FinishEditBorrow finish) {
 		super();
 		this.theRecord = borrowRec.getRecord();
 		this.theDataSource = new SLBorrowDS();
 		this.theDataSource.addData(theRecord);
+		this.finishEdit = finish;
 		initEditWindow();
 	}
 	
-	public BorrowEditWindow(Record borrowRec) {
+	public BorrowEditWindow(Record borrowRec, FinishEditBorrow finish) {
 		super();
 		this.theRecord = borrowRec;
 		this.theDataSource = new SLBorrowDS();
 		this.theDataSource.addData(theRecord);
+		this.finishEdit = finish;
 		initEditWindow();
 	}
 	
@@ -373,6 +382,8 @@ public class BorrowEditWindow  extends Window {
 				}
 				
 				SC.say("图书出库"+theRecord.getAttribute("bookName") );
+				//finishEdit.doRefreshPage();
+				
 			}
 		});
 		
@@ -386,6 +397,7 @@ public class BorrowEditWindow  extends Window {
 					return;
 				}
 				SC.say("归还图书"+theRecord.getAttribute("bookName"));
+				//finishEdit.doRefreshPage();
 			}
 		});
 	}

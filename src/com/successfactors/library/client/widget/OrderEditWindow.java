@@ -17,6 +17,9 @@ import com.successfactors.library.shared.model.SLOrder;
 
 public class OrderEditWindow  extends Window {
 
+	public interface FinishEditOrder {
+		void doRefreshPage();
+	}
 	private static final String WINDOW_WIDTH = "450px";
 	private static final String WINDOW_HEIGHT = "220px";
 	private static final int IMG_HEIGHT = 150;
@@ -26,19 +29,23 @@ public class OrderEditWindow  extends Window {
 	private SLOrderDS theDataSource;
 	private IButton deleteButton;
 	
-	public OrderEditWindow(SLOrder orderRec) {
+	private FinishEditOrder finishEdit;
+	
+	public OrderEditWindow(SLOrder orderRec, FinishEditOrder finish) {
 		super();
 		this.theRecord = orderRec.getRecord();
 		this.theDataSource = new SLOrderDS();
 		this.theDataSource.addData(theRecord);
+		this.finishEdit = finish;
 		initDisplayWindow();
 	}
 	
-	public OrderEditWindow(Record orderRec) {
+	public OrderEditWindow(Record orderRec, FinishEditOrder finish) {
 		super();
 		this.theRecord = orderRec;
 		this.theDataSource = new SLOrderDS();
 		this.theDataSource.addData(theRecord);
+		this.finishEdit = finish;
 		initDisplayWindow();
 	}
 	
@@ -144,6 +151,8 @@ public class OrderEditWindow  extends Window {
 			public void onClick(ClickEvent event) {
 				// TODO Auto-generated method stub
 				SC.say("取消预订");
+
+				//finishEdit.doRefreshPage();
 			}
 		});
 	}

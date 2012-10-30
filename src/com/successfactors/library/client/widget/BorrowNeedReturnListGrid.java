@@ -17,7 +17,7 @@ import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
-public class BorrowNeedReturnListGrid extends ListGrid {
+public class BorrowNeedReturnListGrid extends ListGrid implements BorrowEditWindow.FinishEditBorrow {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 7;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -75,7 +75,7 @@ public class BorrowNeedReturnListGrid extends ListGrid {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				BorrowEditWindow borrowEditWindow = new BorrowEditWindow(getSelectedRecord());
+				BorrowEditWindow borrowEditWindow = new BorrowEditWindow(getSelectedRecord(), getSelf());
 				borrowEditWindow.show();
 			}
 		});
@@ -182,5 +182,40 @@ public class BorrowNeedReturnListGrid extends ListGrid {
 				}
 			}.retry(3);
 	}
+
+	@Override
+	public void doRefreshPage() {
+
+		for (Record record : this.getRecords()) {
+			slBorrowDS.removeData(record);
+		}
+		new RPCCall<BorrowPage>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(BorrowPage result) {
+				
+				if (result == null) {
+					SC.say("暂无资料。。。囧rz");
+					return;
+				}
+				for (SLBorrow borrow : result.getTheBorrows()) {
+					slBorrowDS.addData(borrow.getRecord());
+				}
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
+				jumpBar.refreshView(pageNowNum, pageTotalNum);
+			}
+			@Override
+			protected void callService(AsyncCallback<BorrowPage> cb) {
+				borrowService.getBorrowList(BorrowStatusType.BORROW_OVERDUE, null, DEFAULT_RECORDS_EACH_PAGE, pageNowNum, cb);
+			}
+		}.retry(3);
+	}
 	
+	private BorrowNeedReturnListGrid getSelf() {
+		return this;
+	}
 }

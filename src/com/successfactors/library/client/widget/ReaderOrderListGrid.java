@@ -18,7 +18,7 @@ import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
-public class ReaderOrderListGrid extends ListGrid {
+public class ReaderOrderListGrid extends ListGrid implements OrderEditWindow.FinishEditOrder {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -79,7 +79,7 @@ public class ReaderOrderListGrid extends ListGrid {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				OrderEditWindow orderEditWindow = new OrderEditWindow(getSelectedRecord());
+				OrderEditWindow orderEditWindow = new OrderEditWindow(getSelectedRecord(), getSelf());
 				orderEditWindow.show();
 			}
 		});
@@ -183,5 +183,39 @@ public class ReaderOrderListGrid extends ListGrid {
 				}
 			}.retry(3);
 		}
+
+	@Override
+	public void doRefreshPage() {
+		for (Record record : this.getRecords()) {
+		slOrderDS.removeData(record);
+		}
+		new RPCCall<OrderPage>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(OrderPage result) {
+				if (result == null) {
+					SC.say("暂无资料。。。囧rz");
+					return;
+				}
+				for (SLOrder order : result.getTheOrders()) {
+					slOrderDS.addData(order.getRecord());
+				}
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
+				jumpBar.refreshView(pageNowNum, pageTotalNum);
+			}
+			@Override
+			protected void callService(AsyncCallback<OrderPage> cb) {
+				orderService.getOrderList(OrderStatusType.NOW, SFLibrary.get().getNowUser().getUserEmail(), DEFAULT_RECORDS_EACH_PAGE, pageNowNum, cb);
+			}
+		}.retry(3);
+	}
+	
+	private ReaderOrderListGrid getSelf() {
+		return this;
+	}
 	
 }
