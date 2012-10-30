@@ -289,9 +289,8 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	public BorrowPage searchBorrowList(BorrowStatusType statusType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
-		String strType = BorrowStatusType.parse(statusType);
-		String strType = BorrowSearchType.parse(searchType)
-		List<SLBorrow> result = borrowDao.searchBorrowList(strType,strType,
+
+		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,searchType,
 		searchValue,itemsPerPage,pageNum);
 
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
