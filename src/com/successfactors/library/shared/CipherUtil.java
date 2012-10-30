@@ -1,4 +1,4 @@
-package com.successfactors.library.client.helper;
+package com.successfactors.library.shared;
 
 import java.security.MessageDigest;  
   

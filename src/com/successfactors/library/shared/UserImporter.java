@@ -29,16 +29,15 @@ public class UserImporter {
 
 		// 定义 row、cell
 		XSSFRow row;
-		String cell;
 
 		// 循环输出表格中的内容
-		for (int i = 1; i < 167; i++) {
+		for (int i = 1; i < 166; i++) {
 			row = sheet.getRow(i);
 
 			String email = row.getCell(10).toString()+"@successfactors.com";
 			String name = row.getCell(1).toString();
 			String department = row.getCell(4).toString();
-			String password = "123456";
+			String password = CipherUtil.generatePassword("123456");
 			String type = "读者";
 			
 			SLUser newUser = new SLUser();

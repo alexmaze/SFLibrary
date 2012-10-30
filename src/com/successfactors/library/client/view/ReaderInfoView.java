@@ -22,6 +22,7 @@ import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.SFLibrary;
+import com.successfactors.library.shared.CipherUtil;
 import com.successfactors.library.shared.model.SLUser;
 
 public class ReaderInfoView extends VLayout {
@@ -234,7 +235,7 @@ public class ReaderInfoView extends VLayout {
 				}
 				
 				userInfo = SFLibrary.get().getNowUser();
-				userInfo.setUserPassword(strNewPw);
+				userInfo.setUserPassword(CipherUtil.generatePassword(strNewPw));
 				
 		        userService.saveUserInfo(userInfo, new AsyncCallback<Boolean>() {
 					
