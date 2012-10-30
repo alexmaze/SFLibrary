@@ -70,8 +70,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public BookPage getAllBookList(int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
-		
 	  ArrayList<SLBook> listBooks=(ArrayList<SLBook>)dao.queryAll(itemsPerPage, pageNum);
       BookPage bookPage=new BookPage(itemsPerPage,pageNum);
       bookPage.setTheBooks(listBooks);
@@ -86,7 +84,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public BookPage getNewBookList(int num) {
-		// TODO Auto-generated method stub
 
 		BookPage page = new BookPage(1, num);
 		ArrayList<SLBook> ret = (ArrayList<SLBook>)dao.getLatestBooks(num);

@@ -94,29 +94,29 @@ public class MysqlBookDao {
       String hql = null;
       switch (searchType) {
       case BOOKNAME:
-        hql = "from SLBook as p where p.bookName= ?";
+        hql = "from SLBook as p where p.bookName like ? order by bookAddDate desc";
         break;
       case BOOKAUTHOR:
-        hql = "from SLBook as p where p.bookAuthor= ?";
+        hql = "from SLBook as p where p.bookAuthor like ? order by bookAddDate desc";
         break;
       case BOOKPUBLISHER:
-        hql = "from SLBook as p where p.bookPublisher= ?";
+        hql = "from SLBook as p where p.bookPublisher like ? order by bookAddDate desc";
         break;
       case BOOKINTRO:
-        hql = "from SLBook as p where p.bookIntro= ?";
+        hql = "from SLBook as p where p.bookIntro like ? order by bookAddDate desc";
         break;
       case BOOKCONTRIBUTOR:
-        hql = "from SLBook as p where p.bookContributor= ?";
+        hql = "from SLBook as p where p.bookContributor like ? order by bookAddDate desc";
         break;
       case BOOKCLASS:
-        hql = "from SLBook as p where p.bookClass= ?";
+        hql = "from SLBook as p where p.bookClass like ? order by bookAddDate desc";
         break;
       case BOOKLANGUAGE:
-        hql = "from SLBook as p where p.bookLanguage= ?";
+        hql = "from SLBook as p where p.bookLanguage like ? order by bookAddDate desc";
         break;
       }
       Query q = session.createQuery(hql);
-      q.setString(0, searchValue);
+      q.setString(0, "%"+searchValue+"%");
       q.setFirstResult((pageNo - 1) * pageSize);
       q.setMaxResults(pageSize);
 
@@ -159,29 +159,29 @@ public class MysqlBookDao {
       String hql = null;
       switch (searchType) {
       case BOOKNAME:
-        hql = "select count(*) from SLBook as p where p.bookName= ?";
+        hql = "select count(*) from SLBook as p where p.bookName like ?";
         break;
       case BOOKAUTHOR:
-        hql = "select count(*) from SLBook as p where p.bookAuthor= ?";
+        hql = "select count(*) from SLBook as p where p.bookAuthor like ?";
         break;
       case BOOKPUBLISHER:
-        hql = "select count(*) from SLBook as p where p.bookPublisher= ?";
+        hql = "select count(*) from SLBook as p where p.bookPublisher like ?";
         break;
       case BOOKINTRO:
-        hql = "select count(*) from SLBook as p where p.bookIntro= ?";
+        hql = "select count(*) from SLBook as p where p.bookIntro like ?";
         break;
       case BOOKCONTRIBUTOR:
-        hql = "select count(*) from SLBook as p where p.bookContributor= ?";
+        hql = "select count(*) from SLBook as p where p.bookContributor like ?";
         break;
       case BOOKCLASS:
-        hql = "select count(*) from SLBook as p where p.bookClass= ?";
+        hql = "select count(*) from SLBook as p where p.bookClass like ?";
         break;
       case BOOKLANGUAGE:
-        hql = "select count(*) from SLBook as p where p.bookLanguage= ?";
+        hql = "select count(*) from SLBook as p where p.bookLanguage like ?";
         break;
       }
       Query q = session.createQuery(hql);
-      q.setString(0, searchValue);
+      q.setString(0, "%"+searchValue+"%");
       if (q.uniqueResult() != null)
         return (Long) q.uniqueResult();
       else
