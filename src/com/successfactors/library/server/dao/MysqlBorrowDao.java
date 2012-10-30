@@ -165,6 +165,13 @@ public class MysqlBorrowDao {
 		return false;
 	}
 	
+	/**
+	 * not used temporarily
+	 * @param qString
+	 * @param itemsPerPage
+	 * @param pageNum
+	 * @return
+	 */
 	@SuppressWarnings("unchecked")
 	public ArrayList<SLBorrow> executeQuery(String qString, int itemsPerPage, int pageNum){
 		session = HibernateSessionFactory.getSession();
@@ -187,6 +194,75 @@ public class MysqlBorrowDao {
 		return result;
 	}
 	
+	/**
+	 * will be refactored soon
+	 * @param borrowType
+	 * @param userEmail
+	 * @param itemsPerPage
+	 * @param pageNum
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SLBorrow> searchBorrowList(String borrowType,String userEmail,int itemsPerPage, int pageNum) {
+		session = HibernateSessionFactory.getSession();
+		List<SLBorrow> result = null;
+		try{
+			Criteria criteria=session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("status",borrowType));//eq是等于，gt是大于，lt是小于,or是或
+			criteria.add(Restrictions.eq("userEmail", userEmail));
+			//criteria.add(Restrictions.eq(searchType, searchValue));
+			if (itemsPerPage > 0 && pageNum > 0) {
+				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
+				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+			}
+			result = criteria.list();
+		}catch(RuntimeException re){
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return result;
+
+	}
+
+	/**
+	 * will be refactored soon
+	 * @param borrowType
+	 * @param itemsPerPage
+	 * @param pageNum
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<SLBorrow> searchBorrowList(String borrowType,int itemsPerPage, int pageNum) {
+		session = HibernateSessionFactory.getSession();
+		List<SLBorrow> result = null;
+		try{
+			Criteria criteria=session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("status",borrowType));//eq是等于，gt是大于，lt是小于,or是或
+			//criteria.add(Restrictions.eq(searchType, searchValue));
+			if (itemsPerPage > 0 && pageNum > 0) {
+				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
+				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+			}
+			result = criteria.list();
+		}catch(RuntimeException re){
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return result;
+
+	}
+	
+	
+	/**
+	 * will be refactored soon
+	 * @param borrowType
+	 * @param searchType
+	 * @param searchValue
+	 * @param itemsPerPage
+	 * @param pageNum
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
 	public List<SLBorrow> searchBorrowList(String borrowType, String searchType,
 			String searchValue, int itemsPerPage, int pageNum) {
 		session = HibernateSessionFactory.getSession();
@@ -199,13 +275,12 @@ public class MysqlBorrowDao {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
 			}
-			List<SLBorrow> list=criteria.list();
+			result = criteria.list();
 		}catch(RuntimeException re){
-			log.error("searchBorrowList execute error", re);
+			log.error("searchBorrowList execute error",re);
 			throw re;
 		}
 		return result;
-
 	}
 
 }
