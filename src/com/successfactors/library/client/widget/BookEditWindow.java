@@ -24,6 +24,7 @@ import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.shared.FieldVerifier;
 import com.successfactors.library.shared.model.SLBook;
 
 public class BookEditWindow extends Window implements UploadImageWindow.FinishUploadOperatable{
@@ -472,10 +473,11 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		bookForm1.setValue("bookClass", "计算机/网络");
 		bookForm1.setValue("bookLanguage", "中文");
 		bookForm1.setValue("bookPrice", "0.00");
+		bookForm1.setValue("bookContributor", "公司采购");
 		
-		bookForm2.setValue("bookTotalQuantity", "0");
-		bookForm2.setValue("bookInStoreQuantity", "0");
-		bookForm2.setValue("bookAvailableQuantity", "0");
+		bookForm2.setValue("bookTotalQuantity", "1");
+		bookForm2.setValue("bookInStoreQuantity", "1");
+		bookForm2.setValue("bookAvailableQuantity", "1");
 		
 		bookForm2.setValue("bookTotalQuantityTitle", "总数");
 		bookForm2.setValue("bookInStoreQuantityTitle", "库中数量");
@@ -494,7 +496,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				updateBookInfo();
+				if (!updateBookInfo()) {
+					return;
+				}
 				//SC.say("提交修改");
 				doUpdateBook();
 			}
@@ -504,7 +508,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				updateBookInfo();
+				if (!updateBookInfo()) {
+					return;
+				}
 				//SC.say("添加图书");
 				doAddBook();
 			}
@@ -564,7 +570,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		}.retry(3);
 	}
 
-	private void updateBookInfo() {
+	private boolean updateBookInfo() {
 		
 		theBook.setBookName(bookForm1.getValueAsString("bookName"));
 		theBook.setBookAuthor(bookForm1.getValueAsString("bookAuthor"));
@@ -582,6 +588,36 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		
 		theBook.setBookPicUrl(strBookPicUrl);
 		
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookName())) {
+			SC.say("请输入书名！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookAuthor())) {
+			SC.say("请输入作者！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookISBN())) {
+			SC.say("请输入书籍ISBN！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookPublisher())) {
+			SC.say("请输入出版商名称！");
+			return false;
+		}
+		if (theBook.getBookPublishDate() == null) {
+			SC.say("请输入出版日期！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookLanguage())) {
+			SC.say("请输入语言种类！");
+			return false;
+		}
+		if (FieldVerifier.isNotEmptyValid(theBook.getBookContributor())) {
+			SC.say("请输入贡献者！");
+			return false;
+		}
+		
+		return true;
 	}
 
 	@Override
