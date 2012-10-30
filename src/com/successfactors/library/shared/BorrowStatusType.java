@@ -38,4 +38,17 @@ public enum BorrowStatusType {
 
 		return null;
 	}
+	
+	
+	public static String parse(BorrowStatusType statusType){
+		if(statusType.equals(BORROW_NOT_RETURNED)){
+			return "未归还";
+		} else if(statusType.equals(BORROW_RETURNED)){
+			return "已归还";
+		} else if(statusType.equals(BORROW_OVERDUE)){
+			return "已超期";
+		} 
+		
+		return null;
+	}
 }

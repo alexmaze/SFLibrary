@@ -133,7 +133,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 //		if(!strType.equals("all")){
 //			
 //		}else{
-//			if(strType.equals("history")){
+//			if(strType.equals("history")){BORROW_RETURNED
 //				status = "已归还";
 //			}else if(strType.equals("now")){
 //				status = "未归还";
@@ -204,7 +204,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 //			 */orrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
 //			ret.set(i, slBorrow);
 //		}
-//		page.setTheBorrows(ret);
+//		page.setTheBorrows(ret);BORROW_RETURNED
 //		page.setTotalPageNum(pageNum);
 //		return page;
 //	}
@@ -238,7 +238,42 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	@Override
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
+		StringBuffer sb = new StringBuffer();
+		sb.append("from SLBorrow as model");
+		String status = "";
+		if(!statusType.equals(BorrowStatusType.BORROW_RETURNED)){
+			
+		}else{
+			if(statusType.equals(BorrowStatusType.BORROW_RETURNED)){
+				status = "已归还";
+			}else if(statusType.equals(BorrowStatusType.BORROW_NOT_RETURNED)){
+				status = "未归还";
+			}
+			else if(statusType.equals(BorrowStatusType.BORROW_OVERDUE)){
+				status = "已超期";
+			}
+			sb.append("where model.status=");
+			sb.append(status);
+		}
+	
+		if(userEmail != null){
+			sb.append("and model.userEmail=");
+			sb.append(userEmail);
+		}
+		
+		ArrayList<SLBorrow> ret = borrowDao.executeQuery(sb.toString(), itemsPerPage, pageNum);
+		
+		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
+		
+		for (int i = 0;i < 10;i++) {
+			SLBorrow slBorrow = ret.get(i);
+			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			ret.set(i, slBorrow);
+		}
+		page.setTheBorrows(ret);
+		page.setTotalPageNum(pageNum);
+		return page;
 		return null;
 	}
 
@@ -254,8 +289,22 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	public BorrowPage searchBorrowList(BorrowStatusType statusType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
-		// TODO Auto-generated method stub
-		return null;
+		String strType = BorrowStatusType.parse(statusType);
+		String strType = BorrowSearchType.parse(searchType)
+		List<SLBorrow> result = borrowDao.searchBorrowList(strType,strType,
+		searchValue,itemsPerPage,pageNum);
+
+		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
+
+		for (int i = 0;i < 10;i++) {
+			SLBorrow slBorrow = result.get(i);
+			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			result.set(i, slBorrow);
+		}
+		page.setTheBorrows((ArrayList<SLBorrow>)result);
+		page.setTotalPageNum(pageNum);
+		return page;
 	}
 
 	/**

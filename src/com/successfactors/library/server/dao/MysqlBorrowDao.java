@@ -12,6 +12,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
+import com.successfactors.library.shared.BorrowSearchType;
+import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
@@ -187,14 +189,16 @@ public class MysqlBorrowDao {
 		return result;
 	}
 	
-	public List<SLBorrow> searchBorrowList(String borrowType, String searchType,
+	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType, BorrowSearchType searchType,
 			String searchValue, int itemsPerPage, int pageNum) {
 		session = HibernateSessionFactory.getSession();
 		List<SLBorrow> result = null;
 		try{
+			String strStatus = BorrowStatusType.parse(borrowType);
+			String strSearch = BorrowSearchType.parse(searchType);
 			Criteria criteria=session.createCriteria(SLBorrow.class);
-			criteria.add(Restrictions.eq("status",borrowType));//eq是等于，gt是大于，lt是小于,or是或
-			criteria.add(Restrictions.eq(searchType, searchValue));
+			criteria.add(Restrictions.eq("status",strStatus));//eq是等于，gt是大于，lt是小于,or是或
+			criteria.add(Restrictions.eq(strSearch, searchValue));
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始

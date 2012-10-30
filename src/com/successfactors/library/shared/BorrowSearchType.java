@@ -35,4 +35,19 @@ public enum BorrowSearchType {
 
 		return null;
 	}
+	
+	public static String parse(BorrowSearchType searchType){
+		if(searchType.equals(BORROW_ID)) {
+			return "borrowId";
+		} else if(searchType.equals(USER_EMAIL)) {
+			return "userEmail";
+		} else if(searchType.equals(BOOK_ISBN)) {
+			return "bookISBN";
+		} else if(searchType.equals(STATUS)) {
+			return "status";
+		}
+		
+		return null;
+	}
+	
 }
