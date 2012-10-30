@@ -100,7 +100,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		hLayout.setWidth(WINDOW_WIDTH);
 
 		//HLayout ---------------------------------------------------------------------------------------
-		String strBookPicUrl = theBook.getBookPicUrl();
+		strBookPicUrl = theBook.getBookPicUrl();
 		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
 		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
@@ -143,6 +143,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		bookISBNItem.setWidth("100%");
 		bookISBNItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookISBNItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		bookISBNItem.setDisabled(true);
 		
 		TextItem bookPublisherItem = new TextItem("bookPublisher", "出版社");
 		bookPublisherItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
