@@ -258,7 +258,7 @@ public class MysqlOrderDao {
 			criteria.setMaxResults(1);
 			slOrder = (SLOrder)criteria.uniqueResult();
 		} catch (RuntimeException re) {
-			log.error("searchBorrowList execute error", re);
+			log.error("getEarlistOrder execute error", re);
 			throw re;
 		}
 		return slOrder;
