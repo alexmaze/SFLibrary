@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.OrderService;
 import com.successfactors.library.server.dao.MysqlOrderDao;
@@ -11,6 +14,7 @@ import com.successfactors.library.shared.OrderSearchType;
 import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
+import com.successfactors.library.shared.model.SLUser;
 
 /**
  * 
@@ -23,6 +27,7 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	private static final String ORDER_INQUEUE = "排队中";
 	private static final String ORDER_CANCElED = "已取消";
 	private static final String ORDER_BORROWED = "已借到";
+	private final static String USER_SESSION_KEY = "SF_LIB_USER"; 
 	
 	private MysqlOrderDao orderDao = new MysqlOrderDao();
 
@@ -39,8 +44,19 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 		SLOrder slOrder = new SLOrder();
 		Calendar c = Calendar.getInstance();
 		Date orderDate = c.getTime();
-		
-		//slOrder.setUserEmail(userEmail);//Has not finished yet
+		HttpServletRequest request = null;
+		HttpSession session = null;
+		SLUser slUser = null;
+		request = getThreadLocalRequest();
+		if(request != null){
+			session = request.getSession();
+		}
+		if(session != null){
+			slUser = (SLUser) session.getAttribute(USER_SESSION_KEY);
+		}else{
+			return false;//if the session is null, this order can not be successful
+		}
+		slOrder.setUserEmail(slUser.getUserEmail());
 		slOrder.setBookISBN(bookISBN);
 		slOrder.setOrderDate(orderDate);
 		slOrder.setStatus(ORDER_INQUEUE);
@@ -68,21 +84,20 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 		return slOrder;
 	}
 	
-//	@Override
-//	public OrderPage searchOrderList(String firstType, String firstValue,
-//			String secondType, String secondValue, int itemsPerPage, int pageNum) {
-//		ArrayList<SLOrder> listOrders = (ArrayList<SLOrder>) orderDao.searchOrderList(firstType, firstValue,
-//				secondType,secondValue, itemsPerPage, pageNum);
-//		OrderPage orderPage = new OrderPage(itemsPerPage, pageNum);
-//		orderPage.setTheOrders(listOrders);
-//		long totalNum = orderDao.selectCount(firstType, firstValue, secondType, secondValue);
-//		if (totalNum % itemsPerPage == 0) {
-//			orderPage.setTotalPageNum((int) totalNum / itemsPerPage);
-//		} else {
-//			orderPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
-//		}
-//		return orderPage;
-//	}
+	private OrderPage searchOrderList(String firstType, String firstValue,
+			String secondType, String secondValue, int itemsPerPage, int pageNum,boolean isLike) {
+		ArrayList<SLOrder> listOrders = (ArrayList<SLOrder>) orderDao.searchOrderList(firstType, firstValue,
+				secondType,secondValue, itemsPerPage, pageNum, isLike);
+		OrderPage orderPage = new OrderPage(itemsPerPage, pageNum);
+		orderPage.setTheOrders(listOrders);
+		long totalNum = orderDao.selectCount(firstType, firstValue, secondType, secondValue, isLike);
+		if (totalNum % itemsPerPage == 0) {
+			orderPage.setTotalPageNum((int) totalNum / itemsPerPage);
+		} else {
+			orderPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+		}
+		return orderPage;
+	}
 //	
 //	@Override
 //	public OrderPage searchOrderList(String searchType, String searchValue,
@@ -107,8 +122,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	@Override
 	public OrderPage getOrderList(OrderStatusType statusType, String userEmail,
 			int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
-		return null;
+		return searchOrderList("status", OrderStatusType.toString(statusType),
+				"userEmail", userEmail, itemsPerPage, pageNum, false);
 	}
 
 	/**
@@ -123,9 +138,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	public OrderPage searchOrderList(OrderStatusType statusType,
 			OrderSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
-		// TODO Auto-generated method stub
-		return null;
+		return searchOrderList("status", OrderStatusType.toString(statusType),
+				OrderSearchType.toString(searchType), searchValue, itemsPerPage, pageNum, true);
 	}
 	 
-
 }

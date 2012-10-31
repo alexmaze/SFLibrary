@@ -20,6 +20,9 @@ import com.successfactors.library.shared.model.SLOrder;
 public class MysqlOrderDao {
 	private static final Logger log = Logger.getLogger(MysqlOrderDao.class);
 	private Session session = null;
+	public static final String SEARCH_ALL ="all";
+    private MysqlBookDao bookDao = new MysqlBookDao();
+	private SLUserDao userDao = new SLUserDao();
 
 	/**
 	 * Construct(do nothing)
@@ -110,18 +113,16 @@ public class MysqlOrderDao {
 	 * @return
 	 */
 	public List<SLOrder> searchOrderList(String firstType, String firstValue, 
-			String secondType, String secondValue, int itemsPerPage, int pageNum){
+			String secondType, String secondValue, int itemsPerPage, int pageNum, boolean isLike){
 	    try {
 	    	log.debug("Start: query SLOrder");
 	        session = HibernateSessionFactory.getSession();
 	        StringBuffer sb = new StringBuffer();
 	        sb.append("from SLOrder as p ");
-//	        if(QueryType.ALL != firstType){
-//	        	sb.append(" where " + getSql(firstType, firstValue));
-//	        	if(QueryType.ALL != secondType){
-//	        		sb.append(" and " + getSql(secondType, secondValue));
-//	        	}
-//	        }
+	        sb = getStringBuffer(firstType,firstValue,
+	        		secondType,secondValue,isLike,sb);
+	        
+	        sb.append(" order by orderDate desc ");
 	        Query q = session.createQuery(sb.toString());
 	        q.setFirstResult((pageNum - 1) * itemsPerPage);
 	        q.setMaxResults(itemsPerPage);
@@ -131,6 +132,8 @@ public class MysqlOrderDao {
 	        Iterator it = list.iterator();
 	        while (it.hasNext()) {
 	          SLOrder bean = (SLOrder) it.next();
+	          bean.setTheBook(bookDao.queryByISBN(bean.getBookISBN()));
+	          bean.setTheUser(userDao.getSLUserByEmail(bean.getUserEmail()));
 	          results.add(bean);
 	        }
 	        log.debug("Get SLOrders:" + results.size());
@@ -153,18 +156,15 @@ public class MysqlOrderDao {
 	 * @return -1 if there is any exception
 	 */
 	public long selectCount(String firstType, String firstValue, 
-			String secondType, String secondValue){
+			String secondType, String secondValue, boolean isLike){
 	    try {
 	    	log.debug("Start: select count");
 	        session = HibernateSessionFactory.getSession();
 	        StringBuffer sb = new StringBuffer();
 	        sb.append("select count(*) from SLOrder as p ");
-//	        if(!firstType.equals(QueryType.ALL)){
-//	        	sb.append(" where " + getSql(firstType, firstValue));
-//	        	if(secondType.equals(QueryType.ALL)){
-//	        		sb.append(" and " + getSql(secondType, secondValue));
-//	        	}
-//	        }
+	        sb=getStringBuffer(firstType,firstValue,
+	        		secondType,secondValue,isLike,sb);
+	        
 	        Query q = session.createQuery(sb.toString());
 	        if (null != q.uniqueResult()){
 	        	return (Long) q.uniqueResult();
@@ -180,9 +180,59 @@ public class MysqlOrderDao {
 	      }
 	}
 	
+	private StringBuffer getStringBuffer(String firstType,String firstValue,
+			String secondType,String secondValue,boolean isLike,StringBuffer sb){
+        if(isLike){
+        	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
+        		if(firstValue.equals("历史记录")){
+        			sb.append(" where p.status='已取消' or p.status='已借到' ");
+        		}else if(firstType.equals("当前记录")){
+        			sb.append(" where p.status='排队中' ");
+        		}else{
+        			sb.append(" where " + getSqlLike(firstType, firstValue));
+        		}
+	        	if(!secondType.equals(SEARCH_ALL)&&secondValue!=null){
+	        		if(secondValue.equals("历史记录")){
+	        			sb.append(" and p.status='已取消' or p.status='已借到' ");
+	        		}else if(secondValue.equals("当前记录")){
+	        			sb.append(" and p.status='排队中' ");
+	        		}else{
+	        			sb.append(" and " + getSqlLike(secondType, secondValue));
+	        		}
+	        	}
+	        }
+        }else{
+        	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
+        		if(firstValue.equals("历史记录")){
+        			sb.append(" where p.status='已取消' or p.status='已借到' ");
+        		}else if(firstType.equals("当前记录")){
+        			sb.append(" where p.status='排队中' ");
+        		}else{
+        			sb.append(" where " + getSql(firstType, firstValue));
+        		}
+	        	if(!secondType.equals(SEARCH_ALL)&&secondValue!=null){
+	        		if(secondValue.equals("历史记录")){
+	        			sb.append(" and p.status='已取消' or p.status='已借到' ");
+	        		}else if(secondValue.equals("当前记录")){
+	        			sb.append(" and p.status='排队中' ");
+	        		}else{
+	        			sb.append(" and " + getSql(secondType, secondValue));
+	        		}
+	        	}
+	        }
+        }
+        return sb;
+	}
+	
 	private String getSql(String type, String value){
 		StringBuffer sb = new StringBuffer();
-		sb.append(" p." + type + " = " + value);
+		sb.append(" p." + type + " = " + "'"+value+"'");
+		return sb.toString();
+	}
+	
+	private String getSqlLike(String type, String value){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" p." + type + " like " + "'"+value+"'");
 		return sb.toString();
 	}
 }

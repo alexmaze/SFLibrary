@@ -43,4 +43,20 @@ public enum OrderStatusType {
 		return null;
 	}
 
+	public static String toString(OrderStatusType enumType) {
+
+		if (enumType.equals(OrderStatusType.ORDER_INQUEUE)) {
+			return "排队中";
+		} else if (enumType.equals(OrderStatusType.ORDER_CANCElED)) {
+			return "已取消";
+		} else if (enumType.equals(OrderStatusType.ORDER_BORROWED)) {
+			return "已借到";
+		} else if (enumType.equals(OrderStatusType.HISTORY)) {
+			return "历史记录";
+		} else if (enumType.equals(OrderStatusType.NOW)) {
+			return "当前记录";
+		}
+
+		return null;
+	}
 }

@@ -36,4 +36,19 @@ public enum OrderSearchType {
 
 		return null;
 	}
+	
+	public static String toString(OrderSearchType enumType) {
+
+		if (enumType.equals(OrderSearchType.ORDER_ID)) {
+			return "orderId";
+		} else if (enumType.equals(OrderSearchType.USER_EMAIL)) {
+			return "userEmail";
+		} else if (enumType.equals(OrderSearchType.BOOK_ISBN)) {
+			return "bookISBN";
+		} else if (enumType.equals(OrderSearchType.STATUS)) {
+			return "status";
+		}
+
+		return null;
+	}
 }
