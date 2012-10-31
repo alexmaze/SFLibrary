@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.OrderService;
+import com.successfactors.library.server.dao.MysqlBookDao;
 import com.successfactors.library.server.dao.MysqlOrderDao;
+import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.OrderSearchType;
 import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.model.OrderPage;
@@ -30,6 +32,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	private final static String USER_SESSION_KEY = "SF_LIB_USER"; 
 	
 	private MysqlOrderDao orderDao = new MysqlOrderDao();
+	private MysqlBookDao bookDao = new MysqlBookDao();
+	private SLUserDao userDao = new SLUserDao();
 
 	/**
 	 * Test the connection of the server
@@ -41,6 +45,11 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 
 	@Override
 	public boolean orderBook(String bookISBN) {
+		
+		if (bookDao.queryByISBN(bookISBN).getBookAvailableQuantity() > 0) {
+			return false;
+		}
+		
 		SLOrder slOrder = new SLOrder();
 		Calendar c = Calendar.getInstance();
 		Date orderDate = c.getTime();
@@ -81,6 +90,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	@Override
 	public SLOrder getOrderInfo(int orderId) {
 		SLOrder slOrder = orderDao.getSLOrderByOrderId(orderId);
+		slOrder.setTheBook(bookDao.queryByISBN(slOrder.getBookISBN()));
+		slOrder.setTheUser(userDao.getSLUserByEmail(slOrder.getUserEmail()));
 		return slOrder;
 	}
 	
