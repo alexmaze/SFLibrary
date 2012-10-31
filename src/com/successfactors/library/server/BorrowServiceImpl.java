@@ -12,12 +12,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BorrowService;
 import com.successfactors.library.server.dao.MysqlBookDao;
 import com.successfactors.library.server.dao.MysqlBorrowDao;
+import com.successfactors.library.server.dao.MysqlOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
+import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
 
 
@@ -26,7 +28,9 @@ import com.successfactors.library.shared.model.SLUser;
 @SuppressWarnings("serial")
 public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowService {
 
-	private MysqlBorrowDao borrowDao= new MysqlBorrowDao();
+	private MysqlBorrowDao borrowDao = new MysqlBorrowDao();
+	
+	private MysqlOrderDao orderDao = new MysqlOrderDao();
 	
 	private MysqlBookDao bookDao = new MysqlBookDao();
 	
@@ -36,6 +40,10 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	
 	public MysqlBorrowDao getMysqlBorrowDao(){
 		return this.borrowDao;
+	}
+	
+	public MysqlOrderDao getMysqlOrderDao(){
+		return this.orderDao;
 	}
 	
 	public MysqlBookDao getMysqlBookDao(){
@@ -84,6 +92,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 			slBorrow.setInStore(false);
 			slBorrow.setOverdue(false);
 			slBorrow.setStatus("未归还");
+			bookDao.updateBook(slBook);
 			borrowDao.save(slBorrow);
 			return true;
 		}else{
@@ -94,13 +103,28 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	@Override
 	public boolean returnBook(int borrowId) {
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
-		//
 		slBorrow.setStatus("已归还");
 		borrowDao.update(slBorrow);
-		//
 		SLBook slBook = slBorrow.getTheBook();
 		slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity()+1);
-		new BookServiceImpl().updateBook(slBook);
+		bookDao.updateBook(slBook);
+		SLOrder slOrder = orderDao.getEarlistOrder(slBook.getBookISBN());
+		if(slOrder != null){
+			SLBorrow newBorrow = new SLBorrow();
+			Calendar c = Calendar.getInstance(); 
+			Date borrowDate = c.getTime();
+			c.add(Calendar.DAY_OF_MONTH, 15); 
+			Date shouldReturnDate = c.getTime();
+			newBorrow.setUserEmail(slOrder.getUserEmail());
+			newBorrow.setBookISBN(slBook.getBookISBN());
+			newBorrow.setBorrowDate(borrowDate);
+			newBorrow.setShouldReturnDate(shouldReturnDate);
+			newBorrow.setInStore(false);
+			newBorrow.setOverdue(false);
+			newBorrow.setStatus("未归还");
+			borrowDao.save(newBorrow);
+			
+		}
 		return true;
 	}
 
@@ -134,8 +158,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	@Override
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
-		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,itemsPerPage,pageNum);
-
+		List<SLBorrow> result = null;
+		if(userEmail != null){
+			result = borrowDao.searchBorrowList(statusType,itemsPerPage,pageNum);
+		}else{
+			result = borrowDao.searchBorrowList(statusType,
+					userEmail,itemsPerPage,pageNum);
+		}
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 		
 		for (int i = 0;i < 10;i++) {
@@ -200,8 +229,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	// 更改inStore属性，更改Book表中bookInStoreQuantity属性
 	@Override
 	public boolean outStoreBook(int borrowId) {
-		// TODO Auto-generated method stub
-		return false;
+		SLBorrow slBorrow =  borrowDao.getBorrowById(borrowId);
+		SLBook slBook = bookDao.queryByISBN(slBorrow.getBookISBN());
+		slBook.setBookInStoreQuantity(slBook.getBookInStoreQuantity() - 1);
+		slBorrow.setInStore(false);
+		borrowDao.update(slBorrow);
+		bookDao.updateBook(slBook);
+		return true;
 	}
 
 }

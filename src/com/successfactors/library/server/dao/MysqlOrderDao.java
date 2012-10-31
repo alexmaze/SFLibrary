@@ -1,15 +1,21 @@
 package com.successfactors.library.server.dao;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
+import com.successfactors.library.shared.BorrowSearchType;
+import com.successfactors.library.shared.BorrowStatusType;
+import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
 
 /**
@@ -234,5 +240,27 @@ public class MysqlOrderDao {
 		StringBuffer sb = new StringBuffer();
 		sb.append(" p." + type + " like " + "'"+value+"'");
 		return sb.toString();
+	}
+	
+	/**
+	 * only hack for borrowService
+	 * @param bookISBN
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public SLOrder getEarlistOrder(String bookISBN){
+		session = HibernateSessionFactory.getSession();
+		SLOrder slOrder = null;
+		try {
+			Criteria criteria = session.createCriteria(SLOrder.class);
+			criteria.add(Restrictions.eq("bookISBN", bookISBN));// eq是等于，gt是大于，lt是小于,or是或
+			criteria.addOrder(Order.asc("orderDate"));
+			criteria.setMaxResults(1);
+			slOrder = (SLOrder)criteria.uniqueResult();
+		} catch (RuntimeException re) {
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return slOrder;
 	}
 }
