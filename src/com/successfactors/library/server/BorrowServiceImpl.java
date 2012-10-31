@@ -77,23 +77,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		SLBook slBook = bookDao.queryByISBN(bookISBN);
 		if(slBook.getBookAvailableQuantity() > 0){
 			slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() - 1);
-			SLBorrow slBorrow = new SLBorrow();
-			
-			Calendar c = Calendar.getInstance(); 
-			Date borrowDate = c.getTime();
-			c.add(Calendar.DAY_OF_MONTH, 15); 
-			Date shouldReturnDate = c.getTime();
-			if(slUser != null){
-				slBorrow.setUserEmail(slUser.getUserEmail());
-			}
-			slBorrow.setBookISBN(bookISBN);
-			slBorrow.setBorrowDate(borrowDate);
-			slBorrow.setShouldReturnDate(shouldReturnDate);
-			slBorrow.setInStore(false);
-			slBorrow.setOverdue(false);
-			slBorrow.setStatus("未归还");
-			bookDao.updateBook(slBook);
+			SLBorrow slBorrow = initBorrow(slUser.getUserEmail(),slBook.getBookISBN());
 			borrowDao.save(slBorrow);
+			bookDao.updateBook(slBook);
 			return true;
 		}else{
 			return false;
@@ -110,18 +96,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		bookDao.updateBook(slBook);
 		SLOrder slOrder = orderDao.getEarlistOrder(slBook.getBookISBN());
 		if(slOrder != null){
-			SLBorrow newBorrow = new SLBorrow();
-			Calendar c = Calendar.getInstance(); 
-			Date borrowDate = c.getTime();
-			c.add(Calendar.DAY_OF_MONTH, 15); 
-			Date shouldReturnDate = c.getTime();
-			newBorrow.setUserEmail(slOrder.getUserEmail());
-			newBorrow.setBookISBN(slBook.getBookISBN());
-			newBorrow.setBorrowDate(borrowDate);
-			newBorrow.setShouldReturnDate(shouldReturnDate);
-			newBorrow.setInStore(false);
-			newBorrow.setOverdue(false);
-			newBorrow.setStatus("未归还");
+			SLBorrow newBorrow = initBorrow(slOrder.getUserEmail(),slBook.getBookISBN());
 			borrowDao.save(newBorrow);
 			
 		}
@@ -236,6 +211,22 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		borrowDao.update(slBorrow);
 		bookDao.updateBook(slBook);
 		return true;
+	}
+	
+	private SLBorrow initBorrow(String userEmail, String ISBN){
+		SLBorrow newBorrow = new SLBorrow();
+		Calendar c = Calendar.getInstance(); 
+		Date borrowDate = c.getTime();
+		c.add(Calendar.DAY_OF_MONTH, 15); 
+		Date shouldReturnDate = c.getTime();
+		newBorrow.setUserEmail(userEmail);
+		newBorrow.setBookISBN(ISBN);
+		newBorrow.setBorrowDate(borrowDate);
+		newBorrow.setShouldReturnDate(shouldReturnDate);
+		newBorrow.setInStore(false);
+		newBorrow.setOverdue(false);
+		newBorrow.setStatus("未归还");
+		return newBorrow;
 	}
 
 }
