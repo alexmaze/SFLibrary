@@ -196,4 +196,12 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		return (ArrayList<SLBorrow>)result;
 	}
 
+	// 图书出库
+	// 更改inStore属性，更改Book表中bookInStoreQuantity属性
+	@Override
+	public boolean outStoreBook(int borrowId) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

@@ -278,16 +278,6 @@ public class AdminBorrowHistoryListGrid extends ListGrid implements BorrowEditWi
 		}
 	}
 
-	public void showNeedReturnWindow() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void showNeedTookenWindow() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public void doReturnBook() {
 		BorrowEditWindow borrowEditWindow = new BorrowEditWindow(getSelf());
 		borrowEditWindow.show();

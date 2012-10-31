@@ -1,5 +1,8 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.orderService;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
@@ -13,6 +16,7 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLOrderDS;
+import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.shared.model.SLOrder;
 
 public class OrderEditWindow  extends Window {
@@ -149,10 +153,29 @@ public class OrderEditWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				SC.say("取消预订");
 
-				//finishEdit.doRefreshPage();
+				new RPCCall<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == false) {
+							SC.say("取消失败，请稍后重试！");
+							return;
+						}
+						SC.say("取消预定成功");
+						if (finishEdit != null) {
+							finishEdit.doRefreshPage();
+						}
+						destroy();
+					}
+					@Override
+					protected void callService(AsyncCallback<Boolean> cb) {
+						orderService.cancelOrder(theRecord.getAttributeAsInt("orderId"), cb);
+					}
+				}.retry(3);
 			}
 		});
 	}

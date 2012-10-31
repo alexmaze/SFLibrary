@@ -1,5 +1,9 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.borrowService;
+import static com.successfactors.library.client.SFLibrary.orderService;
+
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.TitleOrientation;
@@ -14,6 +18,8 @@ import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
+import com.successfactors.library.client.helper.RPCCall;
+import com.successfactors.library.client.widget.BookEditWindow.FinishEditBook;
 import com.successfactors.library.shared.model.SLBook;
 
 public class BookDisplayWindow  extends Window {
@@ -29,19 +35,23 @@ public class BookDisplayWindow  extends Window {
 	private IButton orderButton;
 	private IButton borrowButton;
 	
-	public BookDisplayWindow(SLBook bookRec) {
+	private FinishEditBook finishEdit;
+	
+	public BookDisplayWindow(SLBook bookRec, FinishEditBook finish) {
 		super();
 		this.theRecord = bookRec.getRecord();
 		this.theDataSource = new SLBookDS();
 		this.theDataSource.addData(theRecord);
+		finishEdit = finish;
 		initDisplayWindow();
 	}
 	
-	public BookDisplayWindow(Record bookRec) {
+	public BookDisplayWindow(Record bookRec, FinishEditBook finish) {
 		super();
 		this.theRecord = bookRec;
 		this.theDataSource = new SLBookDS();
 		this.theDataSource.addData(theRecord);
+		finishEdit = finish;
 		initDisplayWindow();
 	}
 	
@@ -231,16 +241,61 @@ public class BookDisplayWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：预订按钮事件
-				SC.say("预定");
+
+				new RPCCall<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == false) {
+							SC.say("预定失败，请稍后重试！");
+							return;
+						}
+						SC.say("预定成功");
+						if (finishEdit != null) {
+							finishEdit.doRefreshPage();
+						}
+						destroy();
+					}
+
+					@Override
+					protected void callService(AsyncCallback<Boolean> cb) {
+						orderService.orderBook(theRecord.getAttribute("bookISBN"), cb);
+					}
+				}.retry(3);
 			}
 		});
 		borrowButton.addClickHandler(new ClickHandler() {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 前端：借书按钮事件
-				SC.say("借阅");
+				new RPCCall<Boolean>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == false) {
+							SC.say("借阅失败，请稍后重试！");
+							return;
+						}
+						SC.say("借阅成功");
+						if (finishEdit != null) {
+							finishEdit.doRefreshPage();
+						}
+						destroy();
+					}
+
+					@Override
+					protected void callService(AsyncCallback<Boolean> cb) {
+						borrowService.borrowBook(theRecord.getAttribute("bookISBN"), cb);
+					}
+				}.retry(3);
 			}
 		});
 	}

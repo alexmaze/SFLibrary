@@ -27,6 +27,10 @@ public interface BorrowService extends RemoteService {
 	// 通过ID获取借阅信息
 	SLBorrow getBorrowInfo(int borrowId);
 	
+	// 图书出库
+	// 更改inStore属性，更改Book表中bookInStoreQuantity属性
+	boolean outStoreBook(int borrowId);
+	
 //	BorrowPage getBorrowList(String strType, String userEmail,
 //			int itemsPerPage, int pageNum);
 //	

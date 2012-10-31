@@ -539,7 +539,11 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 					SC.say("添加失败，请稍后重试！");
 					return;
 				}
-				finishEdit.doRefreshPage();
+				SC.say("添加成功！");
+				if (finishEdit != null) {
+					finishEdit.doRefreshPage();
+				}
+				destroy();
 				
 			}
 			@Override
@@ -561,7 +565,11 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 					SC.say("更新失败，请稍后重试！");
 					return;
 				}
-				finishEdit.doRefreshPage();
+				SC.say("更新成功！");
+				if (finishEdit != null) {
+					finishEdit.doRefreshPage();
+				}
+				destroy();
 			}
 			@Override
 			protected void callService(AsyncCallback<Boolean> cb) {
@@ -588,19 +596,19 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		
 		theBook.setBookPicUrl(strBookPicUrl);
 		
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookName())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookName())) {
 			SC.say("请输入书名！");
 			return false;
 		}
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookAuthor())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookAuthor())) {
 			SC.say("请输入作者！");
 			return false;
 		}
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookISBN())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookISBN())) {
 			SC.say("请输入书籍ISBN！");
 			return false;
 		}
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookPublisher())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookPublisher())) {
 			SC.say("请输入出版商名称！");
 			return false;
 		}
@@ -608,11 +616,11 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			SC.say("请输入出版日期！");
 			return false;
 		}
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookLanguage())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookLanguage())) {
 			SC.say("请输入语言种类！");
 			return false;
 		}
-		if (FieldVerifier.isNotEmptyValid(theBook.getBookContributor())) {
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookContributor())) {
 			SC.say("请输入贡献者！");
 			return false;
 		}

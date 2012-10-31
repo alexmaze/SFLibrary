@@ -17,7 +17,7 @@ import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
-public class ReaderBookListGrid extends ListGrid {
+public class ReaderBookListGrid extends ListGrid implements BookEditWindow.FinishEditBook {
 	
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -83,7 +83,7 @@ public class ReaderBookListGrid extends ListGrid {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(getSelectedRecord());
+				BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(getSelectedRecord(), getSelf());
 				bookDisplayWindow.show();
 			}
 		});
@@ -281,6 +281,41 @@ public class ReaderBookListGrid extends ListGrid {
 				}
 			}.retry(3);
 		}
+	}
+
+	@Override
+	public void doRefreshPage() {
+		for (Record record : this.getRecords()) {
+			slBookDS.removeData(record);
+		}
+		new RPCCall<BookPage>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(BookPage result) {
+				
+				if (result == null) {
+					SC.say("暂无资料。。。囧rz");
+					return;
+				}
+				for (SLBook book : result.getTheBooks()) {
+					slBookDS.addData(book.getRecord());
+				}
+				pageNowNum = result.getPageNum();
+				pageTotalNum = result.getTotalPageNum();
+				jumpBar.refreshView(pageNowNum, pageTotalNum);
+			}
+			@Override
+			protected void callService(AsyncCallback<BookPage> cb) {
+				bookService.getAllBookList( DEFAULT_RECORDS_EACH_PAGE, pageNowNum, cb);
+			}
+		}.retry(3);
+	}
+	
+	private ReaderBookListGrid getSelf() {
+		return this;
 	}
 	
 }

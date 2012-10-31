@@ -191,15 +191,5 @@ public class ReaderBorrowListGrid extends ListGrid {
 				}
 			}.retry(3);
 		}
-
-	public void showNeedReturnWindow() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void showNeedTookenWindow() {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

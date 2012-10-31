@@ -38,4 +38,6 @@ public interface BorrowServiceAsync {
 
 	void getOverdueBorrowList(AsyncCallback<ArrayList<SLBorrow>> callback);
 
+	void outStoreBook(int borrowId, AsyncCallback<Boolean> callback);
+
 }

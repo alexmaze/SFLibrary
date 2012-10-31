@@ -157,7 +157,7 @@ public class HotBookShelf extends VLayout {
 							SC.say("暂无资料。。。囧rz");
 							return;
 						}
-						BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(result);
+						BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(result, null);
 						bookDisplayWindow.draw();
 					}
 					@Override

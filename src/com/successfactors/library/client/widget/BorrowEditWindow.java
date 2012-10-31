@@ -381,8 +381,31 @@ public class BorrowEditWindow  extends Window {
 					return;
 				}
 				
-				SC.say("图书出库"+theRecord.getAttribute("bookName") );
-				//finishEdit.doRefreshPage();
+				new RPCCall<Boolean>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == false) {
+							SC.say("出库失败，请稍后重试！");
+							return;
+						}
+						SC.say("图书出库成功");
+						if (finishEdit != null) {
+							finishEdit.doRefreshPage();
+						}
+						destroy();
+					}
+
+					@Override
+					protected void callService(AsyncCallback<Boolean> cb) {
+						borrowService.outStoreBook(theRecord.getAttributeAsInt("borrowId"), cb);
+					}
+				}.retry(3);
 				
 			}
 		});
@@ -391,13 +414,35 @@ public class BorrowEditWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
 				if (theRecord == null) {
 					SC.say("请输入借阅编号");
 					return;
 				}
-				SC.say("归还图书"+theRecord.getAttribute("bookName"));
-				//finishEdit.doRefreshPage();
+				new RPCCall<Boolean>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+
+					@Override
+					public void onSuccess(Boolean result) {
+						if (result == false) {
+							SC.say("借书失败，请稍后重试！");
+							return;
+						}
+						SC.say("图书借阅成功");
+						if (finishEdit != null) {
+							finishEdit.doRefreshPage();
+						}
+						destroy();
+					}
+
+					@Override
+					protected void callService(AsyncCallback<Boolean> cb) {
+						borrowService.returnBook(theRecord.getAttributeAsInt("borrowId"), cb);
+					}
+				}.retry(3);
 			}
 		});
 	}

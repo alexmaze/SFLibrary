@@ -100,7 +100,7 @@ public class TestWidget {
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
 				
-				BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(temp);
+				BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(temp, null);
 				bookDisplayWindow.draw();
 				
 				GWT.log("***********  Test Widget End  *************");
