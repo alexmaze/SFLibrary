@@ -21,13 +21,15 @@ public class PictureUploadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String UPLOAD_PATH = ".\\images\\upload\\";
-	public static final String TEMP_PATH = ".\\images\\upload\\temp\\";
+	public static final String UPLOAD_PATH = "D:\\Dev\\Tomcat 7.0\\webapps\\ROOT\\images\\upload\\";
+	public static final String TEMP_PATH = "D:\\Dev\\Tomcat 7.0\\webapps\\ROOT\\images\\upload\\temp\\";
 
 	@SuppressWarnings("rawtypes")
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 	throws ServletException, IOException {
 
+		System.out.println("开始上传图片");
+		
 		response.setContentType("text/html; charset=UTF-8");
 		response.setCharacterEncoding("UTF-8");
 
@@ -66,6 +68,8 @@ public class PictureUploadServlet extends HttpServlet {
 		
 		out.print(picNewName);
 		out.close();
+
+		System.out.println("上传图片完成");
 
 	}
 

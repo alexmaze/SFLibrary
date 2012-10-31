@@ -10,7 +10,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
-import com.successfactors.library.shared.QueryType;
 import com.successfactors.library.shared.model.SLOrder;
 
 /**
@@ -117,12 +116,12 @@ public class MysqlOrderDao {
 	        session = HibernateSessionFactory.getSession();
 	        StringBuffer sb = new StringBuffer();
 	        sb.append("from SLOrder as p ");
-	        if(QueryType.ALL != firstType){
-	        	sb.append(" where " + getSql(firstType, firstValue));
-	        	if(QueryType.ALL != secondType){
-	        		sb.append(" and " + getSql(secondType, secondValue));
-	        	}
-	        }
+//	        if(QueryType.ALL != firstType){
+//	        	sb.append(" where " + getSql(firstType, firstValue));
+//	        	if(QueryType.ALL != secondType){
+//	        		sb.append(" and " + getSql(secondType, secondValue));
+//	        	}
+//	        }
 	        Query q = session.createQuery(sb.toString());
 	        q.setFirstResult((pageNum - 1) * itemsPerPage);
 	        q.setMaxResults(itemsPerPage);
@@ -160,12 +159,12 @@ public class MysqlOrderDao {
 	        session = HibernateSessionFactory.getSession();
 	        StringBuffer sb = new StringBuffer();
 	        sb.append("select count(*) from SLOrder as p ");
-	        if(!firstType.equals(QueryType.ALL)){
-	        	sb.append(" where " + getSql(firstType, firstValue));
-	        	if(secondType.equals(QueryType.ALL)){
-	        		sb.append(" and " + getSql(secondType, secondValue));
-	        	}
-	        }
+//	        if(!firstType.equals(QueryType.ALL)){
+//	        	sb.append(" where " + getSql(firstType, firstValue));
+//	        	if(secondType.equals(QueryType.ALL)){
+//	        		sb.append(" and " + getSql(secondType, secondValue));
+//	        	}
+//	        }
 	        Query q = session.createQuery(sb.toString());
 	        if (null != q.uniqueResult()){
 	        	return (Long) q.uniqueResult();
