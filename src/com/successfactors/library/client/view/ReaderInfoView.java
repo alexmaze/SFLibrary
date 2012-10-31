@@ -63,7 +63,23 @@ public class ReaderInfoView extends VLayout {
 		userEducationItem.setTitle("所在团队");
 		userEducationItem.setType("select");
 		userEducationItem.setName("userDepartment");
-		userEducationItem.setValueMap("1", "2", "3", "4");
+		userEducationItem.setValueMap(
+        		"Varpay",
+        		"Recruiting", 
+        		"Compensation",
+        		"API",
+        		"Platform", 
+        		"Employee Center",
+        		"Gole Management",
+        		"Performance",
+        		"Special Project",
+        		"Rules Engine",
+        		"Mobile",
+        		"Automation",
+        		"360",
+        		"IT",
+        		"Other"
+        		);
 		userEducationItem.setDefaultToFirstOption(true);
 
 		form.setFields(headerMust, userRealNameItem,

@@ -54,7 +54,7 @@ public class SFLibDailyTask extends TimerTask {
 	}
 
 	private void sendOverdueEmail(SLBorrow slBorrow) {
-		// TODO 发送超期邮件
+		// TODO 美化超期邮件
 		
 		String toEmail = slBorrow.getUserEmail();
 		String strTitle = "[Minerva's Book Lib]借书超期提醒";

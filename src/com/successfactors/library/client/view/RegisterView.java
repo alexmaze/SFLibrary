@@ -69,12 +69,28 @@ public class RegisterView  extends VLayout {
         reUserPasswordItem.setName("reUserPassword");
         reUserPasswordItem.setHint("再输入一遍密码");
         
-        // TODO 团队列表
+        // 团队列表
         SelectItem userTeamItem = new SelectItem();  
         userTeamItem.setTitle("所属团队");
         userTeamItem.setType("select");
         userTeamItem.setName("userDepartment");
-        userTeamItem.setValueMap("EC", "PM", "..");
+        userTeamItem.setValueMap(
+        		"Varpay",
+        		"Recruiting", 
+        		"Compensation",
+        		"API",
+        		"Platform", 
+        		"Employee Center",
+        		"Gole Management",
+        		"Performance",
+        		"Special Project",
+        		"Rules Engine",
+        		"Mobile",
+        		"Automation",
+        		"360",
+        		"IT",
+        		"Other"
+        		);
         userTeamItem.setDefaultToFirstOption(true);
         
         form.setFields(headerMust, userRealNameItem, userEmailItem, userPasswordItem, reUserPasswordItem, userTeamItem);
