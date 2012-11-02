@@ -284,7 +284,8 @@ public class BookDisplayWindow  extends Window {
 							SC.say("借阅失败，请稍后重试！");
 							return;
 						}
-						SC.say("借阅成功");
+						SC.say("借阅成功\n" +
+								"请尽快到图书管理员处领取");
 						if (finishEdit != null) {
 							finishEdit.doRefreshPage();
 						}
