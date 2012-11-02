@@ -43,7 +43,9 @@ public class SFLibDailyTask extends TimerTask {
 
 	// 执行任务
 	private void doTask() {
-		//  借书超期处理
+		// TODO 检查书籍超期情况
+		
+		// 借书超期处理
 		BorrowServiceImpl bookService = new BorrowServiceImpl();
 		ArrayList<SLBorrow> overdueList = bookService.getOverdueBorrowList();
 		
