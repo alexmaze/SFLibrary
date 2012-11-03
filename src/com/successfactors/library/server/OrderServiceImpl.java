@@ -33,9 +33,9 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	public static final String ORDER_CANCElED = "已取消";
 	public static final String ORDER_BORROWED = "已借到";
 
-	private SLOrderDao orderDao = new SLOrderDao();
-	private SLBookDao bookDao = new SLBookDao();
-	private SLUserDao userDao = new SLUserDao();
+	protected SLOrderDao orderDao = new SLOrderDao();
+	protected SLBookDao bookDao = new SLBookDao();
+	protected SLUserDao userDao = new SLUserDao();
 
 	/**
 	 * Test the connection of the server
@@ -51,11 +51,14 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public boolean orderBook(String bookISBN) {
 
+		// TODO 先检查是否已借！
+		// TODO 再检查是否已预订！
+		
 		// 如果还有的借，不能预订
 		if (bookDao.queryByISBN(bookISBN).getBookAvailableQuantity() > 0) {
 			return false;
 		}
-
+		
 		// 获取当前登录用户信息
 		SLUser slUser = getCurrentUser();
 		if (slUser == null) {

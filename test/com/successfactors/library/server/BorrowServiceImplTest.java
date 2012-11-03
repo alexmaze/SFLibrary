@@ -33,7 +33,7 @@ public class BorrowServiceImplTest {
 		}
 	};
 	
-	private final static String USER_EMAIL = "ayan@successfactors.com";
+	private final static String USER_EMAIL = "cdeng@successfactors.com";
 	private final static String BOOK_ISBN = "123456987";
 
 	/**

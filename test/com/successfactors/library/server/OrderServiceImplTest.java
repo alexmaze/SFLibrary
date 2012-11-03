@@ -3,22 +3,42 @@
  */
 package com.successfactors.library.server;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.successfactors.library.shared.OrderSearchType;
+import com.successfactors.library.shared.OrderStatusType;
+import com.successfactors.library.shared.model.OrderPage;
+import com.successfactors.library.shared.model.SLOrder;
+import com.successfactors.library.shared.model.SLUser;
 
 /**
  * @author Alex
  *
  */
 public class OrderServiceImplTest {
+	
+	@SuppressWarnings("serial")
+	private OrderServiceImpl orderService = new OrderServiceImpl() {
+		@Override
+		protected SLUser getCurrentUser() {
+			return this.userDao.getSLUserByEmail(USER_EMAIL);
+		}
+	};
+	private final static String USER_EMAIL = "ayan@successfactors.com";
+	private final static String BOOK_ISBN = "123456987";
 
 	/**
 	 * 测试：预订书籍
 	 */
 	@Test
 	public final void testOrderBook() {
-		fail("Not yet implemented"); // TODO
+		try {
+			orderService.orderBook(BOOK_ISBN);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
 	}
 
 	/**
@@ -26,7 +46,11 @@ public class OrderServiceImplTest {
 	 */
 	@Test
 	public final void testCancelOrder() {
-		fail("Not yet implemented"); // TODO
+		try {
+			orderService.cancelOrder(2);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
 	}
 
 	/**
@@ -34,7 +58,12 @@ public class OrderServiceImplTest {
 	 */
 	@Test
 	public final void testGetOrderInfo() {
-		fail("Not yet implemented"); // TODO
+		try {
+			SLOrder order = orderService.getOrderInfo(2);
+			assertTrue(order.getOrderId() == 2);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
 	}
 
 	/**
@@ -42,7 +71,12 @@ public class OrderServiceImplTest {
 	 */
 	@Test
 	public final void testGetOrderList() {
-		fail("Not yet implemented"); // TODO
+		try {
+			OrderPage page = orderService.getOrderList(OrderStatusType.ORDER_INQUEUE, USER_EMAIL, 10, 1);
+			assertTrue(page.getTotalPageNum() == 1);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
 	}
 
 	/**
@@ -50,7 +84,12 @@ public class OrderServiceImplTest {
 	 */
 	@Test
 	public final void testSearchOrderList() {
-		fail("Not yet implemented"); // TODO
+		try {
+			OrderPage page = orderService.searchOrderList(OrderStatusType.NOW, OrderSearchType.USER_EMAIL, "ayan", 10, 1);
+			assertTrue(page.getTotalPageNum() == 1);
+		} catch (Exception e) {
+			assertTrue(false);
+		}
 	}
 
 }

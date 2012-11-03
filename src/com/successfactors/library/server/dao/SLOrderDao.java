@@ -190,7 +190,7 @@ public class SLOrderDao {
         	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
         		if(firstValue.equals("历史记录")){
         			sb.append(" where p.status='已取消' or p.status='已借到' ");
-        		}else if(firstType.equals("当前记录")){
+        		}else if(firstValue.equals("当前记录")){
         			sb.append(" where p.status='排队中' ");
         		}else{
         			sb.append(" where " + getSqlLike(firstType, firstValue));
@@ -209,7 +209,7 @@ public class SLOrderDao {
         	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
         		if(firstValue.equals("历史记录")){
         			sb.append(" where p.status='已取消' or p.status='已借到' ");
-        		}else if(firstType.equals("当前记录")){
+        		}else if(firstValue.equals("当前记录")){
         			sb.append(" where p.status='排队中' ");
         		}else{
         			sb.append(" where " + getSql(firstType, firstValue));
