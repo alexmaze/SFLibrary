@@ -57,6 +57,7 @@ public class SFLibDailyTask extends TimerTask {
 		for (SLBorrow slBorrow : nowBorrowList) {
 			if (slBorrow.getShouldReturnDate().before(new Date())) {
 				slBorrow.setStatus("已超期");
+				slBorrow.setOverdue(true);
 				borrowDao.update(slBorrow);
 				context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 				//System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
