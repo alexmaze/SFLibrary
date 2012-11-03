@@ -1,7 +1,6 @@
 package com.successfactors.library.server.dao;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -16,7 +15,6 @@ import org.hibernate.criterion.Restrictions;
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
-import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 public class SLBorrowDao {
@@ -210,59 +208,35 @@ public class SLBorrowDao {
 	@SuppressWarnings("unchecked")
 	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
 			String userEmail, int itemsPerPage, int pageNum) {
-		session = HibernateSessionFactory.getSession();
-		List<SLBorrow> result = null;	
-		try {
-			Criteria criteria = session.createCriteria(SLBorrow.class);
-			String strStatus = BorrowStatusType.parse(borrowType);
-			if (strStatus != null) {	
-				criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或		
-			}else {
-				this.extend_borrowStatusType(criteria, borrowType);
-			}
-			criteria.add(Restrictions.eq("userEmail", userEmail));
-			criteria.addOrder(Order.desc("borrowDate"));
-			if (itemsPerPage > 0 && pageNum > 0) {
-				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
-				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
-			}
-			result = criteria.list();
-		} catch (RuntimeException re) {
-			log.error("searchBorrowList execute error", re);
-			throw re;
-		}
-		return result;
 
-	}
-
-	/**
-	 * will be refactored soon
-	 * 
-	 * @param borrowType
-	 * @param itemsPerPage
-	 * @param pageNum
-	 * @return
-	 */
-	@SuppressWarnings("unchecked")
-	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
-			int itemsPerPage, int pageNum) {
 		session = HibernateSessionFactory.getSession();
 		List<SLBorrow> result = null;
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
 			String strStatus = BorrowStatusType.parse(borrowType);
-			if (strStatus != null) {	
-				criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或		
-			}else {
+
+			if (strStatus != null) {
+				// eq是等于，gt是大于，lt是小于,or是或
+				criteria.add(Restrictions.eq("status", strStatus));
+			} else {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}
-			criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或
+
+			// 如果userEmail == null, 搜索所有用户的记录
+			if (userEmail != null) {
+				criteria.add(Restrictions.eq("userEmail", userEmail));
+			}
+
 			criteria.addOrder(Order.desc("borrowDate"));
+
 			if (itemsPerPage > 0 && pageNum > 0) {
-				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
-				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+				// 最大显示记录数
+				criteria.setMaxResults(itemsPerPage);
+				// 从第几条开始
+				criteria.setFirstResult((pageNum - 1) * itemsPerPage);
 			}
 			result = criteria.list();
+
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);
 			throw re;
@@ -270,6 +244,42 @@ public class SLBorrowDao {
 		return result;
 
 	}
+
+//	/**
+//	 * will be refactored soon
+//	 * 
+//	 * @param borrowType
+//	 * @param itemsPerPage
+//	 * @param pageNum
+//	 * @return
+//	 */
+//	@SuppressWarnings("unchecked")
+//	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
+//			int itemsPerPage, int pageNum) {
+//		session = HibernateSessionFactory.getSession();
+//		List<SLBorrow> result = null;
+//		try {
+//			Criteria criteria = session.createCriteria(SLBorrow.class);
+//			String strStatus = BorrowStatusType.parse(borrowType);
+//			if (strStatus != null) {
+//				criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或
+//			} else {
+//				this.extend_borrowStatusType(criteria, borrowType);
+//			}
+//			criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或
+//			criteria.addOrder(Order.desc("borrowDate"));
+//			if (itemsPerPage > 0 && pageNum > 0) {
+//				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
+//				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+//			}
+//			result = criteria.list();
+//		} catch (RuntimeException re) {
+//			log.error("searchBorrowList execute error", re);
+//			throw re;
+//		}
+//		return result;
+//
+//	}
 
 	/**
 	 * will be refactored soon
@@ -291,19 +301,23 @@ public class SLBorrowDao {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
 			String strStatus = BorrowStatusType.parse(borrowType);
 			String strSearch = BorrowSearchType.parse(searchType);
-			if (strStatus != null) {	
-				criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或		
-			}else {
+			
+			if (strStatus != null) {
+				// eq是等于，gt是大于，lt是小于,or是或
+				criteria.add(Restrictions.eq("status", strStatus));
+			} else {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}
-			criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或
+			
 			criteria.add(Restrictions.like(strSearch, searchValue));
 			criteria.addOrder(Order.desc("borrowDate"));
+			
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
 				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
 			}
 			result = criteria.list();
+			
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);
 			throw re;
@@ -318,12 +332,12 @@ public class SLBorrowDao {
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
 			String strStatus = BorrowStatusType.parse(borrowType);
-			if (strStatus != null) {	
-				criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或		
-			}else {
+			if (strStatus != null) {
+				// eq是等于，gt是大于，lt是小于,or是或
+				criteria.add(Restrictions.eq("status", strStatus));
+			} else {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}
-			criteria.add(Restrictions.eq("status", strStatus));// eq是等于，gt是大于，lt是小于,or是或
 			criteria.addOrder(Order.desc("borrowDate"));
 			result = criteria.list();
 		} catch (RuntimeException re) {
@@ -332,21 +346,23 @@ public class SLBorrowDao {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * will refactor soon
+	 * 
 	 * @param criteria
 	 * @param borrowType
 	 */
-	private void extend_borrowStatusType(Criteria criteria,BorrowStatusType borrowType){
-		if(borrowType.equals(BorrowStatusType.BORROW_NEED_TAKE)){
-			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"), 
+	private void extend_borrowStatusType(Criteria criteria,
+			BorrowStatusType borrowType) {
+		if (borrowType.equals(BorrowStatusType.BORROW_NEED_TAKE)) {
+			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"),
 					Restrictions.eq("status", "已超期")));
-			criteria.add(Restrictions.eq("inStore",true));
-		}else if(borrowType.equals(BorrowStatusType.HISTORY)){
+			criteria.add(Restrictions.eq("inStore", true));
+		} else if (borrowType.equals(BorrowStatusType.HISTORY)) {
 			criteria.add(Restrictions.eq("status", "已超期"));
-		}else if(borrowType.equals(BorrowStatusType.NOW)){
-			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"), 
+		} else if (borrowType.equals(BorrowStatusType.NOW)) {
+			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"),
 					Restrictions.eq("status", "已超期")));
 		}
 	}

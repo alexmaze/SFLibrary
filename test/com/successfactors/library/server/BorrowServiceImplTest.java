@@ -3,14 +3,17 @@
  */
 package com.successfactors.library.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import java.util.ArrayList;
+
 import org.junit.Test;
 
+import com.successfactors.library.shared.BorrowSearchType;
+import com.successfactors.library.shared.BorrowStatusType;
+import com.successfactors.library.shared.model.BorrowPage;
+import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLUser;
 
 /**
@@ -19,7 +22,10 @@ import com.successfactors.library.shared.model.SLUser;
  */
 public class BorrowServiceImplTest {
 
-	
+	/**
+	 * Mock
+	 * */
+	@SuppressWarnings("serial")
 	private BorrowServiceImpl borrowService = new BorrowServiceImpl() {
 		@Override
 		protected SLUser getCurrentUser() {
@@ -43,7 +49,7 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testReturnBook() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(borrowService.returnBook(4));
 	}
 
 	/**
@@ -51,7 +57,8 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testGetBorrowInfo() {
-		fail("Not yet implemented"); // TODO
+		SLBorrow borrow = borrowService.getBorrowInfo(3);
+		assertEquals(borrow.getBorrowId(), 3);
 	}
 
 	/**
@@ -59,7 +66,10 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testGetBorrowList() {
-		fail("Not yet implemented"); // TODO
+		BorrowPage page = borrowService.getBorrowList(
+				BorrowStatusType.BORROW_RETURNED, null, 
+				10, 1);
+		assertEquals(page.getPageNum(), 1);
 	}
 
 	/**
@@ -67,7 +77,8 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testSearchBorrowList() {
-		fail("Not yet implemented"); // TODO
+		BorrowPage page = borrowService.searchBorrowList(BorrowStatusType.NOW, BorrowSearchType.USER_EMAIL, "ayan", 10, 1);
+		assertEquals(page.getPageNum(), 1);
 	}
 
 	/**
@@ -75,7 +86,8 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testGetOverdueBorrowList() {
-		fail("Not yet implemented"); // TODO
+		ArrayList<SLBorrow> list = borrowService.getOverdueBorrowList();
+		assertTrue(list.size() == 1);
 	}
 
 	/**
@@ -83,7 +95,7 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testOutStoreBook() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(borrowService.outStoreBook(6));
 	}
 
 }
