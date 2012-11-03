@@ -1,7 +1,5 @@
 package com.successfactors.library.server;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -105,15 +103,6 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 			return true;
 		}
 		return false;
-	}
-
-	/**
-	 * TODO 获取系统用户列表
-	 * */
-	@Override
-	public ArrayList<SLUser> getUserList(int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

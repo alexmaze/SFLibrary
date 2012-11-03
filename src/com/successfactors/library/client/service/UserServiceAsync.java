@@ -1,7 +1,5 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.successfactors.library.shared.model.SLUser;
 
@@ -20,8 +18,5 @@ public interface UserServiceAsync {
 	void register(SLUser newUser, AsyncCallback<SLUser> callback);
 
 	void saveUserInfo(SLUser slUser, AsyncCallback<Boolean> callback);
-
-	void getUserList(int itemsPerPage, int pageNum,
-			AsyncCallback<ArrayList<SLUser>> callback);
 
 }

@@ -105,7 +105,7 @@ public class SLEmailUtil {
 		String strTitle = "[Minerva's Book Lib]借阅《"+ slBorrow.getTheBook().getBookName() +"》成功";
 		String strContent = "亲爱的"+slBorrow.getTheUser().getUserName()+"，\n\n"
 				+ "您已成功借阅" +" 《"+ slBorrow.getTheBook().getBookName() +"》\n"
-				+ "借阅编号：" + slBorrow.getBorrowId() +" 请到图书管理员处领取\n"
+				+ "请到图书管理员处领取\n"
 				+ "借阅到期时间为："+formatDate(slBorrow.getShouldReturnDate())+", 请按期归还。\n\n"
 				+ "感谢您的支持！\n"
 				+ "Minerva's Book Lib\n";
@@ -116,7 +116,7 @@ public class SLEmailUtil {
 		String strTitleToAdmin = "[Minerva's Book Lib]"+slBorrow.getTheUser().getUserName()+"借阅《"+ slBorrow.getTheBook().getBookName() +"》成功";
 		String strContentToAdmin = "亲爱的管理员同志，\n\n"
 				+ slBorrow.getTheUser().getUserName() + "已成功借阅" +" 《"+ slBorrow.getTheBook().getBookName() +"》\n"
-				+ "借阅编号：" + slBorrow.getBorrowId() +" 请准备好此书给他，并登记出库信息\n"
+				+ "请准备好此书给他，并登记出库信息\n"
 				+ "借阅到期时间为："+formatDate(slBorrow.getShouldReturnDate())+"\n\n"
 				+ "感谢您的付出！\n"
 				+ "Minerva's Book Lib\n";
@@ -137,7 +137,6 @@ public class SLEmailUtil {
 		String strTitle = "[Minerva's Book Lib]预订成功提醒";
 		String strContent = "亲爱的"+slOrder.getTheUser().getUserName()+"，\n\n"
 				+ "您已成功预订" +" 《"+ slOrder.getTheBook().getBookName() +"》\n"
-				+ "预订编号：" + slOrder.getOrderId() +"\n"
 				+ "我们会自动按预订顺序，为您安排借阅，请耐心等待。\n\n"
 				+ "感谢您的支持！\n"
 				+ "Minerva's Book Lib\n";

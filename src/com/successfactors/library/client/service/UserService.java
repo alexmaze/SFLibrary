@@ -1,7 +1,5 @@
 package com.successfactors.library.client.service;
 
-import java.util.ArrayList;
-
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.successfactors.library.shared.model.SLUser;
@@ -29,7 +27,5 @@ public interface UserService extends RemoteService {
 	
 	// 通过Email删除用户
 	boolean deleteUserByEmail(String userEmail);
-	
-	// 获取所有用户列表
-	ArrayList<SLUser> getUserList(int itemsPerPage, int pageNum);
+
 }
