@@ -273,6 +273,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		return newBorrow;
 	}
 
+	/**
+	 * 获取当前登录用户信息
+	 * */
 	protected SLUser getCurrentUser() {
 
 		HttpServletRequest request = null;

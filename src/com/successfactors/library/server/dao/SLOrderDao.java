@@ -1,5 +1,9 @@
 package com.successfactors.library.server.dao;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -8,14 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
-import com.successfactors.library.shared.BorrowSearchType;
-import com.successfactors.library.shared.BorrowStatusType;
-import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
 
 /**
@@ -118,6 +115,7 @@ public class SLOrderDao {
 	 * @param pageNum
 	 * @return
 	 */
+    @SuppressWarnings("rawtypes")
 	public List<SLOrder> searchOrderList(String firstType, String firstValue, 
 			String secondType, String secondValue, int itemsPerPage, int pageNum, boolean isLike){
 	    try {
@@ -134,7 +132,7 @@ public class SLOrderDao {
 	        q.setMaxResults(itemsPerPage);
 
 	        List<SLOrder> results = new ArrayList<SLOrder>();
-	        List list = q.list();
+			List list = q.list();
 	        Iterator it = list.iterator();
 	        while (it.hasNext()) {
 	          SLOrder bean = (SLOrder) it.next();
@@ -247,7 +245,6 @@ public class SLOrderDao {
 	 * @param bookISBN
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
 	public SLOrder getEarlistOrder(String bookISBN){
 		session = HibernateSessionFactory.getSession();
 		SLOrder slOrder = null;

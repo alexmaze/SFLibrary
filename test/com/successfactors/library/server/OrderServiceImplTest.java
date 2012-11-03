@@ -3,12 +3,8 @@
  */
 package com.successfactors.library.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -18,35 +14,7 @@ import org.junit.Test;
 public class OrderServiceImplTest {
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#orderBook(java.lang.String)}.
+	 * 测试：预订书籍
 	 */
 	@Test
 	public final void testOrderBook() {
@@ -54,7 +22,7 @@ public class OrderServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#cancelOrder(int)}.
+	 * 测试：取消预订
 	 */
 	@Test
 	public final void testCancelOrder() {
@@ -62,15 +30,7 @@ public class OrderServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#updateStatusAfterBorrowBook(int)}.
-	 */
-	@Test
-	public final void testUpdateStatusAfterBorrowBook() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#getOrderInfo(int)}.
+	 * 测试：获取预订信息
 	 */
 	@Test
 	public final void testGetOrderInfo() {
@@ -78,7 +38,7 @@ public class OrderServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#getOrderList(com.successfactors.library.shared.OrderStatusType, java.lang.String, int, int)}.
+	 * 测试：获取预订列表
 	 */
 	@Test
 	public final void testGetOrderList() {
@@ -86,7 +46,7 @@ public class OrderServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.OrderServiceImpl#searchOrderList(com.successfactors.library.shared.OrderStatusType, com.successfactors.library.shared.OrderSearchType, java.lang.String, int, int)}.
+	 * 测试：获取搜索结果
 	 */
 	@Test
 	public final void testSearchOrderList() {
