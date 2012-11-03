@@ -19,12 +19,12 @@ import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
-public class MysqlBorrowDao {
-	private static final Logger log = Logger.getLogger(MysqlBorrowDao.class);
+public class SLBorrowDao {
+	private static final Logger log = Logger.getLogger(SLBorrowDao.class);
 
 	private Session session;
 
-	public MysqlBorrowDao() {
+	public SLBorrowDao() {
 		log.info("MysqlBorrowDao construct is running");
 		session = HibernateSessionFactory.getSession();
 		if (session == null) {

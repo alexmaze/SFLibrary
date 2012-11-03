@@ -11,50 +11,35 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.successfactors.library.shared.model.SLUser;
+
 /**
  * @author Alex
  *
  */
 public class BorrowServiceImplTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+	
+	private BorrowServiceImpl borrowService = new BorrowServiceImpl() {
+		@Override
+		protected SLUser getCurrentUser() {
+			return this.userDao.getSLUserByEmail(USER_EMAIL);
+		}
+	};
+	
+	private final static String USER_EMAIL = "ayan@successfactors.com";
+	private final static String BOOK_ISBN = "123456987";
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-
-	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#borrowBook(java.lang.String)}.
+	 * 测试：借书
 	 */
 	@Test
 	public final void testBorrowBook() {
-		fail("Not yet implemented"); // TODO
+		assertTrue(borrowService.borrowBook(BOOK_ISBN));
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#returnBook(int)}.
+	 * 测试：还书
 	 */
 	@Test
 	public final void testReturnBook() {
@@ -62,15 +47,7 @@ public class BorrowServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#lostBook(int)}.
-	 */
-	@Test
-	public final void testLostBook() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#getBorrowInfo(int)}.
+	 * 测试：获取借阅信息
 	 */
 	@Test
 	public final void testGetBorrowInfo() {
@@ -78,7 +55,7 @@ public class BorrowServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#getBorrowList(com.successfactors.library.shared.BorrowStatusType, java.lang.String, int, int)}.
+	 * 测试：借阅列表
 	 */
 	@Test
 	public final void testGetBorrowList() {
@@ -86,7 +63,7 @@ public class BorrowServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#searchBorrowList(com.successfactors.library.shared.BorrowStatusType, com.successfactors.library.shared.BorrowSearchType, java.lang.String, int, int)}.
+	 * 测试：搜索借阅列表
 	 */
 	@Test
 	public final void testSearchBorrowList() {
@@ -94,7 +71,7 @@ public class BorrowServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#getOverdueBorrowList()}.
+	 * 测试：超期借阅列表
 	 */
 	@Test
 	public final void testGetOverdueBorrowList() {
@@ -102,7 +79,7 @@ public class BorrowServiceImplTest {
 	}
 
 	/**
-	 * Test method for {@link com.successfactors.library.server.BorrowServiceImpl#outStoreBook(int)}.
+	 * 测试：图书出库
 	 */
 	@Test
 	public final void testOutStoreBook() {

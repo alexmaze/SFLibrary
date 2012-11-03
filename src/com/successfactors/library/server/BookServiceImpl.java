@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BookService;
-import com.successfactors.library.server.dao.MysqlBookDao;
+import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
@@ -14,7 +14,7 @@ import com.successfactors.library.shared.model.SLBook;
 @SuppressWarnings("serial")
 public class BookServiceImpl extends RemoteServiceServlet implements BookService {
 
-    private MysqlBookDao dao=new MysqlBookDao();
+    private SLBookDao dao=new SLBookDao();
 	/**
 	 * 测试服务器连通
 	 * */

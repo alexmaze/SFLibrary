@@ -15,7 +15,7 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 		UserService {
 
 	private SLUserDao slUserDao = new SLUserDao();
-	private final static String USER_SESSION_KEY = "SF_LIB_USER";
+	public final static String USER_SESSION_KEY = "SF_LIB_USER";
 
 	/**
 	 * 测试服务器连通

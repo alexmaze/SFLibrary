@@ -10,9 +10,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BorrowService;
-import com.successfactors.library.server.dao.MysqlBookDao;
-import com.successfactors.library.server.dao.MysqlBorrowDao;
-import com.successfactors.library.server.dao.MysqlOrderDao;
+import com.successfactors.library.server.dao.SLBookDao;
+import com.successfactors.library.server.dao.SLBorrowDao;
+import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
@@ -22,38 +22,17 @@ import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
 
-
-
+import static com.successfactors.library.server.UserServiceImpl.USER_SESSION_KEY;
 
 @SuppressWarnings("serial")
-public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowService {
+public class BorrowServiceImpl extends RemoteServiceServlet implements
+		BorrowService {
 
-	private MysqlBorrowDao borrowDao = new MysqlBorrowDao();
-	
-	private MysqlOrderDao orderDao = new MysqlOrderDao();
-	
-	private MysqlBookDao bookDao = new MysqlBookDao();
-	
-	private SLUserDao userDao = new SLUserDao();
-	
-	private final static String USER_SESSION_KEY = "SF_LIB_USER"; 
-	
-	public MysqlBorrowDao getMysqlBorrowDao(){
-		return this.borrowDao;
-	}
-	
-	public MysqlOrderDao getMysqlOrderDao(){
-		return this.orderDao;
-	}
-	
-	public MysqlBookDao getMysqlBookDao(){
-		return this.bookDao;
-	}
-	
-	public SLUserDao getMysqlUserDao(){
-		return this.userDao;
-	}
-	
+	protected SLBorrowDao borrowDao = new SLBorrowDao();
+	protected SLOrderDao orderDao = new SLOrderDao();
+	protected SLBookDao bookDao = new SLBookDao();
+	protected SLUserDao userDao = new SLUserDao();
+
 	/**
 	 * 测试服务器连通
 	 * */
@@ -62,44 +41,66 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		return "Hello " + strHello;
 	}
 
+	/**
+	 * 借阅图书
+	 * */
 	@Override
 	public boolean borrowBook(String bookISBN) {
-		HttpServletRequest request = null;
-		HttpSession session = null;
-		SLUser slUser = null;
-		request = getThreadLocalRequest();
-		if(request != null){
-			session = request.getSession();
+
+		// 现获取当前用户
+		SLUser slUser = getCurrentUser();
+		if (slUser == null) {
+			return false;
 		}
-		if(session != null){
-			slUser = (SLUser) session.getAttribute(USER_SESSION_KEY);
-		}
+
+		return borrowBook(slUser.getUserEmail(), bookISBN);
+	}
+	
+	private boolean borrowBook(String userEmail, String bookISBN) {
+
 		SLBook slBook = bookDao.queryByISBN(bookISBN);
-		if(slBook.getBookAvailableQuantity() > 0){
+		if (slBook.getBookAvailableQuantity() > 0) {
 			slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() - 1);
-			SLBorrow slBorrow = initBorrow(slUser.getUserEmail(),slBook.getBookISBN());
+			SLBorrow slBorrow = initBorrow(userEmail,
+					slBook.getBookISBN());
 			borrowDao.save(slBorrow);
 			bookDao.updateBook(slBook);
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}
 
+	/**
+	 * 还书
+	 * */
 	@Override
 	public boolean returnBook(int borrowId) {
+		
+		// 更新借书表
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		slBorrow.setStatus("已归还");
 		borrowDao.update(slBorrow);
+		
+		// 更新书籍表
 		SLBook slBook = slBorrow.getTheBook();
-		slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity()+1);
-		bookDao.updateBook(slBook);
-		SLOrder slOrder = orderDao.getEarlistOrder(slBook.getBookISBN());
-		if(slOrder != null){
-			SLBorrow newBorrow = initBorrow(slOrder.getUserEmail(),slBook.getBookISBN());
-			borrowDao.save(newBorrow);
-			
+		slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() + 1);
+		if (!slBorrow.isInStore()) {
+			slBook.setBookInStoreQuantity(slBook.getBookInStoreQuantity() + 1);
 		}
+		bookDao.updateBook(slBook);
+		
+		// 更新预订表
+		SLOrder slOrder = orderDao.getEarlistOrder(slBook.getBookISBN());
+		if (slOrder != null) {
+			// 自动为最早预订的用户借阅
+			if (borrowBook(slOrder.getUserEmail(), slBook.getBookISBN())) {
+				// 更新预订表
+				slOrder.setStatus("已借到");
+				orderDao.updateOrder(slOrder);
+			}
+		}
+		
 		return true;
 	}
 
@@ -107,7 +108,8 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	public boolean lostBook(int borrowId) {
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		slBorrow.setStatus("已丢失");
-		SLBook slBook = new BookServiceImpl().getBookByISBN(slBorrow.getBookISBN());
+		SLBook slBook = new BookServiceImpl().getBookByISBN(slBorrow
+				.getBookISBN());
 		slBook.setBookTotalQuantity(slBook.getBookAvailableQuantity() - 1);
 		return true;
 	}
@@ -115,18 +117,20 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	@Override
 	public SLBorrow getBorrowInfo(int borrowId) {
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
-		SLBook slBook =bookDao.queryByISBN(slBorrow.getBookISBN());
+		SLBook slBook = bookDao.queryByISBN(slBorrow.getBookISBN());
 		SLUser slUser = userDao.getSLUserByEmail(slBorrow.getUserEmail());
 		slBorrow.setTheBook(slBook);
 		slBorrow.setTheUser(slUser);
 		return slBorrow;
 	}
 
-
 	/**
 	 * 获取某种状态下的，某用户的所有借阅信息
-	 * @param statusType 借阅状态
-	 * @param userEmail 用户邮箱地址，注：当userEmail==null时，对所有用户
+	 * 
+	 * @param statusType
+	 *            借阅状态
+	 * @param userEmail
+	 *            用户邮箱地址，注：当userEmail==null时，对所有用户
 	 * @param itemsPerPage
 	 * @param pageNum
 	 */
@@ -134,30 +138,36 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
 		List<SLBorrow> result = null;
-		if(userEmail != null){
-			result = borrowDao.searchBorrowList(statusType,itemsPerPage,pageNum);
-		}else{
-			result = borrowDao.searchBorrowList(statusType,
-					userEmail,itemsPerPage,pageNum);
+		if (userEmail != null) {
+			result = borrowDao.searchBorrowList(statusType, itemsPerPage,
+					pageNum);
+		} else {
+			result = borrowDao.searchBorrowList(statusType, userEmail,
+					itemsPerPage, pageNum);
 		}
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-		
-		for (int i = 0;i < itemsPerPage;i++) {
+
+		for (int i = 0; i < itemsPerPage; i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
+					.getUserEmail()));
 			result.set(i, slBorrow);
 		}
-		page.setTheBorrows((ArrayList<SLBorrow>)result);
+		page.setTheBorrows((ArrayList<SLBorrow>) result);
 		page.setTotalPageNum(pageNum);
 		return page;
 	}
 
 	/**
 	 * 在某种状态下的借阅信息中，所有用户中，搜索
-	 * @param statusType 借阅状态
-	 * @param searchType 搜索类型
-	 * @param searchValue 关键词
+	 * 
+	 * @param statusType
+	 *            借阅状态
+	 * @param searchType
+	 *            搜索类型
+	 * @param searchValue
+	 *            关键词
 	 * @param itemsPerPage
 	 * @param pageNum
 	 * */
@@ -166,18 +176,19 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
 
-		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,searchType,
-		searchValue,itemsPerPage,pageNum);
+		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,
+				searchType, searchValue, itemsPerPage, pageNum);
 
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 
-		for (int i = 0;i < itemsPerPage;i++) {
+		for (int i = 0; i < itemsPerPage; i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
+					.getUserEmail()));
 			result.set(i, slBorrow);
 		}
-		page.setTheBorrows((ArrayList<SLBorrow>)result);
+		page.setTheBorrows((ArrayList<SLBorrow>) result);
 		page.setTotalPageNum(pageNum);
 		return page;
 	}
@@ -190,21 +201,21 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		BorrowStatusType statusType = BorrowStatusType.parse("已超期");
 		List<SLBorrow> result = borrowDao.searchBorrowList(statusType);
 
-
-		for (int i = 0;i < result.size();i++) {
+		for (int i = 0; i < result.size(); i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
-			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow.getUserEmail()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
+					.getUserEmail()));
 			result.set(i, slBorrow);
 		}
-		return (ArrayList<SLBorrow>)result;
+		return (ArrayList<SLBorrow>) result;
 	}
 
 	// 图书出库
 	// 更改inStore属性，更改Book表中bookInStoreQuantity属性
 	@Override
 	public boolean outStoreBook(int borrowId) {
-		SLBorrow slBorrow =  borrowDao.getBorrowById(borrowId);
+		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		SLBook slBook = bookDao.queryByISBN(slBorrow.getBookISBN());
 		slBook.setBookInStoreQuantity(slBook.getBookInStoreQuantity() - 1);
 		slBorrow.setInStore(false);
@@ -212,21 +223,37 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements BorrowSer
 		bookDao.updateBook(slBook);
 		return true;
 	}
-	
-	private SLBorrow initBorrow(String userEmail, String ISBN){
+
+	private SLBorrow initBorrow(String userEmail, String ISBN) {
 		SLBorrow newBorrow = new SLBorrow();
-		Calendar c = Calendar.getInstance(); 
+		Calendar c = Calendar.getInstance();
 		Date borrowDate = c.getTime();
-		c.add(Calendar.DAY_OF_MONTH, 15); 
+		c.add(Calendar.DAY_OF_MONTH, 15);
 		Date shouldReturnDate = c.getTime();
 		newBorrow.setUserEmail(userEmail);
 		newBorrow.setBookISBN(ISBN);
 		newBorrow.setBorrowDate(borrowDate);
 		newBorrow.setShouldReturnDate(shouldReturnDate);
-		newBorrow.setInStore(false);
+		newBorrow.setInStore(true);
 		newBorrow.setOverdue(false);
 		newBorrow.setStatus("未归还");
 		return newBorrow;
+	}
+
+	protected SLUser getCurrentUser() {
+
+		HttpServletRequest request = null;
+		HttpSession session = null;
+		SLUser slUser = null;
+		request = getThreadLocalRequest();
+		if (request != null) {
+			session = request.getSession();
+		}
+		if (session != null) {
+			slUser = (SLUser) session.getAttribute(USER_SESSION_KEY);
+		}
+
+		return slUser;
 	}
 
 }

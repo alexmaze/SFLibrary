@@ -16,12 +16,12 @@ import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.SLBook;
 
-public class MysqlBookDao {
-  private static final Logger log = Logger.getLogger(MysqlBookDao.class);
+public class SLBookDao {
+  private static final Logger log = Logger.getLogger(SLBookDao.class);
 
   private Session session = null;
 
-  public MysqlBookDao() {
+  public SLBookDao() {
     log.debug("MysqlBookDao construct is running");
   }
 

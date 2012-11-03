@@ -23,17 +23,17 @@ import com.successfactors.library.shared.model.SLOrder;
  * @author haimingli
  *
  */
-public class MysqlOrderDao {
-	private static final Logger log = Logger.getLogger(MysqlOrderDao.class);
+public class SLOrderDao {
+	private static final Logger log = Logger.getLogger(SLOrderDao.class);
 	private Session session = null;
 	public static final String SEARCH_ALL ="all";
-    private MysqlBookDao bookDao = new MysqlBookDao();
+    private SLBookDao bookDao = new SLBookDao();
 	private SLUserDao userDao = new SLUserDao();
 
 	/**
 	 * Construct(do nothing)
 	 */
-	public MysqlOrderDao() {
+	public SLOrderDao() {
 		log.debug("MysqlOrderDao construct is running");
 	}
 

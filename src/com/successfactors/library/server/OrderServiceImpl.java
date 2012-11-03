@@ -9,8 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.OrderService;
-import com.successfactors.library.server.dao.MysqlBookDao;
-import com.successfactors.library.server.dao.MysqlOrderDao;
+import com.successfactors.library.server.dao.SLBookDao;
+import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.OrderSearchType;
 import com.successfactors.library.shared.OrderStatusType;
@@ -31,8 +31,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements OrderServi
 	private static final String ORDER_BORROWED = "已借到";
 	private final static String USER_SESSION_KEY = "SF_LIB_USER"; 
 	
-	private MysqlOrderDao orderDao = new MysqlOrderDao();
-	private MysqlBookDao bookDao = new MysqlBookDao();
+	private SLOrderDao orderDao = new SLOrderDao();
+	private SLBookDao bookDao = new SLBookDao();
 	private SLUserDao userDao = new SLUserDao();
 
 	/**
