@@ -2,10 +2,13 @@ package com.successfactors.library.server;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContext;
 
+import com.successfactors.library.server.dao.SLBorrowDao;
+import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.SLBorrow;
 
@@ -42,32 +45,31 @@ public class SFLibDailyTask extends TimerTask {
 	}
 
 	// 执行任务
-	private void doTask() {
-		// TODO 检查书籍超期情况
+	public void doTask() {
+		BorrowServiceImpl borrowService = new BorrowServiceImpl();
+		SLBorrowDao borrowDao = new SLBorrowDao();
+		
+		// 检查书籍超期情况
+		ArrayList<SLBorrow> nowBorrowList = borrowService.getBorrowList(BorrowStatusType.NOW, null, Integer.MAX_VALUE, 1).getTheBorrows();
+		if (nowBorrowList == null) {
+			return;
+		}
+		for (SLBorrow slBorrow : nowBorrowList) {
+			if (slBorrow.getShouldReturnDate().before(new Date())) {
+				slBorrow.setStatus("已超期");
+				borrowDao.update(slBorrow);
+				//context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
+				System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
+			}
+		}
 		
 		// 借书超期处理
-		BorrowServiceImpl bookService = new BorrowServiceImpl();
-		ArrayList<SLBorrow> overdueList = bookService.getOverdueBorrowList();
+		ArrayList<SLBorrow> overdueList = borrowService.getOverdueBorrowList();
 		
 		for (SLBorrow slBorrow : overdueList) {
-			sendOverdueEmail(slBorrow);
+			emailUtil.sendOverdueEmail(slBorrow);
 		}
 		
 	}
-
-	private void sendOverdueEmail(SLBorrow slBorrow) {
-		// TODO 美化超期邮件
-		
-		String toEmail = slBorrow.getUserEmail();
-		String strTitle = "[Minerva's Book Lib]借书超期提醒";
-		String strContent = "亲爱的"+slBorrow.getTheUser().getUserName()+"，\n"
-				+ "您于" + slBorrow.getBorrowDate()+ "借阅的" + "《" + slBorrow.getTheBook().getBookName() + "》\n"
-				+ "已超过借阅期限，请尽快归还！\n"
-				+ "感谢您的支持！\n"
-				+ "Minerva's Book Lib\n";
-		
-		emailUtil.sendEmail(toEmail, strTitle, strContent);
-	}
-
 
 }

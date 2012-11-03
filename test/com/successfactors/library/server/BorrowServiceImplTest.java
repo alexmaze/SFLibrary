@@ -49,7 +49,7 @@ public class BorrowServiceImplTest {
 	 */
 	@Test
 	public final void testReturnBook() {
-		assertTrue(borrowService.returnBook(4));
+		assertTrue(borrowService.returnBook(8));
 	}
 
 	/**
@@ -97,5 +97,4 @@ public class BorrowServiceImplTest {
 	public final void testOutStoreBook() {
 		assertTrue(borrowService.outStoreBook(6));
 	}
-
 }

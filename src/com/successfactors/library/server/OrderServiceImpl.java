@@ -14,6 +14,7 @@ import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.OrderSearchType;
 import com.successfactors.library.shared.OrderStatusType;
+import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
@@ -36,6 +37,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	protected SLOrderDao orderDao = new SLOrderDao();
 	protected SLBookDao bookDao = new SLBookDao();
 	protected SLUserDao userDao = new SLUserDao();
+	
+	private SLEmailUtil emailUtil = new SLEmailUtil();
 
 	/**
 	 * Test the connection of the server
@@ -73,8 +76,14 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 		slOrder.setBookISBN(bookISBN);
 		slOrder.setOrderDate(orderDate);
 		slOrder.setStatus(ORDER_INQUEUE);
-
-		return orderDao.orderBook(slOrder);
+		orderDao.orderBook(slOrder);
+		
+		// 发送邮件
+		slOrder.setTheBook(bookDao.queryByISBN(bookISBN));
+		slOrder.setTheUser(userDao.getSLUserByEmail(slOrder.getUserEmail()));
+		emailUtil.sendOrderSuccessEmail(slOrder);
+		
+		return true;
 	}
 
 	/**

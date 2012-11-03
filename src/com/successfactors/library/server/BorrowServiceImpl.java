@@ -1,7 +1,9 @@
 package com.successfactors.library.server;
 
-import java.util.Calendar;
+import static com.successfactors.library.server.UserServiceImpl.USER_SESSION_KEY;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +18,12 @@ import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
+import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
-
-import static com.successfactors.library.server.UserServiceImpl.USER_SESSION_KEY;
 
 public class BorrowServiceImpl extends RemoteServiceServlet implements
 		BorrowService {
@@ -32,6 +33,8 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	protected SLOrderDao orderDao = new SLOrderDao();
 	protected SLBookDao bookDao = new SLBookDao();
 	protected SLUserDao userDao = new SLUserDao();
+	
+	private SLEmailUtil emailUtil = new SLEmailUtil();
 
 	/**
 	 * 测试服务器连通
@@ -70,6 +73,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 					slBook.getBookISBN());
 			borrowDao.save(slBorrow);
 			bookDao.updateBook(slBook);
+			
+			// 发邮件
+			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
+			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
+					.getUserEmail()));
+			emailUtil.sendBorrowSuccessEmail(slBorrow);
+			
 			return true;
 		} else {
 			return false;
@@ -132,6 +142,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		return true;
 	}
 
+	/**
+	 * 获取借阅信息
+	 * */
 	@Override
 	public SLBorrow getBorrowInfo(int borrowId) {
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
