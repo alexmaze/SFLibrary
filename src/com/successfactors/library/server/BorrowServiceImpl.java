@@ -49,13 +49,10 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * */
 	@Override
 	public boolean borrowBook(String bookISBN) {
-
-		// 现获取当前用户
 		SLUser slUser = getCurrentUser();
 		if (slUser == null) {
 			return false;
 		}
-
 		return borrowBook(slUser.getUserEmail(), bookISBN);
 	}
 	
@@ -73,8 +70,6 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 					slBook.getBookISBN());
 			borrowDao.save(slBorrow);
 			bookDao.updateBook(slBook);
-			
-			// 发邮件
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
 			slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
 					.getUserEmail()));
@@ -91,27 +86,20 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * */
 	@Override
 	public boolean returnBook(int borrowId) {
-		
-		// 更新借书表
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		slBorrow.setStatus("已归还");
 		slBorrow.setReturnDate(new Date());
 		borrowDao.update(slBorrow);
-		
-		// 更新书籍表
 		SLBook slBook = bookDao.queryByISBN(slBorrow.getBookISBN());
 		slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() + 1);
 		if (!slBorrow.isInStore()) {
 			slBook.setBookInStoreQuantity(slBook.getBookInStoreQuantity() + 1);
 		}
 		bookDao.updateBook(slBook);
-		
-		// 更新预订表
 		SLOrder slOrder = orderDao.getEarlistOrder(slBook.getBookISBN());
 		if (slOrder != null) {
 			// 自动为最早预订的用户借阅
 			if (borrowBook(slOrder.getUserEmail(), slBook.getBookISBN())) {
-				// 更新预订表
 				slOrder.setStatus("已借到");
 				orderDao.updateOrder(slOrder);
 			}
@@ -125,13 +113,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * */
 	@Override
 	public boolean lostBook(int borrowId) {
-		
-		// 更新借阅信息
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		slBorrow.setStatus("已丢失");
 		borrowDao.save(slBorrow);
-		
-		// 更新书籍信息
 		SLBook slBook = bookDao.queryByISBN(slBorrow
 				.getBookISBN());
 		slBook.setBookTotalQuantity(slBook.getBookTotalQuantity() - 1);
@@ -168,18 +152,13 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
-		
-		// 获取借阅列表
 		List<SLBorrow> result = null;
 		if (userEmail == null) {
-			result = borrowDao.searchBorrowList(statusType, null, 
-					itemsPerPage, pageNum);
+			result = borrowDao.searchBorrowList(statusType, itemsPerPage, pageNum);
 		} else {
 			result = borrowDao.searchBorrowList(statusType, userEmail,
 					itemsPerPage, pageNum);
 		}
-		
-		// 组装Page
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
 		for (int i = 0; i < result.size(); i++) {
 			SLBorrow slBorrow = result.get(i);
@@ -189,9 +168,12 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 			result.set(i, slBorrow);
 		}
 		page.setTheBorrows((ArrayList<SLBorrow>) result);
-		// TODO 设置总页数
-//		page.setTotalPageNum(pageNum);
-		
+		int totalNum = borrowDao.getTotalCount();
+		if (totalNum % itemsPerPage == 0) {
+			page.setTotalPageNum((int) totalNum / itemsPerPage);
+		} else {
+			page.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+		}
 		return page;
 	}
 
@@ -211,12 +193,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	public BorrowPage searchBorrowList(BorrowStatusType statusType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
-
 		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,
 				searchType, searchValue, itemsPerPage, pageNum);
-
 		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
-
 		for (int i = 0; i < result.size(); i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
@@ -225,10 +204,12 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 			result.set(i, slBorrow);
 		}
 		page.setTheBorrows((ArrayList<SLBorrow>) result);
-
-		// TODO 设置总页数
-//		page.setTotalPageNum(pageNum);
-		
+		int totalNum = borrowDao.getTotalCount();
+		if (totalNum % itemsPerPage == 0) {
+			page.setTotalPageNum((int) totalNum / itemsPerPage);
+		} else {
+			page.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+		}
 		return page;
 	}
 
@@ -255,13 +236,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * */
 	@Override
 	public boolean outStoreBook(int borrowId) {
-		
-		// 更新借阅信息
 		SLBorrow slBorrow = borrowDao.getBorrowById(borrowId);
 		slBorrow.setInStore(false);
 		borrowDao.update(slBorrow);
-		
-		// 更新书籍信息
 		SLBook slBook = bookDao.queryByISBN(slBorrow.getBookISBN());
 		slBook.setBookInStoreQuantity(slBook.getBookInStoreQuantity() - 1);
 		bookDao.updateBook(slBook);
@@ -292,7 +269,6 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * 获取当前登录用户信息
 	 * */
 	protected SLUser getCurrentUser() {
-
 		HttpServletRequest request = null;
 		HttpSession session = null;
 		SLUser slUser = null;
@@ -303,7 +279,6 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		if (session != null) {
 			slUser = (SLUser) session.getAttribute(USER_SESSION_KEY);
 		}
-
 		return slUser;
 	}
 
