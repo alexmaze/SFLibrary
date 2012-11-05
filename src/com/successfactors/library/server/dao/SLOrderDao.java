@@ -236,7 +236,7 @@ public class SLOrderDao {
 	
 	private String getSqlLike(String type, String value){
 		StringBuffer sb = new StringBuffer();
-		sb.append(" p." + type + " like " + "'"+value+"'");
+		sb.append(" p." + type + " like " + "'%"+value+"%'");
 		return sb.toString();
 	}
 	
