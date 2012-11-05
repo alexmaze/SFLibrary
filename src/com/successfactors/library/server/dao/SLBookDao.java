@@ -16,6 +16,7 @@ import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BookSearchType;
 import com.successfactors.library.shared.model.SLBook;
 
+@SuppressWarnings("rawtypes")
 public class SLBookDao {
 	private static final Logger log = Logger.getLogger(SLBookDao.class);
 

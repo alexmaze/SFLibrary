@@ -1,9 +1,7 @@
 package com.successfactors.library.server;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BookService;
@@ -26,8 +24,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public SLBook addBook(SLBook newBook) {
-		// TODO Auto-generated method stub
-	  if(dao.insertBook(newBook)){
+			  if(dao.insertBook(newBook)){
 	    return newBook;
 	  }else{
 	    return null;
@@ -36,7 +33,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public boolean deleteBook(String bookISBN) {
-		// TODO Auto-generated method stub
 	  SLBook book=new SLBook();
 	  book.setBookISBN(bookISBN);
 	  return dao.deleteBook(book);
@@ -44,7 +40,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public boolean updateBook(SLBook updateBook) {
-		// TODO Auto-generated method stub
 		return dao.updateBook(updateBook);
 	}
 
@@ -56,7 +51,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 	@Override
 	public BookPage searchBookList(BookSearchType searchType,
 			String searchValue, int itemsPerPage, int pageNum) {
-		// TODO Auto-generated method stub
 		ArrayList<SLBook> listBooks=(ArrayList<SLBook>)dao.queryByCustomField(searchType,searchValue,itemsPerPage,pageNum);
 		BookPage bookPage=new BookPage(itemsPerPage,pageNum);
 		bookPage.setTheBooks(listBooks);
@@ -95,7 +89,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements BookService
 
 	@Override
 	public BookPage getHotBookList(int num) {
-		// TODO Auto-generated method stub
 
 		BookPage page = new BookPage(1, num);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();

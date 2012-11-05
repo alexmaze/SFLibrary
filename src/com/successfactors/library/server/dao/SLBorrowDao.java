@@ -265,7 +265,7 @@ public class SLBorrowDao {
 			}
 			//hack for get count(*)
 			criteria.setProjection(Projections.rowCount());
-			totalCount = (Integer)criteria.uniqueResult();
+			totalCount = ((Long)criteria.uniqueResult()).intValue();
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
@@ -308,7 +308,7 @@ public class SLBorrowDao {
 			}	
 			criteria.add(Restrictions.like(strSearch, searchValue));
 			criteria.setProjection(Projections.rowCount());
-			totalCount = (Integer)criteria.uniqueResult();
+			totalCount = ((Long)criteria.uniqueResult()).intValue();
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
