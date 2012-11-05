@@ -219,6 +219,7 @@ public class SLBorrowDao {
 		List<SLBorrow> result = null;
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("userEmail", userEmail));
 			String strStatus = BorrowStatusType.parse(borrowType);
 			if (strStatus != null) {
 				criteria.add(Restrictions.eq("status", strStatus));
