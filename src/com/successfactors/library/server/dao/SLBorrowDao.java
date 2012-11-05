@@ -355,8 +355,8 @@ public class SLBorrowDao {
 			BorrowStatusType borrowType) {
 		if (borrowType.equals(BorrowStatusType.BORROW_NEED_TAKE)) {
 			criteria.add(Restrictions.and(Restrictions.or(Restrictions.eq("status", "未归还"),
-					Restrictions.eq("status", "已超期")), Restrictions.eq("inStore", "1")));
-			criteria.add(Restrictions.eq("inStore", true));
+					Restrictions.eq("status", "已超期")), Restrictions.eq("inStore", true)));
+			//criteria.add(Restrictions.eq("inStore", "1"));
 		} else if (borrowType.equals(BorrowStatusType.HISTORY)) {
 			criteria.add(Restrictions.eq("status", "已归还"));
 		} else if (borrowType.equals(BorrowStatusType.NOW)) {
