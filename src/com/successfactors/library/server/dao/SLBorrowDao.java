@@ -226,7 +226,7 @@ public class SLBorrowDao {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}
 			criteria.setProjection(Projections.rowCount());
-			totalCount = (Integer)criteria.uniqueResult();
+			totalCount = ((Long)criteria.uniqueResult()).intValue();
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);
