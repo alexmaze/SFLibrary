@@ -69,7 +69,7 @@ public class SFLibrary implements EntryPoint {
 			eventBus = new SimpleEventBus();
 			new AppController();
 			
-			Window.enableScrolling(false);
+			Window.enableScrolling(true);
 			Window.setMargin("0px");
 			
 			mainLayout = new VLayout();
