@@ -1,13 +1,15 @@
 package com.successfactors.library.server;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimerTask;
 
 import javax.servlet.ServletContext;
 
+import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLBorrowDao;
+import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.SLBorrow;
@@ -21,6 +23,9 @@ public class SFLibDailyTask extends TimerTask {
 	private ServletContext context = null;
 	
 	private SLEmailUtil emailUtil = new SLEmailUtil();
+	private SLBorrowDao borrowDao = new SLBorrowDao();
+	private SLBookDao bookDao = new SLBookDao();
+	private SLUserDao userDao = new SLUserDao();
 
 	public SFLibDailyTask(ServletContext context) {
 		this.context = context;
@@ -32,12 +37,8 @@ public class SFLibDailyTask extends TimerTask {
 		if (!isRunning) {
 			if (C_SCHEDULE_HOUR == cal.get(Calendar.HOUR_OF_DAY)) {
 				isRunning = true;
-				context.log("开始执行定时任务");
-
 				doTask();
-
 				isRunning = false;
-				context.log("定时任务执行结束");
 			}
 		} else {
 			context.log("上一次任务执行还未结束");
@@ -46,31 +47,33 @@ public class SFLibDailyTask extends TimerTask {
 
 	// 执行任务
 	public void doTask() {
-		BorrowServiceImpl borrowService = new BorrowServiceImpl();
-		SLBorrowDao borrowDao = new SLBorrowDao();
+		context.log("开始执行定时任务");
 		
 		// 检查书籍超期情况
-		ArrayList<SLBorrow> nowBorrowList = borrowService.getBorrowList(BorrowStatusType.NOW, null, Integer.MAX_VALUE, 1).getTheBorrows();
+		List<SLBorrow> nowBorrowList = borrowDao.searchBorrowList(BorrowStatusType.NOW, Integer.MAX_VALUE, 1);
 		if (nowBorrowList == null) {
 			return;
 		}
+		
+		//context.log("共有： "+nowBorrowList.size()+" 个当前借阅记录");
 		for (SLBorrow slBorrow : nowBorrowList) {
 			if (slBorrow.getShouldReturnDate().before(new Date())) {
+				
 				slBorrow.setStatus("已超期");
 				slBorrow.setOverdue(true);
 				borrowDao.update(slBorrow);
+				
+				slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
+				slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
+						.getUserEmail()));
+				
+				emailUtil.sendOverdueEmail(slBorrow);
 				context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
-				//System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
+//				System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 			}
 		}
-		
-		// 借书超期处理
-		ArrayList<SLBorrow> overdueList = borrowService.getOverdueBorrowList();
-		
-		for (SLBorrow slBorrow : overdueList) {
-			emailUtil.sendOverdueEmail(slBorrow);
-		}
-		
+
+		context.log("定时任务执行结束");
 	}
 
 }
