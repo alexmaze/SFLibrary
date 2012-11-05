@@ -35,7 +35,6 @@ public class SLUserDao {
 	 * */
 	public boolean save(SLUser slUser) {
 		log.info("SLUserDao save is running");
-		// TODO 必要么？
 		session = HibernateSessionFactory.getSession();
 		boolean flag = false;
 		Transaction tran = null;
