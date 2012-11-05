@@ -48,7 +48,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
 		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);
 
-		ListGridField orderIdField = new ListGridField("orderId", "借阅编号");
+		ListGridField orderIdField = new ListGridField("orderId", "预订编号", 100);
 		ListGridField bookNameField = new ListGridField("bookName", "书名");
 		ListGridField bookISBNField = new ListGridField("bookISBN", "ISBN");
 		ListGridField userNameField = new ListGridField("userName", "预订人");

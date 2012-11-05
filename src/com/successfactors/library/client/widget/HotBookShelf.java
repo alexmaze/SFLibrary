@@ -27,8 +27,8 @@ public class HotBookShelf extends VLayout {
 	private static final int IMG_HEIGHT = 90;
 	private static final int IMG_WIDTH = 62;
 
-	private static final String TILE_HEIGHT = "180px";
-	private static final String TILE_WIDTH = "155px";
+//	private static final String TILE_HEIGHT = "180px";
+//	private static final String TILE_WIDTH = "155px";
 
 	private static final int BOOK_NUM = 3;
 
@@ -93,7 +93,7 @@ public class HotBookShelf extends VLayout {
 				IMG_HEIGHT);
 
 		VLayout bookInfo1 = new VLayout();
-		VLayout bookInfo2 = new VLayout();
+//		VLayout bookInfo2 = new VLayout();
 
 		Label bookNameLabel = new Label(theBook.getBookName());
 		Label bookAuthorLabel = new Label(theBook.getBookAuthor());

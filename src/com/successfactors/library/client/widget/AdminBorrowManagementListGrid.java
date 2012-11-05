@@ -48,7 +48,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
 		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);
 
-		ListGridField borrowIdField = new ListGridField("borrowId", "借阅编号");
+		ListGridField borrowIdField = new ListGridField("borrowId", "借阅编号", 100);
 		ListGridField bookNameField = new ListGridField("bookName", "书名");
 		ListGridField bookISBNField = new ListGridField("bookISBN", "ISBN");
 		ListGridField userNameField = new ListGridField("userName", "借书人");

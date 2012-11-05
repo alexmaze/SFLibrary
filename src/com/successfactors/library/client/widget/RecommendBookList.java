@@ -1,16 +1,8 @@
 package com.successfactors.library.client.widget;
 
-import static com.successfactors.library.client.SFLibrary.bookService;
-
-import java.util.ArrayList;
-
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.layout.VLayout;
-import com.successfactors.library.client.helper.RPCCall;
-import com.successfactors.library.shared.model.SLBook;
 
 /**
  * 主页展示推荐书目列表
