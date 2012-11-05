@@ -224,7 +224,7 @@ public class BookDisplayWindow  extends Window {
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
 		int bookAvailableQuantity = theRecord.getAttributeAsInt("bookAvailableQuantity");
-		orderButton.setVisible(bookAvailableQuantity < 0);
+		orderButton.setVisible(bookAvailableQuantity <= 0);
 		borrowButton.setVisible(bookAvailableQuantity > 0);
 		
 		hLayout.setMembers(bookPicUrlItem, bookForm1);
