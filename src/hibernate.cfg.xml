@@ -14,7 +14,7 @@
         <property name="connection.password">Welcomeay!</property>
 
         <!-- JDBC connection pool (use the built-in) -->
-        <property name="connection.pool_size">1</property>
+        <!-- <property name="connection.pool_size">1</property>  -->
 
         <!-- SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -35,6 +35,19 @@
         <property name="hbm2ddl.auto">update</property>
 
 		<property name="javax.persistence.validation.mode">none</property>
+		
+		<property name="connection.autoReconnect">true</property>
+        <property name="connection.autoReconnectForPools">true</property>
+        <property name="connection.is-connection-validation-required">true</property>
+        
+        <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+        <property name="hibernate.c3p0.timeout">0</property>
+        <property name="hibernate.c3p0.max_statements">100</property>
+        <property name="hibernate.c3p0.idle_test_period">0</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>
+        <property name="hibernate.c3p0.validate">true</property>
        
        <mapping class="com.successfactors.library.shared.model.SLBook"/>
        <mapping class="com.successfactors.library.shared.model.SLBorrow"/>
