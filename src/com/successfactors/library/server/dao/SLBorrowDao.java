@@ -9,6 +9,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -307,7 +308,7 @@ public class SLBorrowDao {
 			} else {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}	
-			criteria.add(Restrictions.like(strSearch, searchValue));
+			criteria.add(Restrictions.like(strSearch, searchValue, MatchMode.ANYWHERE));
 			criteria.setProjection(Projections.rowCount());
 			totalCount = ((Long)criteria.uniqueResult()).intValue();
 			criteria.setProjection(null);
