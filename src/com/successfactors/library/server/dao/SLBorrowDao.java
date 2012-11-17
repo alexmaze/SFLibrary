@@ -367,4 +367,26 @@ public class SLBorrowDao {
 		}
 	}
 
+	/**
+	 * 获取某本书籍的当前借阅队列，按时间升序排列
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<SLBorrow> getNowBorrowListByISBN(String bookISBN) {
+		
+		session = HibernateSessionFactory.getSession();
+		ArrayList<SLBorrow> result = null;
+		try {
+			Criteria criteria = session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("bookISBN", bookISBN));
+			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"),
+					Restrictions.eq("status", "已超期")));
+			
+			criteria.addOrder(Order.asc("borrowDate"));
+			result = (ArrayList<SLBorrow>) criteria.list();
+		} catch (RuntimeException re) {
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return result;
+	}
 }

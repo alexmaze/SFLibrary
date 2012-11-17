@@ -87,9 +87,13 @@ public class SLOrder implements Serializable {
 		record.setAttribute("status", status);
 		
 		//------------------------------------------------------
-		record.setAttribute("userName", theUser.getUserName());
-		record.setAttribute("bookName", theBook.getBookName());
-		record.setAttribute("bookPicUrl", theBook.getBookPicUrl());
+		if (theUser != null) {
+			record.setAttribute("userName", theUser.getUserName());
+		}
+		if (theBook != null) {
+			record.setAttribute("bookName", theBook.getBookName());
+			record.setAttribute("bookPicUrl", theBook.getBookPicUrl());
+		}
 		
 		return record;
 	}

@@ -3,6 +3,7 @@ package com.successfactors.library.client.service;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.successfactors.library.shared.BookSearchType;
+import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -41,4 +42,7 @@ public interface BookService extends RemoteService {
 	//				"bookPublisher","bookIntro",
 	//				"bookContributor","bookClass","bookLanguage"
 	BookPage searchBookList(BookSearchType searchType, String searchValue, int itemsPerPage, int pageNum);
+	
+	// 获取某本书籍的借阅队列和预订队列,两个队列都按时间顺序升序排列
+	BookBorrowOrderListInfo getBookNowBorrowOrderListByISBN(String bookISBN);
 }

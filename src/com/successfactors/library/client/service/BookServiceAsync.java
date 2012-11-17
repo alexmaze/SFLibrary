@@ -2,6 +2,7 @@ package com.successfactors.library.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.successfactors.library.shared.BookSearchType;
+import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
@@ -27,5 +28,8 @@ public interface BookServiceAsync {
 	void getHotBookList(int num, AsyncCallback<BookPage> callback);
 
 	void getBookByDoubanAPI(String bookISBN, AsyncCallback<SLBook> callback);
+
+	void getBookNowBorrowOrderListByISBN(String bookISBN,
+			AsyncCallback<BookBorrowOrderListInfo> callback);
 
 }

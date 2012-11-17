@@ -19,15 +19,24 @@ import org.stringtree.json.JSONValidatingReader;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.BookService;
 import com.successfactors.library.server.dao.SLBookDao;
+import com.successfactors.library.server.dao.SLBorrowDao;
+import com.successfactors.library.server.dao.SLOrderDao;
+import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BookSearchType;
+import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
+import com.successfactors.library.shared.model.SLBorrow;
+import com.successfactors.library.shared.model.SLOrder;
 
 @SuppressWarnings("serial")
 public class BookServiceImpl extends RemoteServiceServlet implements
 		BookService {
 
 	private SLBookDao dao = new SLBookDao();
+	private SLBorrowDao borrowDao = new SLBorrowDao();
+	private SLOrderDao orderDao = new SLOrderDao();
+	private SLUserDao userDao = new SLUserDao();
 	private static final String DOUBAN_API_URL = "https://api.douban.com/v2/book/isbn/";
 	private static final String DOUBAN_API_KEY = "?apikey={0b71b06d4ed8d8a722551147ec8a89f5}";
 
@@ -251,6 +260,27 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 		Matcher m = p.matcher(str);
 		// 替换与模式匹配的所有字符（即非数字的字符将被""替换）
 		return m.replaceAll("").trim();
+	}
+
+	/**
+	 * 获取某本书籍的当前借阅队列和预订队列
+	 * 两个队列都按时间顺序升序排列
+	 */
+	@Override
+	public BookBorrowOrderListInfo getBookNowBorrowOrderListByISBN(String bookISBN) {
+		BookBorrowOrderListInfo ret = new BookBorrowOrderListInfo();
+
+		ret.setTheBorrows(borrowDao.getNowBorrowListByISBN(bookISBN));
+		ret.setTheOrders(orderDao.getNowOrderListByISBN(bookISBN));
+		
+		for (SLBorrow borrow : ret.getTheBorrows()) {
+			borrow.setTheUser(userDao.getSLUserByEmail(borrow.getUserEmail()));
+		}
+		for (SLOrder order : ret.getTheOrders()) {
+			order.setTheUser(userDao.getSLUserByEmail(order.getUserEmail()));
+		}
+		
+		return ret;
 	}
 	
 }

@@ -260,4 +260,27 @@ public class SLOrderDao {
 		}
 		return slOrder;
 	}
+	
+	/**
+	 * 获取某本书籍的当前预订队列，按时间升序排列
+	 */
+	@SuppressWarnings("unchecked")
+	public ArrayList<SLOrder> getNowOrderListByISBN(String bookISBN) {
+		
+		session = HibernateSessionFactory.getSession();
+		ArrayList<SLOrder> result = null;
+		try {
+			Criteria criteria = session.createCriteria(SLOrder.class);
+			criteria.add(Restrictions.eq("bookISBN", bookISBN));
+			criteria.add(Restrictions.eq("status", "排队中"));
+			
+			criteria.addOrder(Order.asc("orderDate"));
+			result = (ArrayList<SLOrder>) criteria.list();
+		} catch (RuntimeException re) {
+			log.error("searchBorrowList execute error", re);
+			throw re;
+		}
+		return result;
+	}
+	
 }

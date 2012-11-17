@@ -1,5 +1,6 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.bookService;
 import static com.successfactors.library.client.SFLibrary.borrowService;
 import static com.successfactors.library.client.SFLibrary.orderService;
 
@@ -20,6 +21,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.widget.BookEditWindow.FinishEditBook;
+import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
 import com.successfactors.library.shared.model.SLBook;
 
 public class BookDisplayWindow  extends Window {
@@ -34,6 +36,7 @@ public class BookDisplayWindow  extends Window {
 
 	private IButton orderButton;
 	private IButton borrowButton;
+	private IButton borrowOrderListButton;
 	
 	private FinishEditBook finishEdit;
 	
@@ -220,7 +223,12 @@ public class BookDisplayWindow  extends Window {
 		orderButton.setIcon("actions/approve.png");
 		borrowButton = new IButton("借阅本书");
 		borrowButton.setIcon("actions/approve.png");
-		buttonLayout.setMembers(orderButton, borrowButton);
+		
+		borrowOrderListButton = new IButton("当前借阅与预订");
+		borrowOrderListButton.setIcon("icons/16/reports.png");
+		borrowOrderListButton.setWidth("150px");
+		
+		buttonLayout.setMembers(borrowOrderListButton, orderButton, borrowButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
 		int bookAvailableQuantity = theRecord.getAttributeAsInt("bookAvailableQuantity");
@@ -295,6 +303,33 @@ public class BookDisplayWindow  extends Window {
 					@Override
 					protected void callService(AsyncCallback<Boolean> cb) {
 						borrowService.borrowBook(theRecord.getAttribute("bookISBN"), cb);
+					}
+				}.retry(3);
+			}
+		});
+		borrowOrderListButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				new RPCCall<BookBorrowOrderListInfo>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+
+					@Override
+					public void onSuccess(BookBorrowOrderListInfo result) {
+						if (result == null) {
+							SC.say("当前无任何预订与借阅信息！");
+							return;
+						}
+						// 显示当前借阅预订队列
+						(new BookNowBorrowOrderListWindow(theRecord.getAttribute("bookName"), result)).show();
+					}
+
+					@Override
+					protected void callService(AsyncCallback<BookBorrowOrderListInfo> cb) {
+						bookService.getBookNowBorrowOrderListByISBN(theRecord.getAttribute("bookISBN"), cb);
 					}
 				}.retry(3);
 			}
