@@ -147,7 +147,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		
 		TextItem bookISBNItem = new TextItem("bookISBN", "ISBN");
 		bookISBNItem.setColSpan(4);
-		bookISBNItem.setWidth("50%");
+		bookISBNItem.setWidth("100%");
 		bookISBNItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookISBNItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 		bookISBNItem.setDisabled(true);
