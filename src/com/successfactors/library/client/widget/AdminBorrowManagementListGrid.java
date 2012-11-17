@@ -43,7 +43,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 		this.setCellHeight(DEFAULT_CELL_HEIGHT);
 		
 		ListGridField bookPicUrlField = new ListGridField("bookPicUrl", "封面", 60);
-		bookPicUrlField.setImageURLPrefix("/images/upload/");
+		//bookPicUrlField.setImageURLPrefix("/images/upload/");
 		bookPicUrlField.setType(ListGridFieldType.IMAGE);
 		bookPicUrlField.setImageHeight(DEFAULT_IMG_HEIGHT);
 		bookPicUrlField.setImageWidth(DEFAULT_IMG_WIDTH);

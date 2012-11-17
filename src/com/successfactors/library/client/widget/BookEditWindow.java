@@ -16,10 +16,15 @@ import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.DateItem;
+import com.smartgwt.client.widgets.form.fields.FormItemIcon;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.form.fields.TextAreaItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;
+import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
+import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.datasource.SLBookDS;
@@ -32,6 +37,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 	public interface FinishEditBook {
 		void doRefreshPage();
 	}
+	
 	
 	private static final String WINDOW_WIDTH = "620px";
 	private static final String WINDOW_HEIGHT = "360px";
@@ -104,7 +110,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		strBookPicUrl = theBook.getBookPicUrl();
 		imgVLayout = new VLayout();
 		imgVLayout.setWidth(IMG_WIDTH);
-		bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 //		bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 //		bookPicUrlItem.setPrefix("/images/upload/");
 		
@@ -141,7 +147,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		
 		TextItem bookISBNItem = new TextItem("bookISBN", "ISBN");
 		bookISBNItem.setColSpan(4);
-		bookISBNItem.setWidth("100%");
+		bookISBNItem.setWidth("50%");
 		bookISBNItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookISBNItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 		bookISBNItem.setDisabled(true);
@@ -346,6 +352,27 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		bookISBNItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookISBNItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 		
+		bookISBNItem.setShowIcons(true);
+		FormItemIcon fetchBookInfoBut = new FormItemIcon();
+		fetchBookInfoBut.setSrc("/images/actions/approve.png");
+		bookISBNItem.setIcons(fetchBookInfoBut);
+		bookISBNItem.addKeyPressHandler(new KeyPressHandler() {
+			@Override
+			public void onKeyPress(KeyPressEvent event) {
+				if (event.getKeyName().equals("Enter")) {
+					fetchDataFromDouban();
+				}
+			}
+		});
+		fetchBookInfoBut.addFormItemClickHandler(new FormItemClickHandler() {
+			
+			@Override
+			public void onFormItemClick(FormItemIconClickEvent event) {
+				fetchDataFromDouban();
+			}
+		});
+		bookISBNItem.setIconPrompt("从豆瓣获取书籍信息");
+		
 		TextItem bookPublisherItem = new TextItem("bookPublisher", "出版社");
 		bookPublisherItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookPublisherItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
@@ -467,7 +494,6 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		hLayout.setMembers(imgVLayout, bookForm1);
 		vLayout.setMembers(hLayout, bookForm2, bookForm3, buttonLayout);
 		vLayout.setMembersMargin(20);
-		
 
 		bookForm1.setValue("bookPublishDate", new Date());
 		bookForm1.setValue("bookClass", "计算机/网络");
@@ -488,7 +514,57 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		
 		bind();
 	}
-	
+
+	// TODO 从豆瓣获取图书信息
+	protected void fetchDataFromDouban() {
+
+		theBook.setBookISBN(bookForm1.getValueAsString("bookISBN"));
+		if (!FieldVerifier.isNotEmptyValid(theBook.getBookISBN())) {
+			SC.say("请先输入书籍ISBN！");
+			return;
+		}
+		
+		new RPCCall<SLBook>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(SLBook result) {
+				if (result == null) {
+					SC.say("连接豆瓣服务器失败，请稍后重试！");
+					return;
+				}
+				theBook = result;
+				
+				bookForm1.setValue("bookName", theBook.getBookName());
+				bookForm1.setValue("bookAuthor", theBook.getBookAuthor());
+				bookForm1.setValue("bookISBN", theBook.getBookISBN());
+				bookForm1.setValue("bookPublisher", theBook.getBookPublisher());
+				
+				bookForm1.setValue("bookPublishDate", theBook.getBookPublishDate());
+				bookForm1.setValue("bookClass", theBook.getBookClass());
+				bookForm1.setValue("bookLanguage", theBook.getBookLanguage());
+				bookForm1.setValue("bookPrice", theBook.getBookPrice());
+				bookForm1.setValue("bookContributor", theBook.getBookContributor());
+				
+				bookForm2.setValue("bookTotalQuantity", "1");
+				bookForm2.setValue("bookInStoreQuantity", "1");
+				bookForm2.setValue("bookAvailableQuantity", "1");
+				
+				bookForm3.setValue("bookIntro", theBook.getBookIntro());
+				
+				doAfterFinishUpload(theBook.getBookPicUrl());
+			}
+			@Override
+			protected void callService(AsyncCallback<SLBook> cb) {
+				bookService.getBookByDoubanAPI(theBook.getBookISBN(), cb);
+			}
+		}.retry(3);
+		
+		
+	}
+
 	private void bind() {
 
 		if (submitButton != null)
@@ -629,9 +705,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 	}
 
 	@Override
-	public void doAfterFinishUpload(String picName) {
-		strBookPicUrl = picName;
-		bookPicUrlItem.setSrc("/images/upload/"+strBookPicUrl);
+	public void doAfterFinishUpload(String picUrl) {
+		strBookPicUrl = picUrl;
+		bookPicUrlItem.setSrc(strBookPicUrl);
 		
 	}
 	

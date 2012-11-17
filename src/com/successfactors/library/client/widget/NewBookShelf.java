@@ -86,7 +86,7 @@ public class NewBookShelf extends VLayout {
 		
 		VLayout bookBox = new VLayout();
 		
-		Img bookPicUrlImg = new Img("/images/upload/"+theBook.getBookPicUrl(), IMG_WIDTH, IMG_HEIGHT);
+		Img bookPicUrlImg = new Img(theBook.getBookPicUrl(), IMG_WIDTH, IMG_HEIGHT);
 		Label bookNameLabel = new Label(theBook.getBookName());
 		Label bookAuthorLabel = new Label(theBook.getBookAuthor());
 		

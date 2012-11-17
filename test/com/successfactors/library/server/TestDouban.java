@@ -6,127 +6,32 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.stringtree.json.JSONReader;
 import org.stringtree.json.JSONValidatingReader;
 
-import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-import com.successfactors.library.client.service.BookService;
-import com.successfactors.library.server.dao.SLBookDao;
-import com.successfactors.library.shared.BookSearchType;
-import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 
-@SuppressWarnings("serial")
-public class BookServiceImpl extends RemoteServiceServlet implements
-		BookService {
+public class TestDouban {
 
-	private SLBookDao dao = new SLBookDao();
 	private static final String DOUBAN_API_URL = "https://api.douban.com/v2/book/isbn/";
 	private static final String DOUBAN_API_KEY = "?apikey={0b71b06d4ed8d8a722551147ec8a89f5}";
 
 	/**
-	 * 测试服务器连通
-	 * */
-	@Override
-	public String helloServer(String strHello) {
-		return "Hello " + strHello;
-	}
-
-	@Override
-	public SLBook addBook(SLBook newBook) {
-		if (dao.insertBook(newBook)) {
-			return newBook;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public boolean deleteBook(String bookISBN) {
-		SLBook book = new SLBook();
-		book.setBookISBN(bookISBN);
-		return dao.deleteBook(book);
-	}
-
-	@Override
-	public boolean updateBook(SLBook updateBook) {
-		return dao.updateBook(updateBook);
-	}
-
-	@Override
-	public SLBook getBookByISBN(String bookISBN) {
-		return dao.queryByISBN(bookISBN);
-	}
-
-	@Override
-	public BookPage searchBookList(BookSearchType searchType,
-			String searchValue, int itemsPerPage, int pageNum) {
-		ArrayList<SLBook> listBooks = (ArrayList<SLBook>) dao
-				.queryByCustomField(searchType, searchValue, itemsPerPage,
-						pageNum);
-		BookPage bookPage = new BookPage(itemsPerPage, pageNum);
-		bookPage.setTheBooks(listBooks);
-		long totalNum = dao.getCountByCustomField(searchType, searchValue);
-		if (totalNum % itemsPerPage == 0) {
-			bookPage.setTotalPageNum((int) totalNum / itemsPerPage);
-		} else {
-			bookPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
-		}
-		return bookPage;
-	}
-
-	@Override
-	public BookPage getAllBookList(int itemsPerPage, int pageNum) {
-		ArrayList<SLBook> listBooks = (ArrayList<SLBook>) dao.queryAll(
-				itemsPerPage, pageNum);
-		BookPage bookPage = new BookPage(itemsPerPage, pageNum);
-		bookPage.setTheBooks(listBooks);
-		long totalNum = dao.getCountAll();
-		if (totalNum % itemsPerPage == 0) {
-			bookPage.setTotalPageNum((int) totalNum / itemsPerPage);
-		} else {
-			bookPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
-		}
-		return bookPage;
-	}
-
-	@Override
-	public BookPage getNewBookList(int num) {
-
-		BookPage page = new BookPage(1, num);
-		ArrayList<SLBook> ret = (ArrayList<SLBook>) dao.getLatestBooks(num);
-		page.setTheBooks(ret);
-		page.setTotalPageNum(1);
-		return page;
-	}
-
-	@Override
-	public BookPage getHotBookList(int num) {
-
-		BookPage page = new BookPage(1, num);
-		ArrayList<SLBook> ret = new ArrayList<SLBook>();
-
-		ArrayList<String> listISBN = (ArrayList<String>) dao.getHotBooks(num);
-		Iterator<String> it = listISBN.iterator();
-		while (it.hasNext()) {
-			ret.add(dao.queryByISBN((String) it.next()));
-		}
-
-		page.setTheBooks(ret);
-		page.setTotalPageNum(1);
-		return page;
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		SLBook theBook = getBookByDoubanAPI("9787308103459");
+		
+		theBook.getBookAddDate();
 	}
 
 	@SuppressWarnings("rawtypes")
-	@Override
-	public SLBook getBookByDoubanAPI(String bookISBN) {
+	public static SLBook getBookByDoubanAPI(String bookISBN) {
 		String strUrl = DOUBAN_API_URL + bookISBN + DOUBAN_API_KEY;
 		BufferedReader in = null;
 		
@@ -168,11 +73,8 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 			retBook.setBookLanguage("");
 			retBook.setBookContributor("公司采购");
 			retBook.setBookPrice(result.containsKey("price")?getDouble(result.get("price").toString()):null);
-			retBook.setBookIntro(result.containsKey("summary")?result.get("summary").toString():null);
 
-			retBook.setBookTotalQuantity(1);
-			retBook.setBookInStoreQuantity(1);
-			retBook.setBookAvailableQuantity(1);
+			retBook.setBookIntro(result.containsKey("summary")?result.get("summary").toString():null);
 
 			if (result.containsKey("images")) {
 				HashMap imagesMap = (HashMap) result.get("images");
@@ -241,7 +143,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 		// 替换与模式匹配的所有字符（即非数字的字符将被""替换）
 		return Double.parseDouble(m.replaceAll("").trim());
 	}
-
+	
 	/**
 	 * 过滤字符串中的[]
 	 */
@@ -252,5 +154,4 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 		// 替换与模式匹配的所有字符（即非数字的字符将被""替换）
 		return m.replaceAll("").trim();
 	}
-	
 }

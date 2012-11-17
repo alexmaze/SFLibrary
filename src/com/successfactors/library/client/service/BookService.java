@@ -24,6 +24,9 @@ public interface BookService extends RemoteService {
 	// 通过ISBN获取图书
 	SLBook getBookByISBN(String bookISBN);
 	
+	// 通过ISBN从豆瓣API中获取图书信息
+	SLBook getBookByDoubanAPI(String bookISBN);
+	
 	// 获取所有图书列表 例如：10,2 每页10项，取第二页
 	BookPage getAllBookList(int itemsPerPage, int pageNum);
 	

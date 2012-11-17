@@ -88,8 +88,7 @@ public class HotBookShelf extends VLayout {
 		HLayout bookBox = new HLayout();
 		bookBox.setAlign(Alignment.CENTER);
 
-		Img bookPicUrlImg = new Img(
-				"/images/upload/" + theBook.getBookPicUrl(), IMG_WIDTH,
+		Img bookPicUrlImg = new Img(theBook.getBookPicUrl(), IMG_WIDTH,
 				IMG_HEIGHT);
 
 		VLayout bookInfo1 = new VLayout();

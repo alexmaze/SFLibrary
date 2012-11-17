@@ -26,4 +26,6 @@ public interface BookServiceAsync {
 
 	void getHotBookList(int num, AsyncCallback<BookPage> callback);
 
+	void getBookByDoubanAPI(String bookISBN, AsyncCallback<SLBook> callback);
+
 }

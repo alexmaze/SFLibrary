@@ -79,7 +79,7 @@ public class OrderEditWindow  extends Window {
 		hLayout.setWidth(WINDOW_WIDTH);
 		
 		String strBookPicUrl = theRecord.getAttributeAsString("bookPicUrl");
-		Img bookPicUrlItem = new Img("/images/upload/"+strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
+		Img bookPicUrlItem = new Img(strBookPicUrl, IMG_WIDTH, IMG_HEIGHT);
 		
 		//Form 1-----------------------------------------------------------------------------------------
 		boorowForm1 = new DynamicForm();
