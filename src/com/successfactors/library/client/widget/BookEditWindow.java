@@ -515,7 +515,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 		bind();
 	}
 
-	// TODO 从豆瓣获取图书信息
+	// 从豆瓣获取图书信息
 	protected void fetchDataFromDouban() {
 
 		theBook.setBookISBN(bookForm1.getValueAsString("bookISBN"));
@@ -532,7 +532,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 			@Override
 			public void onSuccess(SLBook result) {
 				if (result == null) {
-					SC.say("连接豆瓣服务器失败，请稍后重试！");
+					SC.say("无此ISBN编号的书籍信息，请检查输入是否正确！");
 					return;
 				}
 				theBook = result;
