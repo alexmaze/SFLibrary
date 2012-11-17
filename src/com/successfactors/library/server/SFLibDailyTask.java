@@ -9,6 +9,7 @@ import javax.servlet.ServletContext;
 
 import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLBorrowDao;
+import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.SLEmailUtil;
@@ -26,6 +27,7 @@ public class SFLibDailyTask extends TimerTask {
 	private SLBorrowDao borrowDao = new SLBorrowDao();
 	private SLBookDao bookDao = new SLBookDao();
 	private SLUserDao userDao = new SLUserDao();
+	private SLOrderDao orderDao = new SLOrderDao();
 
 	public SFLibDailyTask(ServletContext context) {
 		this.context = context;
@@ -67,7 +69,9 @@ public class SFLibDailyTask extends TimerTask {
 				slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
 						.getUserEmail()));
 				
-				emailUtil.sendOverdueEmail(slBorrow);
+				if (orderDao.getEarlistOrder(slBorrow.getBookISBN()) != null) {
+					emailUtil.sendOverdueEmail(slBorrow);
+				}
 				context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 //				System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 			}
