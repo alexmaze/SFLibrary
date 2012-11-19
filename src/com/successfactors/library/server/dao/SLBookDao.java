@@ -38,7 +38,7 @@ public class SLBookDao {
 			log.debug("Start query all books");
 			session = HibernateSessionFactory.getSession();
 			String hql = null;
-			hql = "from SLBook as p ";
+			hql = "from SLBook as p order by bookAddDate desc";
 			Query q = session.createQuery(hql);
 			q.setFirstResult((pageNo - 1) * pageSize);
 			q.setMaxResults(pageSize);
