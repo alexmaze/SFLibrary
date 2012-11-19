@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.OrderService;
 import com.successfactors.library.server.dao.SLBookDao;
+import com.successfactors.library.server.dao.SLBorrowDao;
 import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.OrderSearchType;
@@ -37,6 +38,7 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	protected SLOrderDao orderDao = new SLOrderDao();
 	protected SLBookDao bookDao = new SLBookDao();
 	protected SLUserDao userDao = new SLUserDao();
+	protected SLBorrowDao borrowDao = new SLBorrowDao();
 	
 	private SLEmailUtil emailUtil = new SLEmailUtil();
 
@@ -53,10 +55,6 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	 * */
 	@Override
 	public boolean orderBook(String bookISBN) {
-
-		// TODO 先检查是否已借！
-		// TODO 再检查是否已预订！
-		
 		// 如果还有的借，不能预订
 		if (bookDao.queryByISBN(bookISBN).getBookAvailableQuantity() > 0) {
 			return false;
@@ -68,6 +66,15 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 			return false;
 		}
 
+		// 先检查是否已借！
+		if (borrowDao.isUserBookBorrowed(slUser.getUserEmail(), bookISBN)) {
+			return false;
+		}
+		// 再检查是否已预订！
+		if (orderDao.isUserBookOrdered(slUser.getUserEmail(), bookISBN)) {
+			return false;
+		}
+		
 		// 插入记录
 		SLOrder slOrder = new SLOrder();
 		Calendar c = Calendar.getInstance();

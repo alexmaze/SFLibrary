@@ -389,4 +389,30 @@ public class SLBorrowDao {
 		}
 		return result;
 	}
+
+	/**
+	 * 检验某用户是否已借阅某书
+	 * */
+	public boolean isUserBookBorrowed(String userEmail, String bookISBN) {
+		
+		session = HibernateSessionFactory.getSession();
+		@SuppressWarnings("rawtypes")
+		List result = null;
+		try {
+			Criteria criteria = session.createCriteria(SLBorrow.class);
+			criteria.add(Restrictions.eq("userEmail", userEmail));
+			criteria.add(Restrictions.eq("bookISBN", bookISBN));
+			criteria.add(Restrictions.or(Restrictions.eq("status", "未归还"), Restrictions.eq("status", "已超期")));
+			result = criteria.list();
+		} catch (RuntimeException re) {
+			log.error("isUserBookBorrowed execute error", re);
+			throw re;
+		}
+		
+		if (result.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

@@ -61,7 +61,10 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	 * */
 	private boolean borrowBook(String userEmail, String bookISBN) {
 
-		// TODO 先检查是否已借！
+		// 先检查是否已借！
+		if (borrowDao.isUserBookBorrowed(userEmail, bookISBN)) {
+			return false;
+		}
 		
 		SLBook slBook = bookDao.queryByISBN(bookISBN);
 		if (slBook.getBookAvailableQuantity() > 0) {
@@ -281,5 +284,5 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		}
 		return slUser;
 	}
-
+	
 }

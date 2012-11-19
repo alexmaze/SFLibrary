@@ -278,10 +278,36 @@ public class SLOrderDao {
 			criteria.addOrder(Order.asc("orderDate"));
 			result = (ArrayList<SLOrder>) criteria.list();
 		} catch (RuntimeException re) {
-			log.error("searchBorrowList execute error", re);
+			log.error("getNowOrderListByISBN execute error", re);
 			throw re;
 		}
 		return result;
+	}
+	
+	/**
+	 * 检验某用户是否已预订某书
+	 * */
+	public boolean isUserBookOrdered(String userEmail, String bookISBN) {
+		
+		session = HibernateSessionFactory.getSession();
+		@SuppressWarnings("rawtypes")
+		List result = null;
+		try {
+			Criteria criteria = session.createCriteria(SLOrder.class);
+			criteria.add(Restrictions.eq("userEmail", userEmail));
+			criteria.add(Restrictions.eq("bookISBN", bookISBN));
+			criteria.add(Restrictions.eq("status", "排队中"));
+			result = criteria.list();
+		} catch (RuntimeException re) {
+			log.error("isUserBookOrdered execute error", re);
+			throw re;
+		}
+		
+		if (result.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
 }
