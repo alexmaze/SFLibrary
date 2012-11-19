@@ -251,6 +251,7 @@ public class SLOrderDao {
 		try {
 			Criteria criteria = session.createCriteria(SLOrder.class);
 			criteria.add(Restrictions.eq("bookISBN", bookISBN));// eq是等于，gt是大于，lt是小于,or是或
+			criteria.add(Restrictions.eq("status", "排队中"));// eq是等于，gt是大于，lt是小于,or是或
 			criteria.addOrder(Order.asc("orderDate"));
 			criteria.setMaxResults(1);
 			slOrder = (SLOrder)criteria.uniqueResult();

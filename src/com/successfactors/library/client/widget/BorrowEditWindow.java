@@ -431,7 +431,7 @@ public class BorrowEditWindow  extends Window {
 							SC.say("借书失败，请稍后重试！");
 							return;
 						}
-						SC.say("图书借阅成功");
+						SC.say("图书归还成功");
 						if (finishEdit != null) {
 							finishEdit.doRefreshPage();
 						}
