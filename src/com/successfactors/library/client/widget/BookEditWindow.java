@@ -170,6 +170,9 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 				"哲学/文化",
 				"经济/管理",
 				"政治/军事",
+				"励志/成长",
+				"儿童/育儿",
+				"心理",
 				"法律",
 				"历史",
 				"其他"
