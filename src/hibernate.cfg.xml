@@ -53,7 +53,7 @@
        <mapping class="com.successfactors.library.shared.model.SLBorrow"/>
        <mapping class="com.successfactors.library.shared.model.SLOrder"/>
        <mapping class="com.successfactors.library.shared.model.SLUser"/>
-        
+       <mapping class="com.successfactors.library.shared.model.SLRecommendedBook"/>
     </session-factory>
 
 </hibernate-configuration>
