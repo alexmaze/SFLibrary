@@ -164,6 +164,34 @@ public class HotBookShelf extends VLayout {
 
 			}
 		});
+		
+		bookPicUrlImg.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+
+				new RPCCall<SLBook>() {
+					@Override
+					public void onFailure(Throwable caught) {
+						SC.say("通信失败，请检查您的网络连接！");
+					}
+					@Override
+					public void onSuccess(SLBook result) {
+						if (result == null) {
+							SC.say("暂无资料。。。囧rz");
+							return;
+						}
+						BookDisplayWindow bookDisplayWindow = new BookDisplayWindow(result, null);
+						bookDisplayWindow.draw();
+					}
+					@Override
+					protected void callService(AsyncCallback<SLBook> cb) {
+						bookService.getBookByISBN(theBook.getBookISBN(), cb);
+					}
+				}.retry(3);
+				
+			}
+		});
 
 		return bookBox;
 

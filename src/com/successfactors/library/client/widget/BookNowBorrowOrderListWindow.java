@@ -61,7 +61,6 @@ public class BookNowBorrowOrderListWindow extends Window {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				// TODO Auto-generated method stub
 				SC.say("你想干嘛？");
 			}
 		});
@@ -69,7 +68,6 @@ public class BookNowBorrowOrderListWindow extends Window {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				// TODO Auto-generated method stub
 				SC.say("你想干嘛？");
 			}
 		});
