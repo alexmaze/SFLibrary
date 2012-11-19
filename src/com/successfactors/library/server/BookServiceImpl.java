@@ -220,7 +220,6 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 		Date ret = new Date();
 		
 		String[] arrDate = strDate.split("-");
-		
 		if(arrDate.length == 1) {
 			ret.setYear(Integer.parseInt(arrDate[0])-1900);
 			ret.setMonth(1);
@@ -229,7 +228,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 			ret.setYear(Integer.parseInt(arrDate[0])-1900);
 			ret.setMonth(Integer.parseInt(arrDate[1])-1);
 			ret.setDate(1);
-		} else {
+		} else if(arrDate.length >= 3){
 			ret.setYear(Integer.parseInt(arrDate[0])-1900);
 			ret.setMonth(Integer.parseInt(arrDate[1])-1);
 			ret.setDate(Integer.parseInt(arrDate[2]));
@@ -248,7 +247,11 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(str);
 		// 替换与模式匹配的所有字符（即非数字的字符将被""替换）
-		return Double.parseDouble(m.replaceAll("").trim());
+		String cleanString = m.replaceAll("").trim();
+		if (cleanString.equals("")) {
+			return 0.0;
+		}
+		return Double.parseDouble(cleanString);
 	}
 
 	/**
