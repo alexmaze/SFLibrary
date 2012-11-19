@@ -259,7 +259,7 @@ public class BookDisplayWindow  extends Window {
 					@Override
 					public void onSuccess(Boolean result) {
 						if (result == false) {
-							SC.say("预定失败，请稍后重试！");
+							SC.say("预定失败，您正在借阅或已预订本书！");
 							return;
 						}
 						SC.say("预定成功");
@@ -289,7 +289,7 @@ public class BookDisplayWindow  extends Window {
 					@Override
 					public void onSuccess(Boolean result) {
 						if (result == false) {
-							SC.say("借阅失败，请稍后重试！");
+							SC.say("借阅失败，无可借数量或您正在借阅本书！");
 							return;
 						}
 						SC.say("借阅成功\n" +
