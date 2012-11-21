@@ -19,6 +19,8 @@ import com.successfactors.library.client.service.BorrowService;
 import com.successfactors.library.client.service.BorrowServiceAsync;
 import com.successfactors.library.client.service.OrderService;
 import com.successfactors.library.client.service.OrderServiceAsync;
+import com.successfactors.library.client.service.RecommendedBookService;
+import com.successfactors.library.client.service.RecommendedBookServiceAsync;
 import com.successfactors.library.client.service.UserService;
 import com.successfactors.library.client.service.UserServiceAsync;
 import com.successfactors.library.client.view.ContextAreaFactory;
@@ -37,8 +39,9 @@ public class SFLibrary implements EntryPoint {
 	public final static BookServiceAsync bookService = GWT.create(BookService.class);
 	public final static OrderServiceAsync orderService = GWT.create(OrderService.class);
 	public final static BorrowServiceAsync borrowService = GWT.create(BorrowService.class);
+	public final static RecommendedBookServiceAsync recommendedBookService = GWT.create(RecommendedBookService.class);
 	
-	public final static boolean isTestWidget = false;
+	public final static boolean isTestWidget = true;
 	
 	private static SFLibrary singleton;
 
@@ -90,7 +93,7 @@ public class SFLibrary implements EntryPoint {
 			
 			northLayout.addMember(vLayout);
 			
-			initWestPart();;
+			initWestPart();
 
 			initEastPart();
 

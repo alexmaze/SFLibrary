@@ -124,6 +124,7 @@ public class SLRecommendedBook implements Serializable {
 	public void setRecUserName(String recUserName) {
 		this.recUserName = recUserName;
 	}
+	
 	@Transient
 	public Record getRecord() {
 
@@ -170,6 +171,31 @@ public class SLRecommendedBook implements Serializable {
 		ret.setRecUserEmail(record.getAttribute("recUserEmail"));
 		ret.setRecStatus(record.getAttribute("recStatus"));
 		ret.setRecDate(record.getAttributeAsDate("recDate"));
+		
+		return ret;
+	}
+	
+	@Transient
+	public static SLRecommendedBook parse(SLBook slBook, SLUser slUser) {
+
+		SLRecommendedBook ret = new SLRecommendedBook();
+		
+		ret.setBookName(slBook.getBookName());
+		ret.setBookAuthor(slBook.getBookAuthor());
+		ret.setBookISBN(slBook.getBookISBN());
+		ret.setBookPublisher(slBook.getBookPublisher());
+		ret.setBookPublishDate(slBook.getBookPublishDate());
+		ret.setBookLanguage(slBook.getBookLanguage());
+		ret.setBookPrice(slBook.getBookPrice());
+		ret.setBookClass(slBook.getBookClass());
+		ret.setBookContributor("公司采购");
+		ret.setBookIntro(slBook.getBookIntro());
+		ret.setBookPicUrl(slBook.getBookPicUrl());
+		
+		ret.setRecUserName(slUser.getUserName());
+		ret.setRecUserEmail(slUser.getUserEmail());
+		//ret.setRecStatus("已推荐");
+		//ret.setRecDate(slBook.getAttributeAsDate("recDate"));
 		
 		return ret;
 	}

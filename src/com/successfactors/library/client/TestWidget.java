@@ -15,6 +15,7 @@ import com.successfactors.library.client.widget.BorrowNeedReturnWindow;
 import com.successfactors.library.client.widget.BorrowNeedTookenWindow;
 import com.successfactors.library.client.widget.OrderDisplayWindow;
 import com.successfactors.library.client.widget.OrderEditWindow;
+import com.successfactors.library.client.widget.RecommendedBookEditWindow;
 import com.successfactors.library.client.widget.UploadImageWindow;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
@@ -44,11 +45,18 @@ public class TestWidget {
 
 		IButton but11 = new IButton("上传图片");
 		
+		
+
+		IButton but12 = new IButton("推荐窗口");
+		IButton but13 = new IButton("查看推荐窗口");
+		
+		
 		hLayout.setMembers(
 				but1, but2, but3,
 				but4, but5, but6,
 				but7, but8,
-				but9, but10, but11);
+				but9, but10, but11,
+				but12, but13);
 		hLayout.draw();
 		
 		final SLBook temp = new SLBook();
@@ -221,6 +229,27 @@ public class TestWidget {
 			}
 		});
 		
+		
+		
+		
+		but12.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				GWT.log("*********** Test Widget Start *************");
+				RecommendedBookEditWindow recommendedBookEditWindow = new RecommendedBookEditWindow();
+				recommendedBookEditWindow.show();
+				GWT.log("***********  Test Widget End  *************");
+			}
+		});
+		but13.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				GWT.log("*********** Test Widget Start *************");
+				GWT.log("***********  Test Widget End  *************");
+			}
+		});
 		
 	}
 }

@@ -41,6 +41,15 @@
 		<servlet-name>orderServlet</servlet-name>
 		<url-pattern>/sflibrary/orderService</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>recommendedBookServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.RecommendedBookServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>recommendedBookServlet</servlet-name>
+		<url-pattern>/sflibrary/recommendedBookService</url-pattern>
+	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
