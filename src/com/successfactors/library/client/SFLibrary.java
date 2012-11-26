@@ -3,7 +3,9 @@ package com.successfactors.library.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.SimpleEventBus;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.grid.events.RecordClickEvent;
@@ -13,6 +15,8 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.data.AdminNavigationPaneSectionData;
 import com.successfactors.library.client.data.NavigationPaneRecord;
 import com.successfactors.library.client.data.ReaderNavigationPaneSectionData;
+import com.successfactors.library.client.event.LoginSucceedEvent;
+import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.service.BookService;
 import com.successfactors.library.client.service.BookServiceAsync;
 import com.successfactors.library.client.service.BorrowService;
@@ -40,6 +44,9 @@ public class SFLibrary implements EntryPoint {
 	public final static OrderServiceAsync orderService = GWT.create(OrderService.class);
 	public final static BorrowServiceAsync borrowService = GWT.create(BorrowService.class);
 	public final static RecommendedBookServiceAsync recommendedBookService = GWT.create(RecommendedBookService.class);
+
+	public final static String SF_CK_USER_EMAIL = "SF_LIB_CK_USER_NAME";
+	public final static String SF_CK_USER_PASSWORD = "SF_LIB_CK_USER_PASSWORD";
 	
 	public final static boolean isTestWidget = false;
 	
@@ -106,9 +113,44 @@ public class SFLibrary implements EntryPoint {
 			
 			mainLayout.draw();
 			
+			tryToLogin();
+			
 		}
 	}
 	
+	private void tryToLogin() {
+		final String userEmail = Cookies.getCookie(SF_CK_USER_EMAIL);
+		final String userPassword = Cookies.getCookie(SF_CK_USER_PASSWORD);
+		if (userEmail != null) {
+			// 联系服务器进行登录验证
+			new RPCCall<SLUser>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					SC.say("通信失败，请检查您的网络连接！");
+				}
+
+				@Override
+				public void onSuccess(SLUser result) {
+					if (result == null) {
+						Cookies.removeCookie(SFLibrary.SF_CK_USER_EMAIL);
+						Cookies.removeCookie(SFLibrary.SF_CK_USER_PASSWORD);
+						return;
+					}
+					Cookies.setCookie(SFLibrary.SF_CK_USER_EMAIL, result.getUserEmail());
+					Cookies.setCookie(SFLibrary.SF_CK_USER_PASSWORD, result.getUserPassword());
+					SFLibrary.get().getEventBus().fireEvent(new LoginSucceedEvent(result));
+				}
+
+				@Override
+				protected void callService(AsyncCallback<SLUser> cb) {
+					userService.login(userEmail, userPassword, cb);
+				}
+				
+			}.retry(3);
+		}
+	}
+
 	/**
 	 * 重新加载页面
 	 * */

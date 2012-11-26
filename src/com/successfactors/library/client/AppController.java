@@ -4,6 +4,7 @@ import static com.successfactors.library.client.SFLibrary.userService;
 
 import java.util.Date;
 
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.events.ClickEvent;
@@ -65,6 +66,8 @@ public class AppController {
 					SC.say("用户名或密码错误！");
 					return;
 				}
+				Cookies.setCookie(SFLibrary.SF_CK_USER_EMAIL, result.getUserEmail());
+				Cookies.setCookie(SFLibrary.SF_CK_USER_PASSWORD, result.getUserPassword());
 				SFLibrary.get().getEventBus().fireEvent(new LoginSucceedEvent(result));
 			}
 
@@ -86,6 +89,8 @@ public class AppController {
 
 			@Override
 			public void onSuccess(Boolean result) {
+				Cookies.removeCookie(SFLibrary.SF_CK_USER_EMAIL);
+				Cookies.removeCookie(SFLibrary.SF_CK_USER_PASSWORD);
 				SFLibrary.get().reLoad();
 			}
 
