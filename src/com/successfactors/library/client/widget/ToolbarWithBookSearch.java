@@ -101,13 +101,6 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		searchForm.setFields(searchKeyWordItem, searchClassItem);
 		this.addMember(searchForm);
 
-		
-		searchButton = new ToolStripButton();
-		searchButton.setIcon(SEARCH_BUTTON);
-		searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
-		this.addButton(searchButton);
-		
-
 		searchButton = new ToolStripButton();
 		searchButton.setIcon(SEARCH_BUTTON);
 		searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
