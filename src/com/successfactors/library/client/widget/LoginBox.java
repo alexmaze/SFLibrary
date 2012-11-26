@@ -113,7 +113,7 @@ public class LoginBox extends VLayout {
         adminInfoLabel3.setStyleName("alex_admin_info_label");
         adminInfoLabel4.setStyleName("alex_admin_info_label");
         
-        adminInfoLabel1.setHeight("25px");
+        adminInfoLabel1.setHeight("40px");
         adminInfoLabel2.setHeight("40px");
         adminInfoLabel3.setHeight("40px");
         adminInfoLabel4.setHeight("40px");
