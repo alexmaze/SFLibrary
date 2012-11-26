@@ -287,7 +287,7 @@ public class RecommendedBookEditWindow extends Window {
 			@Override
 			public void onSuccess(Boolean result) {
 				if (result == null || !result) {
-					SC.say("推荐失败，此书已被推荐，或已收入库中！");
+					SC.say("您推荐的书已收入库中！");
 					return;
 				}
 				SC.say("推荐成功！");

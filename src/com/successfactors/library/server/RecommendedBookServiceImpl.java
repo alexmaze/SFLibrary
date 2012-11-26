@@ -18,13 +18,17 @@ public class RecommendedBookServiceImpl extends RemoteServiceServlet implements 
 	@Override
 	public boolean recommendBook(SLRecommendedBook recommendedBook) {
 		
-		// 检查是否已有或已推荐
-		if (bookDao.queryByISBN(recommendedBook.getBookISBN()) != null
-				|| dao.queryByISBN(recommendedBook.getBookISBN()) != null) {
+		// 检查是否已有
+		if (bookDao.queryByISBN(recommendedBook.getBookISBN()) != null) {
 			return false;
 		}
 		
-		if (dao.insertRecBook(recommendedBook)) {
+		SLRecommendedBook allready = dao.queryByISBN(recommendedBook.getBookISBN());
+		if (allready != null) {
+			allready.setRecRate(allready.getRecRate() + 1);
+			dao.updateRecBook(allready);
+			return true;
+		} else if (dao.insertRecBook(recommendedBook)) {
 			return true;
 		} else {
 			return false;
