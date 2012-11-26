@@ -8,6 +8,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.JumpBar;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ReaderBookListGrid;
+import com.successfactors.library.client.widget.RecommendedBookEditWindow;
 import com.successfactors.library.client.widget.ToolbarWithBookSearch;
 import com.successfactors.library.client.widget.ToolbarWithBookSearch.ToolbarButtonType;
 
@@ -49,6 +50,14 @@ public class ReaderBookView extends VLayout {
 			public void onClick(ClickEvent event) {
 				isSearchMode = true;
 				theListGrid.doSearchBook(theToolbar.getSearchInfo());
+			}
+		});
+		theToolbar.addButtonClickHandler(ToolbarButtonType.Recommend_Button, new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				RecommendedBookEditWindow recommendedBookEditWindow = new RecommendedBookEditWindow();
+				recommendedBookEditWindow.show();
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.NEXT_PAGE, new ClickHandler() {

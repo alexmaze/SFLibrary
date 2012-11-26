@@ -203,7 +203,8 @@ public class SLRecommendedBook implements Serializable {
 		
 		ret.setRecUserName(slUser.getUserName());
 		ret.setRecUserEmail(slUser.getUserEmail());
-		//ret.setRecStatus("已推荐");
+		ret.setRecStatus("已推荐");
+		ret.setRecRate(1);
 		//ret.setRecDate(slBook.getAttributeAsDate("recDate"));
 		
 		return ret;

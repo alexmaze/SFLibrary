@@ -3,8 +3,6 @@ package com.successfactors.library.client.widget;
 import static com.successfactors.library.client.SFLibrary.bookService;
 import static com.successfactors.library.client.SFLibrary.recommendedBookService;
 
-import java.util.Date;
-
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.TitleOrientation;
@@ -163,9 +161,11 @@ public class RecommendedBookEditWindow extends Window {
 				);
 		bookClassItem.setDefaultToFirstOption(true);
 		
-		StaticTextItem bookLanguageItem = new StaticTextItem("bookLanguage", "语言");
+		SelectItem bookLanguageItem = new SelectItem("bookLanguage", "语言");
 		bookLanguageItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookLanguageItem.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+		bookLanguageItem.setValueMap("中文", "英语", "法语", "德语", "日语", "俄语", "韩语");
+		bookLanguageItem.setDefaultToFirstOption(true);
 		
 		StaticTextItem bookPriceItem = new StaticTextItem("bookPrice", "价格");
 		bookPriceItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
@@ -305,6 +305,7 @@ public class RecommendedBookEditWindow extends Window {
 		
 		theRecBook.setBookPublisher(bookForm1.getValueAsString("bookPublisher"));
 		theRecBook.setBookClass(bookForm1.getValueAsString("bookClass"));
+		theRecBook.setBookLanguage(bookForm1.getValueAsString("bookLanguage"));
 		
 		if (!FieldVerifier.isNotEmptyValid(theRecBook.getBookISBN())) {
 			SC.say("请先输入图书ISBN，并获取图书信息！");

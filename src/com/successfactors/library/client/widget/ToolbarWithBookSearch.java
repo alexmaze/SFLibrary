@@ -15,6 +15,8 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		Delete_Button,
 		Update_Button,
 		Search_Button,
+		
+		Recommend_Button,
 	}
 
 	private static final String TOOLBAR_HEIGHT = "25px";
@@ -26,15 +28,19 @@ public class ToolbarWithBookSearch extends ToolStrip {
 	private static final String APPLY_BUTTON = "toolbar/reports.png";
 	private static final String SEARCH_BUTTON = "toolbar/search.png";
 
+	private static final String RECOMMEND_BUTTON = "toolbar/newreport.png";
+
 	private static final String NEW_BUTTON_DISPLAY_NAME = "新建";
 	private static final String DELETE_BUTTON_DISPLAY_NAME = "删除";
 	private static final String UPDATE_BUTTON_DISPLAY_NAME = "修改";
 	private static final String SEARCH_BUTTON_DISPLAY_NAME = "搜索";
+	private static final String RECOMMEND_BUTTON_DISPLAY_NAME = "推荐图书";
 
 	ToolStripButton newButton;
 	ToolStripButton deleteButton;
 	ToolStripButton updateButton;
 	ToolStripButton searchButton;
+	ToolStripButton recommendButton;
 
 	private DynamicForm searchForm;
 
@@ -100,6 +106,20 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		searchButton.setIcon(SEARCH_BUTTON);
 		searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
 		this.addButton(searchButton);
+		
+
+		searchButton = new ToolStripButton();
+		searchButton.setIcon(SEARCH_BUTTON);
+		searchButton.setTitle(SEARCH_BUTTON_DISPLAY_NAME);
+		this.addButton(searchButton);
+		
+		if (!canEdit) {
+			this.addSeparator();
+			recommendButton = new ToolStripButton();
+			recommendButton.setIcon(RECOMMEND_BUTTON);
+			recommendButton.setTitle(RECOMMEND_BUTTON_DISPLAY_NAME);
+			this.addButton(recommendButton);
+		}
 	}
 
 	public void addButtonClickHandler(ToolbarButtonType butType, ClickHandler clickHandler) {
@@ -112,6 +132,8 @@ public class ToolbarWithBookSearch extends ToolStrip {
 			updateButton.addClickHandler(clickHandler);
 		} else if (butType == ToolbarButtonType.Search_Button) {
 			searchButton.addClickHandler(clickHandler);
+		} else if (butType == ToolbarButtonType.Recommend_Button) {
+			recommendButton.addClickHandler(clickHandler);
 		} else {
 			GWT.log("Toolbar 按钮绑定单击事件错误 " + butType.name());
 		}
