@@ -19,8 +19,8 @@ import com.successfactors.library.shared.model.OrderPage;
 import com.successfactors.library.shared.model.SLOrder;
 
 public class ReaderOrderHistoryListGrid extends ListGrid {
-	
-	public static final int DEFAULT_RECORDS_EACH_PAGE = 10;
+
+	public static final int DEFAULT_RECORDS_EACH_PAGE = 16;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
 	public static final int DEFAULT_IMG_WIDTH = 28;
 
