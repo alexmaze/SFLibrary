@@ -136,4 +136,15 @@ public class MyToolsInClient {
 		else
 			return strContent + "......";
 	}
+	public static String getWordsForShort(int num, String strContent) {
+		
+		if(strContent == null) {
+			return "";
+		}
+		
+		if(strContent.length() > num)
+			return strContent.subSequence(0, num) + "...";
+		else
+			return strContent;
+	}
 }

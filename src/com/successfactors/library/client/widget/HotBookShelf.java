@@ -95,8 +95,8 @@ public class HotBookShelf extends VLayout {
 //		VLayout bookInfo2 = new VLayout();
 
 		Label bookNameLabel = new Label(theBook.getBookName());
-		Label bookAuthorLabel = new Label(theBook.getBookAuthor());
-		Label bookPublisherLabel = new Label(theBook.getBookPublisher());
+		Label bookAuthorLabel = new Label(MyToolsInClient.getWordsForShort(10, theBook.getBookAuthor()));
+		Label bookPublisherLabel = new Label(MyToolsInClient.getWordsForShort(10, theBook.getBookPublisher()));
 		// Label bookClassLabel = new Label(theBook.getBookClass());
 		// Label bookLanguageLabel = new Label(theBook.getBookLanguage());
 
@@ -123,7 +123,7 @@ public class HotBookShelf extends VLayout {
 		// bookInfo1.setAlign(Alignment.CENTER);
 
 		Label bookIntroLabel = new Label("&nbsp&nbsp&nbsp&nbsp"
-				+ MyToolsInClient.getWords(120, theBook.getBookIntro()));
+				+ MyToolsInClient.getWords(100, theBook.getBookIntro()));
 		bookIntroLabel.setWidth(320);
 
 		bookIntroLabel.setStyleName("alex_bookshelf_bookauthor");
