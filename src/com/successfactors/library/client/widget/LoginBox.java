@@ -3,6 +3,7 @@ package com.successfactors.library.client.widget;
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
@@ -91,7 +92,42 @@ public class LoginBox extends VLayout {
         logo.setStyleName("alex_LoginBox_Picture");
         
         this.addMember(logo);
+        
+        Label adminInfoLabel1 = new Label(
+        		"管理员："
+        		);
+        Label adminInfoLabel2 = new Label(
+        		"Megan Wang<br/>" +
+        		"&nbsp&nbsp meganwang@successfactors.com"
+        		);
+        Label adminInfoLabel3 = new Label(
+        		"April Mei<br/>" +
+        		"&nbsp&nbsp amei@successfactors.com"
+        		);
+        Label adminInfoLabel4 = new Label(
+        		"Daniel Wei<br/>" +
+        		"&nbsp&nbsp dwei@successfactors.com"
+        		);
+        adminInfoLabel1.setStyleName("alex_admin_info_title");
+        adminInfoLabel2.setStyleName("alex_admin_info_label");
+        adminInfoLabel3.setStyleName("alex_admin_info_label");
+        adminInfoLabel4.setStyleName("alex_admin_info_label");
+        
+        adminInfoLabel1.setHeight("25px");
+        adminInfoLabel2.setHeight("40px");
+        adminInfoLabel3.setHeight("40px");
+        adminInfoLabel4.setHeight("40px");
+        
+        VLayout adminLayout = new VLayout();
+        
+        adminLayout.addMember(adminInfoLabel1);
+        adminLayout.addMember(adminInfoLabel2);
+        adminLayout.addMember(adminInfoLabel3);
+        adminLayout.addMember(adminInfoLabel4);
+        
+        adminLayout.setMargin(5);
 	    
+        this.addMember(adminLayout);
 	  }
 	  
 	}
