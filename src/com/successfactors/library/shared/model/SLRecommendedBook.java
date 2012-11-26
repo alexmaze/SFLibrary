@@ -31,6 +31,7 @@ public class SLRecommendedBook implements Serializable {
 	private String recUserEmail;
 	private String recStatus;
 	private Date recDate;
+	private int recRate;
 	
 	public String getBookName() {
 		return bookName;
@@ -124,6 +125,12 @@ public class SLRecommendedBook implements Serializable {
 	public void setRecUserName(String recUserName) {
 		this.recUserName = recUserName;
 	}
+	public int getRecRate() {
+		return recRate;
+	}
+	public void setRecRate(int recRate) {
+		this.recRate = recRate;
+	}
 	
 	@Transient
 	public Record getRecord() {
@@ -146,6 +153,7 @@ public class SLRecommendedBook implements Serializable {
 		record.setAttribute("recUserEmail", "推荐人邮箱");
 		record.setAttribute("recStatus", "推荐状态");
 		record.setAttribute("recDate", "推荐日期");
+		record.setAttribute("recRate", "推荐热度");
 		
 		return record;
 	}
@@ -171,6 +179,7 @@ public class SLRecommendedBook implements Serializable {
 		ret.setRecUserEmail(record.getAttribute("recUserEmail"));
 		ret.setRecStatus(record.getAttribute("recStatus"));
 		ret.setRecDate(record.getAttributeAsDate("recDate"));
+		ret.setRecRate(record.getAttributeAsInt("recRate"));
 		
 		return ret;
 	}

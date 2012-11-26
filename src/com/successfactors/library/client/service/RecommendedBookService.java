@@ -2,7 +2,7 @@ package com.successfactors.library.client.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.successfactors.library.shared.RecommendedBookStatusType;
+import com.successfactors.library.shared.model.RecommendedBookPage;
 import com.successfactors.library.shared.model.SLRecommendedBook;
 
 @RemoteServiceRelativePath("recommendedBookService")
@@ -15,6 +15,9 @@ public interface RecommendedBookService extends RemoteService {
 	public SLRecommendedBook getRecommendedBook(String bookISBN);
 	
 	// 修改推荐图书状态
-	public boolean updateRecommendedBookStatus(String bookISBN, RecommendedBookStatusType statusType);
+	public boolean updateRecommendedBookStatus(SLRecommendedBook recommendedBook);
+
+	// 获取所有推荐图书列表
+	public RecommendedBookPage getAllRecBookList(int itemsPerPage, int pageNum);
 	
 }

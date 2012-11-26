@@ -36,6 +36,7 @@ public class SLRecommendedBookDS extends DataSource {
 		DataSourceTextField recUserEmailField = new DataSourceTextField("recUserEmail", "推荐人邮箱");
 		DataSourceTextField recStatusField = new DataSourceTextField("recStatus", "推荐状态");
 		DataSourceDateField recDateField = new DataSourceDateField("recDate", "推荐日期");
+		DataSourceTextField recRateField = new DataSourceTextField("recRate", "推荐热度");
 
 		this.setFields(
 				bookPicUrlField,
@@ -52,7 +53,8 @@ public class SLRecommendedBookDS extends DataSource {
 				recUserNameField,
 				recUserEmailField,
 				recStatusField,
-				recDateField
+				recDateField,
+				recRateField
 				);
 	}
 }
