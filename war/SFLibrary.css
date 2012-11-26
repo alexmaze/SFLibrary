@@ -2,14 +2,14 @@
 }
 
 body,table td,select {
-	font-size: 11px;
+	font-size: 13px;
 }
 
 /* default text */
 .normal {
 	color: #15428b;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .crm-Masthead {
@@ -66,7 +66,7 @@ body,table td,select {
 	{
 	color: #15428b;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: normal;
 }
 
@@ -118,7 +118,7 @@ body,table td,select {
 	background: none;
 	color: #15428b;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: normal;
 	padding-left: 4px;
 	padding-right: 4px;
@@ -131,7 +131,7 @@ body,table td,select {
 	color: #15428b;
 	cursor: default;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: normal;
 	padding-left: 2px;
 	padding-right: 2px;
@@ -145,7 +145,7 @@ body,table td,select {
 	color: #15428b;
 	cursor: default;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: normal;
 	padding-left: 2px;
 	padding-right: 2px;
@@ -155,7 +155,7 @@ body,table td,select {
 	{
 	color: #15428b;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: normal;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -170,7 +170,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -179,7 +179,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -188,7 +188,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -198,7 +198,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: bold;
 }
 
@@ -210,7 +210,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .crm-NavigationPaneGridCellDark {
@@ -218,7 +218,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .crm-NavigationPaneGridCellOver,.crm-NavigationPaneGridCellOverDark {
@@ -230,7 +230,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .crm-NavigationPaneGridCellSelected,.crm-NavigationPaneGridCellSelectedDark
@@ -242,7 +242,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 .crm-NavigationPaneGridCellSelectedOver,.crm-NavigationPaneGridCellSelectedOverDark
@@ -254,7 +254,7 @@ body,table td,select {
 	cursor: pointer;
 	cursor: hand;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 }
 
 /*
@@ -266,7 +266,7 @@ body,table td,select {
 	background-repeat: repeat-x;
 	cursor: default;
 	font-family: tahoma;
-	font-size: 11px;
+	font-size: 13px;
 	vertical-align: middle;
 	color: #15428b;
 	padding-top: 8px;
@@ -303,7 +303,7 @@ body,table td,select {
 	background-color: #f0f0f0;
 	border-bottom: 1px solid #999999;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 	cursor: default;
@@ -311,7 +311,7 @@ body,table td,select {
 
 .crm-StatusBar-Label {
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 	cursor: default;
@@ -326,7 +326,7 @@ body,table td,select {
 	border-bottom: 1px solid #999999;
 	background-color: #f0f0f0;
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 	cursor: default;
@@ -338,7 +338,7 @@ body,table td,select {
 
 .crm-JumpBar-Label {
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 	cursor: default;
@@ -389,7 +389,7 @@ body,table td,select {
 	border: 1px solid #C0C3C7;
 	background-color: #F0F8FF; /* AliceBlue */
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: #D9D9D9;
 }
 
@@ -548,13 +548,13 @@ letter-spacing: 1px;
 .alex_bookshelf_bookname {
 	color: black;
 	font-family: Arial, Verdana, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 }
 .alex_bookshelf_bookname:hover {
 	color: black;
 	font-family: Arial, Verdana, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	font-weight: bold;
 	text-decoration:underline;
 	cursor: pointer;
@@ -562,24 +562,24 @@ letter-spacing: 1px;
 .alex_bookshelf_bookauthor {
 	color: black;
 	font-family: Arial, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	vertical-align: top;
 }
 
 .alex_jumpbar_label {
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 }
 .alex_jumpbar_linklabel {
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 }
 .alex_jumpbar_linklabel:hover {
 	font-family: Tahoma, Verdana, sans-serif;
-	font-size: 11px;
+	font-size: 13px;
 	color: black;
 	cursor: pointer;
 	font-weight: bold;
@@ -591,8 +591,9 @@ letter-spacing: 1px;
 }
 
 .alex_admin_info_title {
-	color: black;
+	color: #4D4D4D;
 	font-family: Arial, Verdana, sans-serif;
+	font-weight: bold;
 	font-size: 14px;
 	vertical-align: top;
 }

@@ -40,6 +40,7 @@ public class JumpBar extends HLayout implements Refreshable {
 		preLabel.setWidth(60);
 
 		infoLabel.setStyleName("alex_jumpbar_label");
+		infoLabel.setWidth("120px");
 		nextLabel.setStyleName("alex_jumpbar_linklabel");
 		preLabel.setStyleName("alex_jumpbar_linklabel");
 
