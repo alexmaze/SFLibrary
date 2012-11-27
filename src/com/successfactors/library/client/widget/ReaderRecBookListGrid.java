@@ -16,7 +16,7 @@ import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.shared.model.RecommendedBookPage;
 import com.successfactors.library.shared.model.SLRecommendedBook;
 
-public class ReaderRecBookListGrid extends ListGrid {
+public class ReaderRecBookListGrid extends ListGrid implements RecommendedBookWindow.FinishEditBook {
 
 	public static final int DEFAULT_RECORDS_EACH_PAGE = 16;
 	public static final int DEFAULT_IMG_HEIGHT = 40;
@@ -81,7 +81,9 @@ public class ReaderRecBookListGrid extends ListGrid {
 
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				// TODO 显示查看推荐窗口
+				RecommendedBookWindow recommendedBookWindow = new RecommendedBookWindow(
+						SLRecommendedBook.parse(getSelectedRecord()), false, getSelf());
+				recommendedBookWindow.show();
 			}
 		});
 	}
@@ -197,6 +199,7 @@ public class ReaderRecBookListGrid extends ListGrid {
 
 	}
 
+	@Override
 	public void doRefreshPage() {
 
 		for (Record record : this.getRecords()) {
@@ -231,6 +234,10 @@ public class ReaderRecBookListGrid extends ListGrid {
 			}
 		}.retry(3);
 
+	}
+	
+	private ReaderRecBookListGrid getSelf() {
+		return this;
 	}
 
 }

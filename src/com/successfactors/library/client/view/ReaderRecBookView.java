@@ -7,7 +7,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.ReaderRecBookListGrid;
 import com.successfactors.library.client.widget.JumpBar;
-import com.successfactors.library.client.widget.RecommendedBookEditWindow;
+import com.successfactors.library.client.widget.RecommendedBookWindow;
 import com.successfactors.library.client.widget.ToolbarWithRecButton;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ToolbarWithRecButton.ToolbarButtonType;
@@ -60,7 +60,7 @@ public class ReaderRecBookView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				RecommendedBookEditWindow recommendedBookEditWindow = new RecommendedBookEditWindow();
+				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow();
 				recommendedBookEditWindow.show();
 			}
 		});

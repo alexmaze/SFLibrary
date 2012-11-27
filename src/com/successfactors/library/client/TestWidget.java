@@ -15,7 +15,7 @@ import com.successfactors.library.client.widget.BorrowNeedReturnWindow;
 import com.successfactors.library.client.widget.BorrowNeedTookenWindow;
 import com.successfactors.library.client.widget.OrderDisplayWindow;
 import com.successfactors.library.client.widget.OrderEditWindow;
-import com.successfactors.library.client.widget.RecommendedBookEditWindow;
+import com.successfactors.library.client.widget.RecommendedBookWindow;
 import com.successfactors.library.client.widget.UploadImageWindow;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
@@ -237,7 +237,7 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				RecommendedBookEditWindow recommendedBookEditWindow = new RecommendedBookEditWindow();
+				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow();
 				recommendedBookEditWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
