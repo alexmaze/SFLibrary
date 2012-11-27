@@ -2,7 +2,7 @@ package com.successfactors.library.client.widget;
 
 import static com.successfactors.library.client.SFLibrary.recommendedBookService;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -26,7 +26,7 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 
 	public static final int DEFAULT_CELL_HEIGHT = 42;
 	
-	public static HashMap<String, SLRecommendedBook> recBookList = new HashMap<String, SLRecommendedBook>();
+	public static ArrayList<SLRecommendedBook> recBookList = new ArrayList<SLRecommendedBook>();
 
 	private Refreshable jumpBar;
 
@@ -36,7 +36,6 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 
 	public AdminRecBookManagementListGrid(Refreshable jumpbar) {
 		super();
-		recBookList.clear();
 		jumpBar = jumpbar;
 
 		GWT.log("初始化: AdminRecBookManagementListGrid");
@@ -251,12 +250,15 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 			SC.say("请刷新页面！");
 			return;
 		}
-		if (recBookList.containsKey(addBook.getBookISBN())) {
-			SC.say("不可重复添加！");
-		} else {
-			recBookList.put(addBook.getBookISBN(), addBook);
-			SC.say("添加成功！");
+		
+		for (SLRecommendedBook book : recBookList) {
+			if (book.getBookISBN().equals(addBook.getBookISBN())) {
+				SC.say("不可重复添加！");
+				return;
+			}
 		}
+		recBookList.add(addBook);
+		SC.say("添加成功！");
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.successfactors.library.client.service;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.successfactors.library.shared.model.RecommendedBookPage;
 import com.successfactors.library.shared.model.SLRecommendedBook;
@@ -17,5 +19,8 @@ public interface RecommendedBookServiceAsync {
 
 	void getAllRecBookList(int itemsPerPage, int pageNum,
 			AsyncCallback<RecommendedBookPage> callback);
+
+	void buyBookList(ArrayList<String> bookISBNList,
+			AsyncCallback<Boolean> callback);
 
 }

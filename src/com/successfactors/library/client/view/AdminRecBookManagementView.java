@@ -7,6 +7,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.AdminRecBookManagementListGrid;
 import com.successfactors.library.client.widget.JumpBar;
+import com.successfactors.library.client.widget.SelectedRecBookWindow;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ToolbarWithRecSelect;
 
@@ -45,8 +46,9 @@ public class AdminRecBookManagementView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO 打开选购列表 附带计算价格
-				
+				// 打开选购列表 附带计算价格
+				SelectedRecBookWindow selectedRecBookWindow = new SelectedRecBookWindow();
+				selectedRecBookWindow.show();
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.NEXT_PAGE, new ClickHandler() {

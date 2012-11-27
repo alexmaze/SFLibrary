@@ -1,5 +1,7 @@
 package com.successfactors.library.client.service;
 
+import java.util.ArrayList;
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.successfactors.library.shared.model.RecommendedBookPage;
@@ -19,5 +21,8 @@ public interface RecommendedBookService extends RemoteService {
 
 	// 获取所有推荐图书列表
 	public RecommendedBookPage getAllRecBookList(int itemsPerPage, int pageNum);
+	
+	// 购买书单
+	public boolean buyBookList(ArrayList<String> bookISBNList);
 	
 }

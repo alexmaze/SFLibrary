@@ -10,22 +10,25 @@ import javax.mail.internet.MimeMessage;
 
 import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
+import com.successfactors.library.shared.model.SLRecommendedBook;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
 public class SLEmailUtil {
 
-	private String SMS_EMAIL_ADDRESS = "sflibrary@yeah.net";
-	private String SMS_EMAIL_HOST = "smtp.yeah.net";
-	private String SMS_EMAIL_PASSWORD = "Welcomeay!";
+	private String SMS_EMAIL_ADDRESS = "ayan@successfactors.com";
+	private String SMS_EMAIL_GROUP_ADDRESS = "MinervaBookLib@successfactors.com";
+	private String SMS_EMAIL_HOST = "owa.successfactors.com";
+	private String SMS_EMAIL_PASSWORD = ":SuperManAlex:";
 	
 	private String SMS_ADMIN_EMAIL_ADDRESS = "sflibrary@yeah.net";
 
 	/**
 	 *  发送邮件
 	 */
-	private boolean sendEmail(String toEmail, String emailSubject,
+	public boolean sendEmail(String toEmail, String emailSubject,
 			String emailContent) {
 
 		boolean result = false;
@@ -40,8 +43,9 @@ public class SLEmailUtil {
 
 		try {
 			
-			message.setFrom(new InternetAddress(SMS_EMAIL_ADDRESS));
+			message.setFrom(new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+			//TODO message.addRecipient(Message.RecipientType.CC, new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
 			message.setSubject(emailSubject);
 			message.setText(emailContent);
 			message.saveChanges();
@@ -142,6 +146,28 @@ public class SLEmailUtil {
 				+ "Minerva's Book Lib\n";
 		
 		sendEmail(toEmail, strTitle, strContent);
+	}
+	
+	/**
+	 * 发送购买书单邮件
+	 * */
+	public void sendBuyListEmail(ArrayList<SLRecommendedBook> buyList) {
+		// TODO 美化预订成功邮件
+
+		String buyListString = "";
+		for (SLRecommendedBook book : buyList) {
+			// TODO 构造书单
+		}
+		
+		// 发送给管理员
+		String strTitleToAdmin = "[Minerva's Book Lib]"+"最新购买书单";
+		String strContentToAdmin = "亲爱的管理员同志，\n\n"
+				+ "本次选购书单如下，请尽快购进：\n"
+				+ buyListString +"\n\n"
+				+ "感谢您的付出！\n"
+				+ "Minerva's Book Lib\n";
+		
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS, strTitleToAdmin, strContentToAdmin);
 	}
 	
 	/**

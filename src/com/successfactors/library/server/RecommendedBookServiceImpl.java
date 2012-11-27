@@ -6,6 +6,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.RecommendedBookService;
 import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLRecommendedBookDao;
+import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.RecommendedBookPage;
 import com.successfactors.library.shared.model.SLRecommendedBook;
 
@@ -59,6 +60,24 @@ public class RecommendedBookServiceImpl extends RemoteServiceServlet implements 
 			bookPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
 		}
 		return bookPage;
+	}
+
+	@Override
+	public boolean buyBookList(ArrayList<String> bookISBNList) {
+		
+		ArrayList<SLRecommendedBook> buyList = new ArrayList<SLRecommendedBook>();
+		for (String bookISBN : bookISBNList) {
+			SLRecommendedBook buyBook = dao.queryByISBN(bookISBN);
+			buyBook.setRecStatus("已购买");
+			dao.updateRecBook(buyBook);
+			buyList.add(buyBook);
+		}
+
+		// 发送邮件
+		SLEmailUtil emailUtil = new SLEmailUtil();
+		emailUtil.sendBuyListEmail(buyList);
+		
+		return true;
 	}
 
 
