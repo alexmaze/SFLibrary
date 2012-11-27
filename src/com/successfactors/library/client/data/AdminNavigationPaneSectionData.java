@@ -5,6 +5,7 @@ import com.successfactors.library.client.view.AdminBorrowHistoryView;
 import com.successfactors.library.client.view.AdminBorrowManagementView;
 import com.successfactors.library.client.view.AdminOrderHistoryView;
 import com.successfactors.library.client.view.AdminOrderManagementView;
+import com.successfactors.library.client.view.AdminRecBookManagementView;
 import com.successfactors.library.client.view.AdminStaticsInformationView;
 
 public class AdminNavigationPaneSectionData {
@@ -25,6 +26,7 @@ public class AdminNavigationPaneSectionData {
 				 new NavigationPaneRecord("reports", "借阅历史", new AdminBorrowHistoryView.Factory(), null),
 				 new NavigationPaneRecord("reports", "预订管理", new AdminOrderManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "预订历史", new AdminOrderHistoryView.Factory(), null),
+				 new NavigationPaneRecord("reports", "推荐管理", new AdminRecBookManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "统计信息", new AdminStaticsInformationView.Factory(), null),
 		 
 		};

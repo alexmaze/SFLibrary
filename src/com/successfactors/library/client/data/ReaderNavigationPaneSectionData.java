@@ -7,6 +7,7 @@ import com.successfactors.library.client.view.ReaderOrdeHistoryView;
 import com.successfactors.library.client.view.ReaderOrderView;
 import com.successfactors.library.client.view.ReaderInfoView;
 import com.successfactors.library.client.view.ReaderMainView;
+import com.successfactors.library.client.view.ReaderRecBookView;
 
 public class ReaderNavigationPaneSectionData {
 
@@ -28,6 +29,7 @@ public class ReaderNavigationPaneSectionData {
 				 new NavigationPaneRecord("reports", "借阅历史", new ReaderBorrowHistoryView.Factory(), null),
 				 new NavigationPaneRecord("reports", "当前预订", new ReaderOrderView.Factory(), null),
 				 new NavigationPaneRecord("reports", "预定历史", new ReaderOrdeHistoryView.Factory(), null),
+				 new NavigationPaneRecord("reports", "推荐列表", new ReaderRecBookView.Factory(), null),
 		};
 	}
 

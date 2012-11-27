@@ -32,6 +32,7 @@ public class SLRecommendedBook implements Serializable {
 	private String recStatus;
 	private Date recDate;
 	private int recRate;
+	private double countPrice;
 	
 	public String getBookName() {
 		return bookName;
@@ -131,6 +132,12 @@ public class SLRecommendedBook implements Serializable {
 	public void setRecRate(int recRate) {
 		this.recRate = recRate;
 	}
+	public double getCountPrice() {
+		return countPrice;
+	}
+	public void setCountPrice(double countPrice) {
+		this.countPrice = countPrice;
+	}
 	
 	@Transient
 	public Record getRecord() {
@@ -149,11 +156,12 @@ public class SLRecommendedBook implements Serializable {
 		record.setAttribute("bookIntro", bookIntro);
 		record.setAttribute("bookPicUrl", bookPicUrl);
 
-		record.setAttribute("recUserName", "推荐人");
-		record.setAttribute("recUserEmail", "推荐人邮箱");
-		record.setAttribute("recStatus", "推荐状态");
-		record.setAttribute("recDate", "推荐日期");
-		record.setAttribute("recRate", "推荐热度");
+		record.setAttribute("recUserName", recUserName);
+		record.setAttribute("recUserEmail", recUserEmail);
+		record.setAttribute("recStatus", recStatus);
+		record.setAttribute("recDate", recDate);
+		record.setAttribute("recRate", recRate);
+		record.setAttribute("countPrice", countPrice);
 		
 		return record;
 	}
@@ -180,6 +188,7 @@ public class SLRecommendedBook implements Serializable {
 		ret.setRecStatus(record.getAttribute("recStatus"));
 		ret.setRecDate(record.getAttributeAsDate("recDate"));
 		ret.setRecRate(record.getAttributeAsInt("recRate"));
+		ret.setCountPrice(record.getAttributeAsDouble("countPrice"));
 		
 		return ret;
 	}
@@ -205,6 +214,7 @@ public class SLRecommendedBook implements Serializable {
 		ret.setRecUserEmail(slUser.getUserEmail());
 		ret.setRecStatus("已推荐");
 		ret.setRecRate(1);
+		ret.setCountPrice(0);
 		//ret.setRecDate(slBook.getAttributeAsDate("recDate"));
 		
 		return ret;
