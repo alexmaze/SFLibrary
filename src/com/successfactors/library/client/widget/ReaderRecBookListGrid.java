@@ -58,15 +58,13 @@ public class ReaderRecBookListGrid extends ListGrid implements RecommendedBookWi
 
 		ListGridField bookPriceField = new ListGridField("bookPrice", "价格");
 
-		ListGridField countPriceField = new ListGridField("countPrice", "计算价格");
-
 		ListGridField userNameField = new ListGridField("recUserName", "推荐人");
 
 		ListGridField recRateField = new ListGridField("recRate", "推荐热度");
 		
 		this.setFields(bookPicUrlField, bookNameField, bookAuthorField,
 				bookISBNField, bookLanguageField, bookClassField,
-				bookPriceField, countPriceField, userNameField, recRateField);
+				bookPriceField, userNameField, recRateField);
 
 		updateDS(DEFAULT_RECORDS_EACH_PAGE, 1);
 		this.setDataSource(slRecBookDS);
