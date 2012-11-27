@@ -238,4 +238,8 @@ public class ReaderRecBookListGrid extends ListGrid implements RecommendedBookWi
 		return this;
 	}
 
+	@Override
+	public void doAddToBuy(SLRecommendedBook addBook) {
+	}
+
 }
