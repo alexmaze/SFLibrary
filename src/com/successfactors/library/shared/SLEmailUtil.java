@@ -43,7 +43,7 @@ public class SLEmailUtil {
 
 		try {
 			
-			message.setFrom(new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
+			message.setFrom(new InternetAddress(SMS_EMAIL_ADDRESS));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
 			//TODO message.addRecipient(Message.RecipientType.CC, new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
 			message.setSubject(emailSubject);
@@ -155,14 +155,17 @@ public class SLEmailUtil {
 		// TODO 美化预订成功邮件
 
 		String buyListString = "";
+		double totalPrice = 0.0;
 		for (SLRecommendedBook book : buyList) {
-			// TODO 构造书单
+			buyListString += " \t "+ book.getBookISBN()+" \t "+ book.getBookName()+" \t "+book.getCountPrice() + "\n";
+			totalPrice += book.getCountPrice();
 		}
+		buyListString += " \t " + "总价："+totalPrice+" 元";
 		
 		// 发送给管理员
 		String strTitleToAdmin = "[Minerva's Book Lib]"+"最新购买书单";
 		String strContentToAdmin = "亲爱的管理员同志，\n\n"
-				+ "本次选购书单如下，请尽快购进：\n"
+				+ "本次选购书单如下，请尽快购进：\n\n"
 				+ buyListString +"\n\n"
 				+ "感谢您的付出！\n"
 				+ "Minerva's Book Lib\n";
