@@ -27,7 +27,7 @@ public class AdminNavigationPaneSectionData {
 				 new NavigationPaneRecord("reports", "预订管理", new AdminOrderManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "预订历史", new AdminOrderHistoryView.Factory(), null),
 				 new NavigationPaneRecord("reports", "推荐管理", new AdminRecBookManagementView.Factory(), null),
-				 new NavigationPaneRecord("reports", "统计信息", new AdminStaticsInformationView.Factory(), null),
+				 new NavigationPaneRecord("reports", "统计信息(Developing)", new AdminStaticsInformationView.Factory(), null),
 		 
 		};
 	}

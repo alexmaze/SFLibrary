@@ -1,8 +1,12 @@
 package com.successfactors.library.client.view;
 
 import com.google.gwt.core.client.GWT;
+import com.smartgwt.client.types.Side;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.tab.Tab;
+import com.smartgwt.client.widgets.tab.TabSet;
+import com.successfactors.library.client.widget.AdminStaticsInfomationLayout;
 
 public class AdminStaticsInformationView extends VLayout {
 
@@ -17,6 +21,26 @@ public class AdminStaticsInformationView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
+		TabSet tabSet = new TabSet();
+		tabSet.setTabBarPosition(Side.TOP);
+		tabSet.setWidth("100%");
+		tabSet.setHeight("100%");
+  
+        Tab tTab1 = new Tab("借阅、预订统计", "./icons/16/reports.png");
+        tTab1.setWidth(150);
+        VLayout performanceProjectLayout = new AdminStaticsInfomationLayout();
+        tTab1.setPane(performanceProjectLayout);
+  
+        Tab tTab2 = new Tab("其他统计", "./icons/16/reports.png");
+        tTab2.setWidth(150);
+        VLayout performanceStaffLayout = new VLayout();
+        tTab2.setPane(performanceStaffLayout);
+  
+        tabSet.addTab(tTab1);
+        tabSet.addTab(tTab2);
+        
+        this.setMembers(tabSet);
+        this.setPadding(5);
 	}
 	
 	public static class Factory implements ContextAreaFactory {
