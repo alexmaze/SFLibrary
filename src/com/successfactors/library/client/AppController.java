@@ -47,9 +47,15 @@ public class AppController {
 
 	public static void doLogin(final String strEmail, final String strPwd) {
 		// 初步验证用户名密码
-		if (!FieldVerifier.isEmailValid(strEmail)
-				|| !FieldVerifier.isPasswordValid(strPwd)) {
-			SC.say("Email或密码错误！");
+		final String email;
+		if (!FieldVerifier.isEmailValid(strEmail)) {
+			email = strEmail + "@successfactors.com";
+		} else {
+			email = strEmail;
+		}
+		
+		if (!FieldVerifier.isPasswordValid(strPwd)) {
+			SC.say("密码错误！");
 			return;
 		}
 		// 联系服务器进行登录验证
@@ -73,7 +79,7 @@ public class AppController {
 
 			@Override
 			protected void callService(AsyncCallback<SLUser> cb) {
-				userService.login(strEmail, CipherUtil.generatePassword(strPwd), cb);
+				userService.login(email, CipherUtil.generatePassword(strPwd), cb);
 			}
 			
 		}.retry(3);
