@@ -2,6 +2,7 @@ package com.successfactors.library.client.widget;
 
 import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Img;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -76,7 +77,8 @@ public class LoginBox extends VLayout {
         signUpButItem.setWidth(100);
         signUpButItem.addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-            	AppController.doSignUp();
+            	// AppController.doSignUp();
+            	SC.say("注册功能已关闭，请直接用sf邮箱登录，初始密码为：123456");
             }
         });
         
