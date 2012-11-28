@@ -153,7 +153,7 @@ public class SLRecommendedBook implements Serializable {
 		record.setAttribute("bookPrice", bookPrice);
 		record.setAttribute("bookClass", bookClass);
 		record.setAttribute("bookContributor", bookContributor);
-		record.setAttribute("bookIntro", bookIntro);
+		record.setAttribute("bookIntro", SLBook.getWords(bookIntro));
 		record.setAttribute("bookPicUrl", bookPicUrl);
 
 		record.setAttribute("recUserName", recUserName);
@@ -180,7 +180,7 @@ public class SLRecommendedBook implements Serializable {
 		ret.setBookPrice(record.getAttributeAsDouble("bookPrice"));
 		ret.setBookClass(record.getAttribute("bookClass"));
 		ret.setBookContributor(record.getAttribute("bookContributor"));
-		ret.setBookIntro(record.getAttribute("bookIntro"));
+		ret.setBookIntro(SLBook.getWords(record.getAttribute("bookIntro")));
 		ret.setBookPicUrl(record.getAttribute("bookPicUrl"));
 		
 		ret.setRecUserName(record.getAttribute("recUserName"));
@@ -207,7 +207,7 @@ public class SLRecommendedBook implements Serializable {
 		ret.setBookPrice(slBook.getBookPrice());
 		ret.setBookClass(slBook.getBookClass());
 		ret.setBookContributor("公司采购");
-		ret.setBookIntro(slBook.getBookIntro());
+		ret.setBookIntro(SLBook.getWords(slBook.getBookIntro()));
 		ret.setBookPicUrl(slBook.getBookPicUrl());
 		
 		ret.setRecUserName(slUser.getUserName());

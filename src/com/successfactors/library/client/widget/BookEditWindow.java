@@ -558,7 +558,7 @@ public class BookEditWindow extends Window implements UploadImageWindow.FinishUp
 				bookForm2.setValue("bookInStoreQuantity", "1");
 				bookForm2.setValue("bookAvailableQuantity", "1");
 				
-				bookForm3.setValue("bookIntro", theBook.getBookIntro());
+				bookForm3.setValue("bookIntro", SLBook.getWords(theBook.getBookIntro()));
 				
 				doAfterFinishUpload(theBook.getBookPicUrl());
 			}

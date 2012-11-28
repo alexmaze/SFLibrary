@@ -136,7 +136,7 @@ public class SLBook implements Serializable {
 		record.setAttribute("bookPrice", bookPrice);
 		record.setAttribute("bookClass", bookClass);
 		record.setAttribute("bookContributor", bookContributor);
-		record.setAttribute("bookIntro", bookIntro);
+		record.setAttribute("bookIntro", getWords(bookIntro));
 		record.setAttribute("bookTotalQuantity", bookTotalQuantity);
 		record.setAttribute("bookInStoreQuantity", bookInStoreQuantity);
 		record.setAttribute("bookAvailableQuantity", bookAvailableQuantity);
@@ -166,7 +166,7 @@ public class SLBook implements Serializable {
 		ret.setBookPrice(record.getAttributeAsDouble("bookPrice"));
 		ret.setBookClass(record.getAttribute("bookClass"));
 		ret.setBookContributor(record.getAttribute("bookContributor"));
-		ret.setBookIntro(record.getAttribute("bookIntro"));
+		ret.setBookIntro(getWords(record.getAttribute("bookIntro")));
 		ret.setBookTotalQuantity(record.getAttributeAsInt("bookTotalQuantity"));
 		ret.setBookInStoreQuantity(record.getAttributeAsInt("bookInStoreQuantity"));
 		ret.setBookAvailableQuantity(record.getAttributeAsInt("bookAvailableQuantity"));
@@ -174,5 +174,17 @@ public class SLBook implements Serializable {
 		ret.setBookAddDate(record.getAttributeAsDate("bookAddDate"));
 		
 		return ret;
+	}
+	@Transient
+	public static String getWords(String strContent) {
+		int num= 600;
+		if(strContent == null) {
+			return "......";
+		}
+		
+		if(strContent.length() > num)
+			return strContent.subSequence(0, num) + "......";
+		else
+			return strContent + "......";
 	}
 }
