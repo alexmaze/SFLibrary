@@ -18,12 +18,12 @@ import java.util.Properties;
 
 public class SLEmailUtil {
 
-	private String SMS_EMAIL_ADDRESS = "ayan@successfactors.com";
 	private String SMS_EMAIL_GROUP_ADDRESS = "MinervaBookLib@successfactors.com";
-	private String SMS_EMAIL_HOST = "owa.successfactors.com";
-	private String SMS_EMAIL_PASSWORD = ":SuperManAlex:";
+	private String SMS_EMAIL_HOST = "10.50.0.11";
 	
-	private String SMS_ADMIN_EMAIL_ADDRESS = "sflibrary@yeah.net";
+	private String SMS_ADMIN_EMAIL_ADDRESS_1 = "meganwang@successfactors.com";
+	private String SMS_ADMIN_EMAIL_ADDRESS_2 = "amei@successfactors.com";
+	private String SMS_ADMIN_EMAIL_ADDRESS_3 = "dwei@successfactors.com";
 
 	/**
 	 *  发送邮件
@@ -36,16 +36,13 @@ public class SLEmailUtil {
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", SMS_EMAIL_HOST);
 		props.put("mail.smtp.auth", "true");
-		MyAuthenticator myauth = new MyAuthenticator(SMS_EMAIL_ADDRESS,
-				SMS_EMAIL_PASSWORD);
-		Session session = Session.getDefaultInstance(props, myauth);
+		Session session = Session.getDefaultInstance(props, null);
 		MimeMessage message = new MimeMessage(session);
 
 		try {
 			
-			message.setFrom(new InternetAddress(SMS_EMAIL_ADDRESS));
+			message.setFrom(new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
-			//TODO message.addRecipient(Message.RecipientType.CC, new InternetAddress(SMS_EMAIL_GROUP_ADDRESS));
 			message.setSubject(emailSubject);
 			message.setText(emailContent);
 			message.saveChanges();
@@ -125,7 +122,9 @@ public class SLEmailUtil {
 				+ "感谢您的付出！\n"
 				+ "Minerva's Book Lib\n";
 		
-		sendEmail(SMS_ADMIN_EMAIL_ADDRESS, strTitleToAdmin, strContentToAdmin);
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_1, strTitleToAdmin, strContentToAdmin);
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_2, strTitleToAdmin, strContentToAdmin);
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_3, strTitleToAdmin, strContentToAdmin);
 		
 		
 	}
@@ -169,8 +168,10 @@ public class SLEmailUtil {
 				+ buyListString +"\n\n"
 				+ "感谢您的付出！\n"
 				+ "Minerva's Book Lib\n";
-		
-		sendEmail(SMS_ADMIN_EMAIL_ADDRESS, strTitleToAdmin, strContentToAdmin);
+
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_1, strTitleToAdmin, strContentToAdmin);
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_2, strTitleToAdmin, strContentToAdmin);
+		sendEmail(SMS_ADMIN_EMAIL_ADDRESS_3, strTitleToAdmin, strContentToAdmin);
 	}
 	
 	/**
