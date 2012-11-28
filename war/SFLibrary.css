@@ -1,7 +1,12 @@
 * {
 }
 
-body,table td,select {
+body {
+	background-color: #6086B7;
+	font-size: 13px;
+}
+
+table td,select {
 	font-size: 13px;
 }
 
