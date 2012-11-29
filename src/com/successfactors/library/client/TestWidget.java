@@ -237,7 +237,7 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow();
+				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow(null);
 				recommendedBookEditWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}

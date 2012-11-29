@@ -59,9 +59,10 @@ public class RecommendedBookWindow extends Window {
 
 	private String strBookPicUrl = "nopic.jpg";
 
-	public RecommendedBookWindow() {
+	public RecommendedBookWindow(FinishEditBook finish) {
 		super();
 		theRecBook = new SLRecommendedBook();
+		finishEdit = finish;
 		initNewWindow();
 		bind();
 	}

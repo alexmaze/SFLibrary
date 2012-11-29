@@ -193,7 +193,7 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		
 		chartPlanPlan = new ChartWidget();
 		chartPlanPlan.setSize("300px", "200px");
-		chartPlanPlan.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "天", chartPlanPlanDataList));
+		chartPlanPlan.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "本", chartPlanPlanDataList));
 		
 
 		
@@ -226,7 +226,7 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		
 		chartPlanActurally = new ChartWidget();
 		chartPlanActurally.setSize("300px", "200px");
-		chartPlanActurally.setChartData(SLChartHelper.getAniPieChartData("预订比重", "天", chartPlanActurallyDataList));
+		chartPlanActurally.setChartData(SLChartHelper.getAniPieChartData("预订比重", "本", chartPlanActurallyDataList));
 
 		hLayout1.addChild(chartPlanPlan);
 		hLayout2.addChild(chartPlanActurally);

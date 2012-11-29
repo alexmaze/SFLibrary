@@ -60,7 +60,7 @@ public class ReaderRecBookView extends VLayout {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow();
+				RecommendedBookWindow recommendedBookEditWindow = new RecommendedBookWindow(theListGrid);
 				recommendedBookEditWindow.show();
 			}
 		});
