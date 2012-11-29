@@ -283,6 +283,8 @@ public class RecommendedBookWindow extends Window {
 				bookForm1.setValue("bookPrice", theRecBook.getBookPrice());
 
 				bookForm3.setValue("bookIntro", theRecBook.getBookIntro());
+				
+				bookPicUrlItem.setSrc(theRecBook.getBookPicUrl());
 
 			}
 
