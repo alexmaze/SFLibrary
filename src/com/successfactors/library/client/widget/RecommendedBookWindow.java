@@ -52,6 +52,7 @@ public class RecommendedBookWindow extends Window {
 	
 	private IButton addToBuyButton;
 	private IButton dismissButton;
+	private IButton saveButton;
 
 	private Img bookPicUrlItem;
 	private VLayout imgVLayout;
@@ -332,6 +333,14 @@ public class RecommendedBookWindow extends Window {
 					doAddRecBookToBuy();
 				}
 			});
+		if (saveButton != null)
+			saveButton.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					doSave();
+				}
+			});
 
 	}
 
@@ -466,9 +475,13 @@ public class RecommendedBookWindow extends Window {
 				.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 
 		StaticTextItem bookPriceItem = new StaticTextItem("bookPrice", "价格");
-		bookPriceItem.setColSpan(4);
 		bookPriceItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
 		bookPriceItem
+				.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
+
+		TextItem countPriceItem = new TextItem("countPrice", "计算价格");
+		countPriceItem.setTitleStyle("alex_bookdisplaywindow_form_text_title");
+		countPriceItem
 				.setTextBoxStyle("alex_bookdisplaywindow_form_text_content");
 
 		StaticTextItem recUserNameItem = new StaticTextItem("recUserName", "推荐人");
@@ -493,7 +506,7 @@ public class RecommendedBookWindow extends Window {
 
 		bookForm1.setFields(bookISBNItem, bookNameItem, bookAuthorItem,
 				bookPublisherItem, bookPublishDateItem, bookClassItem,
-				bookLanguageItem, bookPriceItem, recUserNameItem,
+				bookLanguageItem, bookPriceItem, countPriceItem,  recUserNameItem,
 				recStatusItem, recDateItem, recRateItem);
 
 		bookForm1.selectRecord(theRecord);
@@ -532,7 +545,10 @@ public class RecommendedBookWindow extends Window {
 		addToBuyButton = new IButton("选购");
 		addToBuyButton.setIcon("icons/16/add.png");
 		
-		buttonLayout.setMembers(addToBuyButton, dismissButton);
+		saveButton = new IButton("保存");
+		saveButton.setIcon("icons/16/check.png");
+		
+		buttonLayout.setMembers(saveButton, addToBuyButton, dismissButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 
 		hLayout.setMembers(imgVLayout, bookForm1);
@@ -737,6 +753,35 @@ public class RecommendedBookWindow extends Window {
 			@Override
 			protected void callService(AsyncCallback<Boolean> cb) {
 				recommendedBookService.recommendBook(theRecBook, cb);
+			}
+		}.retry(3);
+	}
+	
+	private void doSave() {
+		theRecBook.setCountPrice(Double.parseDouble(bookForm1.getValueAsString("countPrice")));
+		new RPCCall<Boolean>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+
+			@Override
+			public void onSuccess(Boolean result) {
+				if (result == null || !result) {
+					SC.say("更新失败，请稍候重试！");
+					return;
+				}
+				SC.say("更新成功！");
+				if (finishEdit != null) {
+					finishEdit.doRefreshPage();
+				}
+				destroy();
+
+			}
+
+			@Override
+			protected void callService(AsyncCallback<Boolean> cb) {
+				recommendedBookService.updateRecommendedBookStatus(theRecBook, cb);
 			}
 		}.retry(3);
 	}

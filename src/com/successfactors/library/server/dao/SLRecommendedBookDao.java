@@ -37,7 +37,7 @@ public class SLRecommendedBookDao {
 			log.debug("Start query all books");
 			session = HibernateSessionFactory.getSession();
 			String hql = null;
-			hql = "from SLRecommendedBook as p where p.recStatus = '已推荐' order by recRate desc";
+			hql = "from SLRecommendedBook as p where p.recStatus = '已推荐' order by p.recRate desc";
 			Query q = session.createQuery(hql);
 			q.setFirstResult((pageNo - 1) * pageSize);
 			q.setMaxResults(pageSize);
