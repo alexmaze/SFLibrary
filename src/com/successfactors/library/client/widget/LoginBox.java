@@ -88,13 +88,6 @@ public class LoginBox extends VLayout {
         
         this.addMember(form);
         
-        Img logo = new Img("minerva.jpg"); 
-        logo.setWidth(240);
-        logo.setHeight(374);
-        logo.setStyleName("alex_LoginBox_Picture");
-        
-        this.addMember(logo);
-        
         Label adminInfoLabel1 = new Label(
         		"管理员："
         		);
@@ -127,9 +120,18 @@ public class LoginBox extends VLayout {
         adminLayout.addMember(adminInfoLabel3);
         adminLayout.addMember(adminInfoLabel4);
         
-        adminLayout.setMargin(5);
+        adminLayout.setMargin(10);
+        adminLayout.setHeight("140px");
 	    
         this.addMember(adminLayout);
+
+        
+        Img logo = new Img("minerva.jpg"); 
+        logo.setWidth(240);
+        logo.setHeight(374);
+        logo.setStyleName("alex_LoginBox_Picture");
+        
+        this.addMember(logo);
 	  }
 	  
 	}
