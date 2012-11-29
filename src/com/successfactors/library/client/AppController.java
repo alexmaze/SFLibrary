@@ -98,6 +98,7 @@ public class AppController {
 				Cookies.removeCookie(SFLibrary.SF_CK_USER_EMAIL);
 				Cookies.removeCookie(SFLibrary.SF_CK_USER_PASSWORD);
 				SFLibrary.get().reLoad();
+				SFLibrary.get().setNowUser(null);
 			}
 
 			@Override

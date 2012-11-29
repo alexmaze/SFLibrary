@@ -23,4 +23,6 @@ public interface RecommendedBookServiceAsync {
 	void buyBookList(ArrayList<String> bookISBNList,
 			AsyncCallback<Boolean> callback);
 
+	void getNewRecBookList(int num, AsyncCallback<RecommendedBookPage> callback);
+
 }

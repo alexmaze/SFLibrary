@@ -18,6 +18,7 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.successfactors.library.client.SFLibrary;
 import com.successfactors.library.client.datasource.SLBookDS;
 import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.widget.BookEditWindow.FinishEditBook;
@@ -249,7 +250,10 @@ public class BookDisplayWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-
+				if (SFLibrary.get().getNowUser() == null) {
+					SC.say("请先登录！");
+					return;
+				}
 				new RPCCall<Boolean>() {
 					@Override
 					public void onFailure(Throwable caught) {
@@ -280,6 +284,10 @@ public class BookDisplayWindow  extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				if (SFLibrary.get().getNowUser() == null) {
+					SC.say("请先登录！");
+					return;
+				}
 				new RPCCall<Boolean>() {
 					@Override
 					public void onFailure(Throwable caught) {

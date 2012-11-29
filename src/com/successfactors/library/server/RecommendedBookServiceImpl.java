@@ -80,5 +80,16 @@ public class RecommendedBookServiceImpl extends RemoteServiceServlet implements 
 		return true;
 	}
 
+	@Override
+	public RecommendedBookPage getNewRecBookList(int num) {
+
+		RecommendedBookPage page = new RecommendedBookPage(num, 1);
+		ArrayList<SLRecommendedBook> ret = (ArrayList<SLRecommendedBook>) dao.getLatestRecBooks(num);
+		page.setTheBooks(ret);
+		page.setTotalPageNum(1);
+		return page;
+		
+	}
+
 
 }

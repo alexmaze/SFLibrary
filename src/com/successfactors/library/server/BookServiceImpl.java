@@ -109,7 +109,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public BookPage getNewBookList(int num) {
 
-		BookPage page = new BookPage(1, num);
+		BookPage page = new BookPage(num, 1);
 		ArrayList<SLBook> ret = (ArrayList<SLBook>) dao.getLatestBooks(num);
 		page.setTheBooks(ret);
 		page.setTotalPageNum(1);
@@ -119,7 +119,7 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public BookPage getHotBookList(int num) {
 
-		BookPage page = new BookPage(1, num);
+		BookPage page = new BookPage(num, 1);
 		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 
 		ArrayList<String> listISBN = (ArrayList<String>) dao.getHotBooks(num);

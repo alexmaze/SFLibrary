@@ -25,4 +25,7 @@ public interface RecommendedBookService extends RemoteService {
 	// 购买书单
 	public boolean buyBookList(ArrayList<String> bookISBNList);
 	
+	// 获取最新推荐
+	public RecommendedBookPage getNewRecBookList(int num);
+	
 }

@@ -742,6 +742,11 @@ public class RecommendedBookWindow extends Window {
 
 	private boolean updateBookInfo() {
 
+		if (SFLibrary.get().getNowUser() == null) {
+			SC.say("请先登录！");
+			return false;
+		}
+		
 		theRecBook
 				.setBookPublisher(bookForm1.getValueAsString("bookPublisher"));
 		theRecBook.setBookClass(bookForm1.getValueAsString("bookClass"));

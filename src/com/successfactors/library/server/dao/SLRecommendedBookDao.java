@@ -154,5 +154,33 @@ public class SLRecommendedBookDao {
 			HibernateSessionFactory.closeSession();
 		}
 	}
+	
+	public List<SLRecommendedBook> getLatestRecBooks(int num) {
+		try {
+			log.debug("Start getLatestRecBooks");
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = "from SLRecommendedBook as p where p.recStatus = '已推荐' order by p.recDate desc";
+			Query q = session.createQuery(hql);
+			q.setFirstResult(0);
+			q.setMaxResults(num);
+
+			List<SLRecommendedBook> results = new ArrayList<SLRecommendedBook>();
+			List list = q.list();
+			Iterator it = list.iterator();
+			while (it.hasNext()) {
+				SLRecommendedBook bean = (SLRecommendedBook) it.next();
+				results.add(bean);
+			}
+			log.debug("getLatestRecBooks successfully");
+			return results;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			log.error("Class: SLRecommendedBookDao ; Method: getLatestRecBooks");
+			return null;
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+	}
 
 }
