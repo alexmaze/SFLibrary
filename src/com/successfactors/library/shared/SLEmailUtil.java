@@ -35,7 +35,7 @@ public class SLEmailUtil {
 
 		Properties props = System.getProperties();
 		props.put("mail.smtp.host", SMS_EMAIL_HOST);
-		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.auth", "false");
 		Session session = Session.getDefaultInstance(props, null);
 		MimeMessage message = new MimeMessage(session);
 
