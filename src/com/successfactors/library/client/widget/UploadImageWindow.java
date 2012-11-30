@@ -22,7 +22,7 @@ public class UploadImageWindow extends Window {
 	private static final String WINDOW_WIDTH = "300px";
 	private static final String WINDOW_HEIGHT = "150px";
 	
-	public static final String UPLOADED_IMAGES_PATH = "http://192.168.25.194/images/upload/";
+	public static final String UPLOADED_IMAGES_PATH = "http://192.168.25.222/images/upload/";
 
 	private FormPanel formPanel;
 	private FileUpload fileUpload;
