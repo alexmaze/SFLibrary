@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.RecommendedBookService;
 import com.successfactors.library.server.dao.SLBookDao;
+import com.successfactors.library.server.dao.SLRecommendHistoryDao;
 import com.successfactors.library.server.dao.SLRecommendedBookDao;
 import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.RecommendedBookPage;
+import com.successfactors.library.shared.model.SLRecommendHistory;
 import com.successfactors.library.shared.model.SLRecommendedBook;
 
 @SuppressWarnings("serial")
@@ -15,6 +17,7 @@ public class RecommendedBookServiceImpl extends RemoteServiceServlet implements 
 
 	private SLBookDao bookDao = new SLBookDao();
 	private SLRecommendedBookDao dao = new SLRecommendedBookDao();
+	private SLRecommendHistoryDao recommendHistoryDao = new SLRecommendHistoryDao();
 	
 	@Override
 	public boolean recommendBook(SLRecommendedBook recommendedBook) {
@@ -23,13 +26,20 @@ public class RecommendedBookServiceImpl extends RemoteServiceServlet implements 
 		if (bookDao.queryByISBN(recommendedBook.getBookISBN()) != null) {
 			return false;
 		}
+		// 检查其是否已推荐
+		if (recommendHistoryDao.isRecommend(recommendedBook.getBookISBN(), recommendedBook.getRecUserEmail())) {
+			return false;
+		}
 		
 		SLRecommendedBook allready = dao.queryByISBN(recommendedBook.getBookISBN());
+		SLRecommendHistory history = SLRecommendHistory.parse(recommendedBook);
 		if (allready != null) {
 			allready.setRecRate(allready.getRecRate() + 1);
 			dao.updateRecBook(allready);
+			recommendHistoryDao.insertRecHistory(history);
 			return true;
 		} else if (dao.insertRecBook(recommendedBook)) {
+			recommendHistoryDao.insertRecHistory(history);
 			return true;
 		} else {
 			return false;
