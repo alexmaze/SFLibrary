@@ -20,8 +20,9 @@ public class SLRecommendedBookDao {
 	private static final Logger log = Logger.getLogger(SLRecommendedBookDao.class);
 
 	private Session session = null;
+	private static SLRecommendedBookDao singleton = null;
 
-	public SLRecommendedBookDao() {
+	private SLRecommendedBookDao() {
 		log.debug("SLRecommendedBookDao construct is running");
 	}
 
@@ -182,5 +183,10 @@ public class SLRecommendedBookDao {
 			HibernateSessionFactory.closeSession();
 		}
 	}
-
+	public static SLRecommendedBookDao getDao() {
+		if (singleton == null) {
+			singleton = new SLRecommendedBookDao();
+		}
+		return singleton;
+	}
 }

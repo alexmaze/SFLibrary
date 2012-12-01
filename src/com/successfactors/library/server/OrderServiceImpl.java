@@ -35,10 +35,10 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	public static final String ORDER_CANCElED = "已取消";
 	public static final String ORDER_BORROWED = "已借到";
 
-	protected SLOrderDao orderDao = new SLOrderDao();
-	protected SLBookDao bookDao = new SLBookDao();
-	protected SLUserDao userDao = new SLUserDao();
-	protected SLBorrowDao borrowDao = new SLBorrowDao();
+	protected SLOrderDao orderDao = SLOrderDao.getDao();
+	protected SLBookDao bookDao = SLBookDao.getDao();
+	protected SLUserDao userDao = SLUserDao.getDao();
+	protected SLBorrowDao borrowDao = SLBorrowDao.getDao();
 	
 	private SLEmailUtil emailUtil = new SLEmailUtil();
 

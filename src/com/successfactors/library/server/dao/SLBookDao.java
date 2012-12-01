@@ -21,8 +21,10 @@ public class SLBookDao {
 	private static final Logger log = Logger.getLogger(SLBookDao.class);
 
 	private Session session = null;
+	
+	private static SLBookDao singleton = null;
 
-	public SLBookDao() {
+	private SLBookDao() {
 		log.debug("MysqlBookDao construct is running");
 	}
 
@@ -311,5 +313,12 @@ public class SLBookDao {
 		} finally {
 			HibernateSessionFactory.closeSession();
 		}
+	}
+	
+	public static SLBookDao getDao() {
+		if (singleton == null) {
+			singleton = new SLBookDao();
+		}
+		return singleton;
 	}
 }

@@ -17,22 +17,16 @@ import org.hibernate.criterion.Restrictions;
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
+import com.successfactors.library.shared.model.BorrowPage;
 import com.successfactors.library.shared.model.SLBorrow;
 
 public class SLBorrowDao {
 	private static final Logger log = Logger.getLogger(SLBorrowDao.class);
 
 	private Session session;
+	private static SLBorrowDao singleton = null;
 	
-	//do not use if there is no query by page
-	private int totalCount = 0;
-	
-	public int getTotalCount(){
-		return totalCount;
-	}
-	
-	
-	public SLBorrowDao() {
+	private SLBorrowDao() {
 		log.info("MysqlBorrowDao construct is running");
 		session = HibernateSessionFactory.getSession();
 		if (session == null) {
@@ -214,9 +208,11 @@ public class SLBorrowDao {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
+	public BorrowPage searchBorrowList(BorrowStatusType borrowType,
 			String userEmail, int itemsPerPage, int pageNum) {
 		session = HibernateSessionFactory.getSession();
+		
+		BorrowPage retBorrowPage = new BorrowPage();
 		List<SLBorrow> result = null;
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
@@ -228,7 +224,14 @@ public class SLBorrowDao {
 				this.extend_borrowStatusType(criteria, borrowType);
 			}
 			criteria.setProjection(Projections.rowCount());
-			totalCount = ((Long)criteria.uniqueResult()).intValue();
+
+			int totalNum = ((Long)criteria.uniqueResult()).intValue();
+			if (totalNum % itemsPerPage == 0) {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+			} else {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+			}
+			
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);
@@ -236,11 +239,13 @@ public class SLBorrowDao {
 			}
 			criteria.addOrder(Order.desc("borrowDate"));
 			result = criteria.list();
+			retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) result);
+			
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);
 			throw re;
 		}
-		return result;
+		return retBorrowPage;
 
 	}
 
@@ -253,9 +258,10 @@ public class SLBorrowDao {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
+	public BorrowPage searchBorrowList(BorrowStatusType borrowType,
 			int itemsPerPage, int pageNum) {
 		session = HibernateSessionFactory.getSession();
+		BorrowPage retBorrowPage = new BorrowPage();
 		List<SLBorrow> result = null;
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
@@ -267,7 +273,14 @@ public class SLBorrowDao {
 			}
 			//hack for get count(*)
 			criteria.setProjection(Projections.rowCount());
-			totalCount = ((Long)criteria.uniqueResult()).intValue();
+
+			int totalNum = ((Long)criteria.uniqueResult()).intValue();
+			if (totalNum % itemsPerPage == 0) {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+			} else {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+			}
+			
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
@@ -275,11 +288,12 @@ public class SLBorrowDao {
 			}
 			criteria.addOrder(Order.desc("borrowDate"));
 			result = criteria.list();
+			retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) result);
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);
 			throw re;
 		}
-		return result;
+		return retBorrowPage;
 
 	}
 
@@ -294,10 +308,11 @@ public class SLBorrowDao {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public List<SLBorrow> searchBorrowList(BorrowStatusType borrowType,
+	public BorrowPage searchBorrowList(BorrowStatusType borrowType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
 		session = HibernateSessionFactory.getSession();
+		BorrowPage retBorrowPage = new BorrowPage();
 		List<SLBorrow> result = null;
 		try {
 			Criteria criteria = session.createCriteria(SLBorrow.class);
@@ -310,7 +325,14 @@ public class SLBorrowDao {
 			}	
 			criteria.add(Restrictions.like(strSearch, searchValue, MatchMode.ANYWHERE));
 			criteria.setProjection(Projections.rowCount());
-			totalCount = ((Long)criteria.uniqueResult()).intValue();
+			
+			int totalNum = ((Long)criteria.uniqueResult()).intValue();
+			if (totalNum % itemsPerPage == 0) {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+			} else {
+				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+			}
+			
 			criteria.setProjection(null);
 			if (itemsPerPage > 0 && pageNum > 0) {
 				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
@@ -318,12 +340,13 @@ public class SLBorrowDao {
 			}
 			criteria.addOrder(Order.desc("borrowDate"));
 			result = criteria.list();
+			retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) result);
 			
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);
 			throw re;
 		}
-		return result;
+		return retBorrowPage;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -414,5 +437,12 @@ public class SLBorrowDao {
 		} else {
 			return true;
 		}
+	}
+	
+	public static SLBorrowDao getDao() {
+		if (singleton == null) {
+			singleton = new SLBorrowDao();
+		}
+		return singleton;
 	}
 }

@@ -15,9 +15,9 @@ import com.successfactors.library.shared.model.SLRecommendedBook;
 @SuppressWarnings("serial")
 public class RecommendedBookServiceImpl extends RemoteServiceServlet implements RecommendedBookService {
 
-	private SLBookDao bookDao = new SLBookDao();
-	private SLRecommendedBookDao dao = new SLRecommendedBookDao();
-	private SLRecommendHistoryDao recommendHistoryDao = new SLRecommendHistoryDao();
+	private SLBookDao bookDao = SLBookDao.getDao();
+	private SLRecommendedBookDao dao = SLRecommendedBookDao.getDao();
+	private SLRecommendHistoryDao recommendHistoryDao = SLRecommendHistoryDao.getDao();
 	
 	@Override
 	public boolean recommendBook(SLRecommendedBook recommendedBook) {

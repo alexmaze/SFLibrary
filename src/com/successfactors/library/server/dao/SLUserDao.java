@@ -18,11 +18,12 @@ public class SLUserDao {
 
 	private static final Logger log = Logger.getLogger(SLUserDao.class);
 	private Session session;
+	private static SLUserDao singleton = null;
 
 	/**
 	 * SLUserDao 默认构造函数
 	 * */
-	public SLUserDao() {
+	private SLUserDao() {
 		log.info("SLUserDao construct is running");
 		session = HibernateSessionFactory.getSession();
 		if (session == null) {
@@ -139,5 +140,10 @@ public class SLUserDao {
 		slUser = (SLUser) session.get(SLUser.class, strEmail);
 		return slUser;
 	}
-
+	public static SLUserDao getDao() {
+		if (singleton == null) {
+			singleton = new SLUserDao();
+		}
+		return singleton;
+	}
 }

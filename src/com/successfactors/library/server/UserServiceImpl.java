@@ -12,7 +12,7 @@ import com.successfactors.library.shared.model.SLUser;
 public class UserServiceImpl extends RemoteServiceServlet implements
 		UserService {
 
-	private SLUserDao slUserDao = new SLUserDao();
+	private SLUserDao slUserDao = SLUserDao.getDao();
 	public final static String USER_SESSION_KEY = "SF_LIB_USER";
 
 	/**

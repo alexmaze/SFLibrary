@@ -29,10 +29,10 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		BorrowService {
 	private static final long serialVersionUID = 1L;
 	
-	protected SLBorrowDao borrowDao = new SLBorrowDao();
-	protected SLOrderDao orderDao = new SLOrderDao();
-	protected SLBookDao bookDao = new SLBookDao();
-	protected SLUserDao userDao = new SLUserDao();
+	protected SLBorrowDao borrowDao = SLBorrowDao.getDao();
+	protected SLOrderDao orderDao = SLOrderDao.getDao();
+	protected SLBookDao bookDao = SLBookDao.getDao();
+	protected SLUserDao userDao = SLUserDao.getDao();
 	
 	private SLEmailUtil emailUtil = new SLEmailUtil();
 
@@ -155,14 +155,16 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public BorrowPage getBorrowList(BorrowStatusType statusType,
 			String userEmail, int itemsPerPage, int pageNum) {
+		BorrowPage page = null;
+		
 		List<SLBorrow> result = null;
 		if (userEmail == null) {
-			result = borrowDao.searchBorrowList(statusType, itemsPerPage, pageNum);
+			page = borrowDao.searchBorrowList(statusType, itemsPerPage, pageNum);
 		} else {
-			result = borrowDao.searchBorrowList(statusType, userEmail,
+			page = borrowDao.searchBorrowList(statusType, userEmail,
 					itemsPerPage, pageNum);
 		}
-		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
+		result = page.getTheBorrows();
 		for (int i = 0; i < result.size(); i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
@@ -170,13 +172,11 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 					.getUserEmail()));
 			result.set(i, slBorrow);
 		}
+		
 		page.setTheBorrows((ArrayList<SLBorrow>) result);
-		int totalNum = borrowDao.getTotalCount();
-		if (totalNum % itemsPerPage == 0) {
-			page.setTotalPageNum((int) totalNum / itemsPerPage);
-		} else {
-			page.setTotalPageNum((int) totalNum / itemsPerPage + 1);
-		}
+		page.setItemsNumPerPage(itemsPerPage);
+		page.setPageNum(pageNum);
+		
 		return page;
 	}
 
@@ -196,9 +196,10 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 	public BorrowPage searchBorrowList(BorrowStatusType statusType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
-		List<SLBorrow> result = borrowDao.searchBorrowList(statusType,
+		BorrowPage page = borrowDao.searchBorrowList(statusType,
 				searchType, searchValue, itemsPerPage, pageNum);
-		BorrowPage page = new BorrowPage(itemsPerPage, pageNum);
+		List<SLBorrow> result = page.getTheBorrows();
+		
 		for (int i = 0; i < result.size(); i++) {
 			SLBorrow slBorrow = result.get(i);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));
@@ -207,12 +208,9 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 			result.set(i, slBorrow);
 		}
 		page.setTheBorrows((ArrayList<SLBorrow>) result);
-		int totalNum = borrowDao.getTotalCount();
-		if (totalNum % itemsPerPage == 0) {
-			page.setTotalPageNum((int) totalNum / itemsPerPage);
-		} else {
-			page.setTotalPageNum((int) totalNum / itemsPerPage + 1);
-		}
+		page.setItemsNumPerPage(itemsPerPage);
+		page.setPageNum(pageNum);
+		
 		return page;
 	}
 

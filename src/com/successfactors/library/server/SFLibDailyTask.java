@@ -24,10 +24,10 @@ public class SFLibDailyTask extends TimerTask {
 	private ServletContext context = null;
 	
 	private SLEmailUtil emailUtil = new SLEmailUtil();
-	private SLBorrowDao borrowDao = new SLBorrowDao();
-	private SLBookDao bookDao = new SLBookDao();
-	private SLUserDao userDao = new SLUserDao();
-	private SLOrderDao orderDao = new SLOrderDao();
+	private SLBorrowDao borrowDao = SLBorrowDao.getDao();
+	private SLBookDao bookDao = SLBookDao.getDao();
+	private SLUserDao userDao = SLUserDao.getDao();
+	private SLOrderDao orderDao = SLOrderDao.getDao();
 
 	public SFLibDailyTask(ServletContext context) {
 		this.context = context;
@@ -52,7 +52,7 @@ public class SFLibDailyTask extends TimerTask {
 		context.log("开始执行定时任务");
 		
 		// 检查书籍超期情况
-		List<SLBorrow> nowBorrowList = borrowDao.searchBorrowList(BorrowStatusType.NOW, Integer.MAX_VALUE, 1);
+		List<SLBorrow> nowBorrowList = borrowDao.searchBorrowList(BorrowStatusType.NOW, Integer.MAX_VALUE, 1).getTheBorrows();
 		if (nowBorrowList == null) {
 			return;
 		}

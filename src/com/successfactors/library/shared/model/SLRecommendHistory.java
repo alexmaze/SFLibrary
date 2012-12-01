@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,7 +22,8 @@ public class SLRecommendHistory implements Serializable {
 	private String userName;
 	private String userEmail;
 	private Date recDate;
-	
+
+	@Id
 	public int getHistoryId() {
 		return historyId;
 	}

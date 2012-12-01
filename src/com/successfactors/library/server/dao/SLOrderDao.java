@@ -24,13 +24,14 @@ public class SLOrderDao {
 	private static final Logger log = Logger.getLogger(SLOrderDao.class);
 	private Session session = null;
 	public static final String SEARCH_ALL ="all";
-    private SLBookDao bookDao = new SLBookDao();
-	private SLUserDao userDao = new SLUserDao();
+    private SLBookDao bookDao = SLBookDao.getDao();
+	private SLUserDao userDao = SLUserDao.getDao();
 
+	private static SLOrderDao singleton = null;
 	/**
 	 * Construct(do nothing)
 	 */
-	public SLOrderDao() {
+	private SLOrderDao() {
 		log.debug("MysqlOrderDao construct is running");
 	}
 
@@ -310,4 +311,10 @@ public class SLOrderDao {
 		}
 	}
 	
+	public static SLOrderDao getDao() {
+		if (singleton == null) {
+			singleton = new SLOrderDao();
+		}
+		return singleton;
+	}
 }

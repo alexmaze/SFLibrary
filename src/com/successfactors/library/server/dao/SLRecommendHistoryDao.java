@@ -15,8 +15,9 @@ public class SLRecommendHistoryDao {
 	private static final Logger log = Logger.getLogger(SLRecommendHistoryDao.class);
 
 	private Session session = null;
+	private static SLRecommendHistoryDao singleton = null;
 
-	public SLRecommendHistoryDao() {
+	private SLRecommendHistoryDao() {
 		log.debug("SLRecommendHistoryDao construct is running");
 	}
 
@@ -60,5 +61,10 @@ public class SLRecommendHistoryDao {
 			HibernateSessionFactory.closeSession();
 		}
 	}
-
+	public static SLRecommendHistoryDao getDao() {
+		if (singleton == null) {
+			singleton = new SLRecommendHistoryDao();
+		}
+		return singleton;
+	}
 }
