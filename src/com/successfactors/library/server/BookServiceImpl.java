@@ -217,6 +217,10 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	@SuppressWarnings("deprecation")
 	public static Date getDateFormString(String strDate)
 	{
+		if (strDate == null || strDate.equals("")) {
+			return null;
+		}
+		
 		Date ret = new Date();
 		
 		String[] arrDate = strDate.split("-");
@@ -242,6 +246,9 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	 * 过滤字符串后转换为Double
 	 */
 	public static Double getDouble(String str) {
+		if (str == null || str.equals("")) {
+			return 0.0;
+		}
 		// 只允数字
 		String regEx = "[^0-9.]";
 		Pattern p = Pattern.compile(regEx);
@@ -258,6 +265,9 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	 * 过滤字符串中的[]
 	 */
 	public static String getStringWithoutBrcket(String str) {
+		if (str == null || str.equals("")) {
+			return "";
+		}
 		String regEx="[\\[\\]]";  
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(str);
