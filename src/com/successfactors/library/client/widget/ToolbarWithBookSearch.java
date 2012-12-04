@@ -17,6 +17,7 @@ public class ToolbarWithBookSearch extends ToolStrip {
 		Search_Button,
 		
 		Recommend_Button,
+		Add_User_Button,
 	}
 
 	private static final String TOOLBAR_HEIGHT = "25px";
@@ -29,18 +30,22 @@ public class ToolbarWithBookSearch extends ToolStrip {
 	private static final String SEARCH_BUTTON = "toolbar/search.png";
 
 	private static final String RECOMMEND_BUTTON = "toolbar/newreport.png";
+	private static final String ADD_USER_BUTTON = "toolbar/assign.png";
 
 	private static final String NEW_BUTTON_DISPLAY_NAME = "新建";
 	private static final String DELETE_BUTTON_DISPLAY_NAME = "删除";
 	private static final String UPDATE_BUTTON_DISPLAY_NAME = "修改";
 	private static final String SEARCH_BUTTON_DISPLAY_NAME = "搜索";
 	private static final String RECOMMEND_BUTTON_DISPLAY_NAME = "推荐图书";
+	private static final String ADD_USER_BUTTON_DISPLAY_NAME = "注册新用户";
 
 	ToolStripButton newButton;
 	ToolStripButton deleteButton;
 	ToolStripButton updateButton;
 	ToolStripButton searchButton;
 	ToolStripButton recommendButton;
+	
+	ToolStripButton addUserButton;
 
 	private DynamicForm searchForm;
 
@@ -71,6 +76,13 @@ public class ToolbarWithBookSearch extends ToolStrip {
 			updateButton.setIcon(APPLY_BUTTON);
 			updateButton.setTitle(UPDATE_BUTTON_DISPLAY_NAME);
 			this.addButton(updateButton);
+
+			this.addSeparator();
+			
+			addUserButton = new ToolStripButton();
+			addUserButton.setIcon(ADD_USER_BUTTON);
+			addUserButton.setTitle(ADD_USER_BUTTON_DISPLAY_NAME);
+			this.addButton(addUserButton);
 
 			this.addSeparator();
 			
@@ -127,6 +139,8 @@ public class ToolbarWithBookSearch extends ToolStrip {
 			searchButton.addClickHandler(clickHandler);
 		} else if (butType == ToolbarButtonType.Recommend_Button) {
 			recommendButton.addClickHandler(clickHandler);
+		} else if (butType == ToolbarButtonType.Add_User_Button) {
+			addUserButton.addClickHandler(clickHandler);
 		} else {
 			GWT.log("Toolbar 按钮绑定单击事件错误 " + butType.name());
 		}

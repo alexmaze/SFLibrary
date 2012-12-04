@@ -7,6 +7,7 @@ import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.widget.AdminBookManagementListGrid;
 import com.successfactors.library.client.widget.JumpBar;
+import com.successfactors.library.client.widget.RegisterWindow;
 import com.successfactors.library.client.widget.JumpBar.JumpbarLabelType;
 import com.successfactors.library.client.widget.ToolbarWithBookSearch;
 import com.successfactors.library.client.widget.ToolbarWithBookSearch.ToolbarButtonType;
@@ -69,6 +70,14 @@ public class AdminBookManagementView extends VLayout {
 			public void onClick(ClickEvent event) {
 				isSearchMode = true;
 				theListGrid.doSearchBook(theToolbar.getSearchInfo());
+			}
+		});
+		theToolbar.addButtonClickHandler(ToolbarButtonType.Add_User_Button, new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				RegisterWindow window = new RegisterWindow();
+				window.show();
 			}
 		});
 		theJumpBar.addLabelClickHandler(JumpbarLabelType.NEXT_PAGE, new ClickHandler() {
