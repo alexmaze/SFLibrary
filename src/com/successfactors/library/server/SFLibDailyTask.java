@@ -67,6 +67,7 @@ public class SFLibDailyTask extends TimerTask {
 					slBorrow.setStatus("已超期");
 					slBorrow.setOverdue(true);
 					borrowDao.update(slBorrow);
+					context.log("借阅过期.\t借阅ID： "+slBorrow.getBorrowId());
 				}
 				
 				SLOrder firstOrder = orderDao.getEarlistOrder(slBorrow.getBookISBN());
@@ -75,9 +76,8 @@ public class SFLibDailyTask extends TimerTask {
 					slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
 							.getUserEmail()));
 					emailUtil.sendOverdueEmail(slBorrow);
-					context.log("\t发送催还邮件.此书第一预订者： "+firstOrder.getUserEmail());
+					context.log("发送催还邮件."+"\t借阅ID："+slBorrow.getBorrowId()+"\t此书顺位订者： "+firstOrder.getUserEmail());
 				}
-				context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 			}
 		}
 
