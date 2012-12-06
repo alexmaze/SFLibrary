@@ -14,6 +14,7 @@ import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.BorrowStatusType;
 import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.SLBorrow;
+import com.successfactors.library.shared.model.SLOrder;
 
 public class SFLibDailyTask extends TimerTask {
 
@@ -57,7 +58,6 @@ public class SFLibDailyTask extends TimerTask {
 			return;
 		}
 		
-		//context.log("共有： "+nowBorrowList.size()+" 个当前借阅记录");
 		for (SLBorrow slBorrow : nowBorrowList) {
 			if (slBorrow.getShouldReturnDate().before(new Date())) {
 				
@@ -69,11 +69,12 @@ public class SFLibDailyTask extends TimerTask {
 				slBorrow.setTheUser(userDao.getSLUserByEmail(slBorrow
 						.getUserEmail()));
 				
-				if (orderDao.getEarlistOrder(slBorrow.getBookISBN()) != null) {
+				SLOrder firstOrder = orderDao.getEarlistOrder(slBorrow.getBookISBN());
+				if (firstOrder != null) {
 					emailUtil.sendOverdueEmail(slBorrow);
+					context.log("\t发送催还邮件.此书第一预订者： "+firstOrder.getUserEmail());
 				}
 				context.log("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
-//				System.out.println("设置借阅ID： "+slBorrow.getBorrowId()+" 为已超期");
 			}
 		}
 
