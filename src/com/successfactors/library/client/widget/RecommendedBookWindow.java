@@ -754,6 +754,9 @@ public class RecommendedBookWindow extends Window {
 
 			@Override
 			protected void callService(AsyncCallback<Boolean> cb) {
+				theRecBook.setRecUserName(SFLibrary.get().getNowUser().getUserName());
+				theRecBook.setRecUserEmail(SFLibrary.get().getNowUser().getUserEmail());
+				theRecBook.setRecDate(null);
 				recommendedBookService.recommendBook(theRecBook, cb);
 			}
 		}.retry(3);
