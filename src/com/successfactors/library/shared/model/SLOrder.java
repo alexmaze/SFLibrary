@@ -103,12 +103,11 @@ public class SLOrder implements Serializable {
 
 		SLOrder ret = new SLOrder();
 		
-		record.getAttribute("orderId");
-		record.getAttribute("userEmail");
-		record.getAttribute("bookISBN");
-		record.getAttribute("bookISBN");
-		record.getAttribute("orderDate");
-		record.getAttribute("status");
+		ret.setOrderId(record.getAttributeAsInt("orderId"));
+		ret.setUserEmail(record.getAttribute("userEmail"));
+		ret.setBookISBN(record.getAttribute("bookISBN"));
+		ret.setOrderDate(record.getAttributeAsDate("orderDate"));
+		ret.setStatus(record.getAttribute("status"));
 
 		//------------------------------------------------------
 		SLUser newUser = new SLUser();
