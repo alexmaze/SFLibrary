@@ -19,7 +19,8 @@ import java.util.Properties;
 public class SLEmailUtil {
 
 	private String SMS_EMAIL_GROUP_ADDRESS = "MinervaBookLib@successfactors.com";
-	private String SMS_EMAIL_HOST = "10.50.0.11";
+	private String SMS_EMAIL_HOST = "10.6.113.251";
+//	private String SMS_EMAIL_HOST = "owa.successfactors.com";
 	
 	private String SMS_ADMIN_EMAIL_ADDRESS_1 = "meganwang@successfactors.com";
 	private String SMS_ADMIN_EMAIL_ADDRESS_2 = "amei@successfactors.com";
