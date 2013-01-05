@@ -803,7 +803,11 @@ public class RecommendedBookWindow extends Window {
 		theRecBook.setBookClass(bookForm1.getValueAsString("bookClass"));
 		theRecBook.setBookLanguage(bookForm1.getValueAsString("bookLanguage"));
 
-		if (!FieldVerifier.isNotEmptyValid(theRecBook.getBookISBN())) {
+		theRecBook.setRecStatus("已推荐");
+		
+		if (!FieldVerifier.isNotEmptyValid(theRecBook.getBookISBN())
+				|| !FieldVerifier.isNotEmptyValid(theRecBook.getBookName())
+				) {
 			SC.say("请先输入图书ISBN，并获取图书信息！");
 			return false;
 		}
