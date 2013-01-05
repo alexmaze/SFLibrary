@@ -190,7 +190,7 @@ public class SLOrderDao {
         if(isLike){
         	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
         		if(firstValue.equals("历史记录")){
-        			sb.append(" where p.status='已取消' or p.status='已借到' ");
+        			sb.append(" where ( p.status='已取消' or p.status='已借到' ) ");
         		}else if(firstValue.equals("当前记录")){
         			sb.append(" where p.status='排队中' ");
         		}else{
@@ -198,7 +198,7 @@ public class SLOrderDao {
         		}
 	        	if(!secondType.equals(SEARCH_ALL)&&secondValue!=null){
 	        		if(secondValue.equals("历史记录")){
-	        			sb.append(" and p.status='已取消' or p.status='已借到' ");
+	        			sb.append(" ( and p.status='已取消' or p.status='已借到' ) ");
 	        		}else if(secondValue.equals("当前记录")){
 	        			sb.append(" and p.status='排队中' ");
 	        		}else{
@@ -209,7 +209,7 @@ public class SLOrderDao {
         }else{
         	if(!firstType.equals(SEARCH_ALL)&&firstValue!=null){
         		if(firstValue.equals("历史记录")){
-        			sb.append(" where p.status='已取消' or p.status='已借到' ");
+        			sb.append(" where ( p.status='已取消' or p.status='已借到' ) ");
         		}else if(firstValue.equals("当前记录")){
         			sb.append(" where p.status='排队中' ");
         		}else{
@@ -217,7 +217,7 @@ public class SLOrderDao {
         		}
 	        	if(!secondType.equals(SEARCH_ALL)&&secondValue!=null){
 	        		if(secondValue.equals("历史记录")){
-	        			sb.append(" and p.status='已取消' or p.status='已借到' ");
+	        			sb.append(" and ( p.status='已取消' or p.status='已借到' ) ");
 	        		}else if(secondValue.equals("当前记录")){
 	        			sb.append(" and p.status='排队中' ");
 	        		}else{
