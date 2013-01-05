@@ -1,6 +1,12 @@
 package com.successfactors.library.shared;
 
 public enum BorrowSearchType {
+	
+	/**
+	 * 按书名查询
+	 * */
+	BOOK_NAME,
+	
 	/**
 	 * 按借阅编号查询
 	 * */
@@ -23,7 +29,9 @@ public enum BorrowSearchType {
 
 	public static BorrowSearchType parse(String strType) {
 
-		if (strType.equalsIgnoreCase("借阅编号")) {
+		if (strType.equalsIgnoreCase("书籍名称")) {
+			return BorrowSearchType.BOOK_NAME;
+		} else if (strType.equalsIgnoreCase("借阅编号")) {
 			return BorrowSearchType.BORROW_ID;
 		} else if (strType.equalsIgnoreCase("用户邮箱")) {
 			return BorrowSearchType.USER_EMAIL;
@@ -37,7 +45,10 @@ public enum BorrowSearchType {
 	}
 	
 	public static String parse(BorrowSearchType searchType){
-		if(searchType.equals(BORROW_ID)) {
+
+		if(searchType.equals(BOOK_NAME)) {
+			return "bookName";
+		} else if(searchType.equals(BORROW_ID)) {
 			return "borrowId";
 		} else if(searchType.equals(USER_EMAIL)) {
 			return "userEmail";

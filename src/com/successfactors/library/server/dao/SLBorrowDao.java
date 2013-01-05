@@ -1,6 +1,7 @@
 package com.successfactors.library.server.dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -307,40 +308,99 @@ public class SLBorrowDao {
 	 * @param pageNum
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public BorrowPage searchBorrowList(BorrowStatusType borrowType,
 			BorrowSearchType searchType, String searchValue, int itemsPerPage,
 			int pageNum) {
+
 		session = HibernateSessionFactory.getSession();
 		BorrowPage retBorrowPage = new BorrowPage();
-		List<SLBorrow> result = null;
+		
+		
 		try {
-			Criteria criteria = session.createCriteria(SLBorrow.class);
-			String strStatus = BorrowStatusType.parse(borrowType);
-			String strSearch = BorrowSearchType.parse(searchType);
-			if (strStatus != null) {
-				criteria.add(Restrictions.eq("status", strStatus));
-			} else {
-				this.extend_borrowStatusType(criteria, borrowType);
-			}	
-			criteria.add(Restrictions.like(strSearch, searchValue, MatchMode.ANYWHERE));
-			criteria.setProjection(Projections.rowCount());
 			
-			int totalNum = ((Long)criteria.uniqueResult()).intValue();
-			if (totalNum % itemsPerPage == 0) {
-				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+			if (searchType == BorrowSearchType.BOOK_NAME) {
+
+		        StringBuffer sb = new StringBuffer();
+		        sb.append("from SLBorrow as b,SLBook as p ");
+		        
+		        String borrowStatusString = BorrowStatusType.parse(borrowType);
+		        if (borrowStatusString == null) {
+			        if(borrowType.equals(BorrowStatusType.HISTORY)){
+			        	borrowStatusString = "已归还";
+					} else if(borrowType.equals(BorrowStatusType.NOW)){
+						borrowStatusString = "已超期' or b.status = '未归还";
+					}
+				}
+		        
+		        sb.append(" where b.bookISBN = p.bookISBN and ( b.status = '"+borrowStatusString+"' ) and p.bookName like "+ "'%"+searchValue+"%'");
+		        sb.append(" order by b.borrowDate desc ");
+		        
+		        Query q = session.createQuery(sb.toString());
+		        q.setFirstResult((pageNum - 1) * itemsPerPage);
+		        q.setMaxResults(itemsPerPage);
+
+		        List<SLBorrow> results = new ArrayList<SLBorrow>();
+				List list = q.list();
+		        Iterator it = list.iterator();
+		        while (it.hasNext()) {
+		        	SLBorrow bean = (SLBorrow) ((Object[]) it.next())[0];
+		          results.add(bean);
+		        }
+				retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) results);
+				
+				// 计算页数
+				sb = new StringBuffer();
+		        sb.append(" select count(*) from SLBorrow as b,SLBook as p ");
+		        sb.append(" where b.bookISBN = p.bookISBN and ( b.status = '"+borrowStatusString+"' ) and p.bookName like "+ "'%"+searchValue+"%'");
+		        sb.append(" order by b.borrowDate desc ");
+		        
+		        q = session.createQuery(sb.toString());
+		        if (null != q.uniqueResult()){
+
+					int totalNum = ((Long) q.uniqueResult()).intValue();
+					if (totalNum % itemsPerPage == 0) {
+						retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+					} else {
+						retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+					}
+					
+		        }else{
+		        	retBorrowPage.setTotalPageNum(0);
+		        }
+
+				
 			} else {
-				retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+
+				List<SLBorrow> result = null;
+				Criteria criteria = session.createCriteria(SLBorrow.class);
+				String strStatus = BorrowStatusType.parse(borrowType);
+				String strSearch = BorrowSearchType.parse(searchType);
+				if (strStatus != null) {
+					criteria.add(Restrictions.eq("status", strStatus));
+				} else {
+					this.extend_borrowStatusType(criteria, borrowType);
+				}	
+				criteria.add(Restrictions.like(strSearch, searchValue, MatchMode.ANYWHERE));
+				criteria.setProjection(Projections.rowCount());
+				
+				int totalNum = ((Long)criteria.uniqueResult()).intValue();
+				if (totalNum % itemsPerPage == 0) {
+					retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage);
+				} else {
+					retBorrowPage.setTotalPageNum((int) totalNum / itemsPerPage + 1);
+				}
+				
+				criteria.setProjection(null);
+				if (itemsPerPage > 0 && pageNum > 0) {
+					criteria.setMaxResults(itemsPerPage);// 最大显示记录数
+					criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
+				}
+				criteria.addOrder(Order.desc("borrowDate"));
+				result = criteria.list();
+				retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) result);
 			}
 			
-			criteria.setProjection(null);
-			if (itemsPerPage > 0 && pageNum > 0) {
-				criteria.setMaxResults(itemsPerPage);// 最大显示记录数
-				criteria.setFirstResult((pageNum - 1) * itemsPerPage);// 从第几条开始
-			}
-			criteria.addOrder(Order.desc("borrowDate"));
-			result = criteria.list();
-			retBorrowPage.setTheBorrows((ArrayList<SLBorrow>) result);
 			
 		} catch (RuntimeException re) {
 			log.error("searchBorrowList execute error", re);

@@ -47,7 +47,7 @@ public enum BorrowStatusType {
 			return "已归还";
 		} else if(statusType.equals(BORROW_OVERDUE)){
 			return "已超期";
-		} 
+		}
 		
 		return null;
 	}

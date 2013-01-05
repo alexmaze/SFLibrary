@@ -66,12 +66,13 @@ public class ToolBarWithBorrowSearch extends ToolStrip {
 			TextItem searchKeyWordItem = new TextItem("searchKeyWord", "关键字");
 			SelectItem searchClassItem = new SelectItem("searchClass", "分类");
 			searchClassItem.setValueMap(
+					"书籍名称",
 					"借阅编号",
 					"用户邮箱",
 					"书籍ISBN",
 					"预定状态"
 					);
-			searchClassItem.setDefaultValue("借阅编号");
+			searchClassItem.setDefaultValue("书籍名称");
 			searchKeyWordItem.setWidth(100);
 			searchKeyWordItem.setHeight(20);
 			searchClassItem.setHeight(20);
