@@ -112,6 +112,7 @@ public class SFLibrary implements EntryPoint {
 			mainLayout.addMember(southLayout);
 			
 			mainLayout.draw();
+			mainLayout.setMinWidth(1280);
 			
 			tryToLogin();
 			
