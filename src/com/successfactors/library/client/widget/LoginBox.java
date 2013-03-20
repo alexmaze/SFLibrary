@@ -15,6 +15,7 @@ import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
+import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.AppController;
 import com.successfactors.library.client.SFLibrary;
@@ -133,8 +134,8 @@ public class LoginBox extends VLayout {
         adminInfoLabel4.setHeight("40px");
         
         mobileLinkTitle.setHeight("40px");
-        androidApkLink.setHeight("40px");
-        iosLink.setHeight("40px");
+        androidApkLink.setHeight("20px");
+        //iosLink.setHeight("40px");
         
         VLayout adminLayout = new VLayout();
         
@@ -145,7 +146,18 @@ public class LoginBox extends VLayout {
 
         adminLayout.addMember(mobileLinkTitle);
         adminLayout.addMember(androidApkLink);
-        adminLayout.addMember(iosLink);
+        //adminLayout.addMember(iosLink);
+        
+        HLayout imgHLayout = new HLayout();
+        Img mobileImg = new Img("http://192.168.25.222/mobile/libmobile_icon.png");
+        mobileImg.setSize("100px", "100px");
+        Img qrcodeImg = new Img("http://192.168.25.222/mobile/libmobile_qrcode.png");
+        qrcodeImg.setSize("100px", "100px");
+        qrcodeImg.setMargin(10);
+        imgHLayout.setMembers(mobileImg, qrcodeImg);
+        imgHLayout.setMembersMargin(5);
+
+        adminLayout.addMember(imgHLayout);
         
         adminLayout.setMargin(10);
         adminLayout.setHeight("140px");
