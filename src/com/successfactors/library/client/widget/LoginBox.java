@@ -1,6 +1,7 @@
 package com.successfactors.library.client.widget;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.user.client.Window;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Img;
@@ -103,15 +104,37 @@ public class LoginBox extends VLayout {
         		"Daniel Wei<br/>" +
         		"&nbsp&nbsp dwei@successfactors.com"
         		);
+        
+
+        Label mobileLinkTitle = new Label(
+        		"客户端："
+        		);
+        Label androidApkLink = new Label("Android： 下载");
+        Label iosLink = new Label("IOS： 敬请期待");
+        androidApkLink.addClickHandler(new com.smartgwt.client.widgets.events.ClickHandler() {
+			@Override
+			public void onClick(com.smartgwt.client.widgets.events.ClickEvent event) {
+				Window.open("http://192.168.25.222/mobile/libmobile.apk", "Android app", null);
+			}
+		});
+        
         adminInfoLabel1.setStyleName("alex_admin_info_title");
         adminInfoLabel2.setStyleName("alex_admin_info_label");
         adminInfoLabel3.setStyleName("alex_admin_info_label");
         adminInfoLabel4.setStyleName("alex_admin_info_label");
         
+        mobileLinkTitle.setStyleName("alex_admin_info_title");
+        androidApkLink.setStyleName("alex_admin_info_label_with_bl");
+        iosLink.setStyleName("alex_admin_info_label_with_bl");
+        
         adminInfoLabel1.setHeight("40px");
         adminInfoLabel2.setHeight("40px");
         adminInfoLabel3.setHeight("40px");
         adminInfoLabel4.setHeight("40px");
+        
+        mobileLinkTitle.setHeight("40px");
+        androidApkLink.setHeight("40px");
+        iosLink.setHeight("40px");
         
         VLayout adminLayout = new VLayout();
         
@@ -119,6 +142,10 @@ public class LoginBox extends VLayout {
         adminLayout.addMember(adminInfoLabel2);
         adminLayout.addMember(adminInfoLabel3);
         adminLayout.addMember(adminInfoLabel4);
+
+        adminLayout.addMember(mobileLinkTitle);
+        adminLayout.addMember(androidApkLink);
+        adminLayout.addMember(iosLink);
         
         adminLayout.setMargin(10);
         adminLayout.setHeight("140px");

@@ -609,3 +609,20 @@ letter-spacing: 1px;
 	vertical-align: top;
 	
 }
+.alex_admin_info_label_with_bl {
+	color: #272626;
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 13px;
+	vertical-align: top;
+	cursor: hand;
+	
+}
+.alex_admin_info_label_with_bl:hover {
+	color: #272626;
+	font-family: Arial, Verdana, sans-serif;
+	font-size: 13px;
+	vertical-align: top;
+	cursor: hand;
+	font-weight: bold;
+	text-decoration:underline;
+}
