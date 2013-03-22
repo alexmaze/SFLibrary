@@ -20,6 +20,8 @@ public class SLUser implements Serializable {
 	private String userFloor;
 	private String userPosition;
 	
+	private String avatarUrl;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -62,6 +64,12 @@ public class SLUser implements Serializable {
 	}
 	public void setUserPosition(String userPosition) {
 		this.userPosition = userPosition;
+	}
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 	
 }

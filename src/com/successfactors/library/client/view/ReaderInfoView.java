@@ -7,31 +7,42 @@ import static com.successfactors.library.shared.FieldVerifier.isPasswordValid;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.types.Alignment;
+import com.smartgwt.client.types.VerticalAlignment;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Canvas;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Img;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.events.ClickEvent;
 import com.smartgwt.client.widgets.events.ClickHandler;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.ButtonItem;
-import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.SelectItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.SFLibrary;
+import com.successfactors.library.client.widget.UploadImageWindow;
+import com.successfactors.library.client.widget.UploadImageWindow.FinishUploadOperatable;
 import com.successfactors.library.shared.CipherUtil;
 import com.successfactors.library.shared.model.SLUser;
 
-public class ReaderInfoView extends VLayout {
+public class ReaderInfoView extends VLayout implements UploadImageWindow.FinishUploadOperatable {
 	
 	private static final String DESCRIPTION = "我的信息";
 	private static final String CONTEXT_AREA_WIDTH = "*";
 
+	private static final int IMG_HEIGHT = 150;
+	private static final int IMG_WIDTH = 120;
+
 	private DynamicForm form;
 	private SLUser userInfo;
+	
+	Img avatarUrlItem;
+	String avatarUrl;
 	
 	public ReaderInfoView() {
 		super();
@@ -41,23 +52,42 @@ public class ReaderInfoView extends VLayout {
 		this.setStyleName("crm-ContextArea");
 		this.setWidth(CONTEXT_AREA_WIDTH);
 		
+
+		HLayout hLayout = new HLayout();
+		
+		//HLayout ---------------------------------------------------------------------------------------
+		
+		VLayout imgVLayout = new VLayout();
+		imgVLayout.setWidth(IMG_WIDTH);
+		imgVLayout.setHeight(200);
+		avatarUrlItem = new Img("", IMG_WIDTH, IMG_HEIGHT);
+		avatarUrlItem.setBorder("1px solid lightgray");
+		
+		IButton uploadPicButton = new IButton("上传头像");
+		uploadPicButton.setIcon("actions/plus.png");
+		uploadPicButton.setWidth(IMG_WIDTH);
+		
+		imgVLayout.setMembers(avatarUrlItem, uploadPicButton);
+		imgVLayout.setMembersMargin(5);
+		imgVLayout.setMargin(8);
+		
 		form = new DynamicForm();
 		
-		// ----基本信息----
-		HeaderItem headerMust = new HeaderItem();
-		headerMust.setDefaultValue("读者基本信息");
 
 		final TextItem userRealNameItem = new TextItem();
 		userRealNameItem.setTitle("姓名");
 		userRealNameItem.setName("userRealName");
+		userRealNameItem.setWidth("100%");
 
 		final TextItem userEmailItem = new TextItem();
 		userEmailItem.setTitle("E-Mail");
 		userEmailItem.setName("userEmail");
+		userEmailItem.setWidth("100%");
 
 		final TextItem userOccupationItem = new TextItem();
 		userOccupationItem.setTitle("用户类型");
 		userOccupationItem.setName("userType");
+		userOccupationItem.setWidth("100%");
 
 		final SelectItem userEducationItem = new SelectItem();
 		userEducationItem.setTitle("所在团队");
@@ -81,6 +111,7 @@ public class ReaderInfoView extends VLayout {
         		"Other"
         		);
 		userEducationItem.setDefaultToFirstOption(true);
+		userEducationItem.setWidth("100%");
 		
 
 
@@ -93,6 +124,7 @@ public class ReaderInfoView extends VLayout {
         		"10楼"
         		);
 		userFloorItem.setDefaultToFirstOption(true);
+		userFloorItem.setWidth("100%");
 
 		final SelectItem userPositionItem = new SelectItem();
 		userPositionItem.setTitle("所在位置");
@@ -106,15 +138,20 @@ public class ReaderInfoView extends VLayout {
         		"E区"
         		);
 		userPositionItem.setDefaultToFirstOption(true);
+		userPositionItem.setWidth("100%");
 		
 
-		form.setFields(headerMust, userRealNameItem,
+		form.setColWidths(80, "*");
+		form.setFields(userRealNameItem,
 				userEmailItem, userOccupationItem,
 				userEducationItem, userFloorItem, userPositionItem);
+		form.setWidth(300);
+		form.setCellPadding(5);
+		form.setHeight(200);
 
-		form.setStyleName("alex_myDecoratorPanel");
-		form.setMargin(10);
-		form.setPadding(10);
+//		form.setStyleName("alex_myDecoratorPanel");
+//		form.setMargin(10);
+//		form.setPadding(10);
 		
 		userRealNameItem.setCanEdit(false);
 		userEmailItem.setCanEdit(false);
@@ -194,6 +231,14 @@ public class ReaderInfoView extends VLayout {
 				showChangePWWindow();
 			}
 		});
+		uploadPicButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				UploadImageWindow uploadWindow = new UploadImageWindow(getSelf());
+				uploadWindow.show();
+			}
+		});
 		
 		
 		HLayout butLayout = new HLayout();
@@ -201,12 +246,29 @@ public class ReaderInfoView extends VLayout {
 		butLayout.setMargin(10);
 		butLayout.setMembersMargin(10);
 		
-		this.setMembers(form, butLayout);
+		hLayout.setMembers(imgVLayout, form);
+		hLayout.setMembersMargin(10);
+		hLayout.setStyleName("alex_myDecoratorPanel");
+		hLayout.setPadding(10);
+		hLayout.setMargin(10);
+		hLayout.setHeight(250);
+		
+		Label headerMust = new Label("读者基本信息");
+		headerMust.setStyleName("alex_header_label");
+		headerMust.setSize("105px", "30px");
+		headerMust.setAlign(Alignment.RIGHT);
+		headerMust.setValign(VerticalAlignment.BOTTOM);
+		
+		this.setMembers(headerMust, hLayout, butLayout);
 
 		fillDatas();
 		
 	}
 	
+	protected FinishUploadOperatable getSelf() {
+		return this;
+	}
+
 	private void fillDatas() {
 		userInfo = SFLibrary.get().getNowUser();
 
@@ -216,6 +278,10 @@ public class ReaderInfoView extends VLayout {
 		form.setValue("userDepartment", userInfo.getUserDepartment());
 		form.setValue("userFloor", userInfo.getUserFloor()==null?"":userInfo.getUserFloor());
 		form.setValue("userPosition", userInfo.getUserPosition()==null?"":userInfo.getUserPosition());
+
+		avatarUrl = userInfo.getAvatarUrl();
+		// http://img4.qzone.cc/one/o/82/073908.jpg
+		avatarUrlItem.setSrc(avatarUrl==null?"http://img4.qzone.cc/one/o/82/073908.jpg":avatarUrl);
 
 	}
 	
@@ -228,6 +294,8 @@ public class ReaderInfoView extends VLayout {
 
 		this.userInfo.setUserFloor(form.getValueAsString("userFloor"));
 		this.userInfo.setUserPosition(form.getValueAsString("userPosition"));
+
+		this.userInfo.setAvatarUrl(avatarUrl);
 		
 		if (!isNotEmptyValid(this.userInfo.getUserName())) {
 			SC.say("请输入正确姓名");
@@ -343,6 +411,12 @@ public class ReaderInfoView extends VLayout {
 		public String getDescription() {
 			return DESCRIPTION;
 		}
+	}
+
+	@Override
+	public void doAfterFinishUpload(String picName) {
+		avatarUrl = picName;
+		avatarUrlItem.setSrc(avatarUrl);
 	}
 
 }
