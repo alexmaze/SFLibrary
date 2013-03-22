@@ -11,14 +11,21 @@ import com.smartgwt.client.widgets.form.fields.ButtonItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.PasswordItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
+import com.smartgwt.client.widgets.form.fields.events.BlurEvent;
+import com.smartgwt.client.widgets.form.fields.events.BlurHandler;
+import com.smartgwt.client.widgets.form.fields.events.ChangedEvent;
+import com.smartgwt.client.widgets.form.fields.events.ChangedHandler;
 import com.smartgwt.client.widgets.form.fields.events.ClickEvent;
 import com.smartgwt.client.widgets.form.fields.events.ClickHandler;
+import com.smartgwt.client.widgets.form.fields.events.FocusEvent;
+import com.smartgwt.client.widgets.form.fields.events.FocusHandler;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressEvent;
 import com.smartgwt.client.widgets.form.fields.events.KeyPressHandler;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.AppController;
 import com.successfactors.library.client.SFLibrary;
+import com.successfactors.library.shared.FieldVerifier;
 
 public class LoginBox extends VLayout {
 	
@@ -45,6 +52,18 @@ public class LoginBox extends VLayout {
         userNameItem.setTitle("Email");
         userNameItem.setName("userName");
         userNameItem.setWidth(170);
+        
+        userNameItem.addBlurHandler(new BlurHandler() {
+			
+			@Override
+			public void onBlur(BlurEvent event) {
+				String email = ((TextItem) event.getSource()).getValueAsString();
+				if (!FieldVerifier.isEmailValid(email)) {
+					email = email + "@successfactors.com";
+				}
+				((TextItem) event.getSource()).setValue(email);
+			}
+		});
         
         PasswordItem passwordItem = new PasswordItem();
         passwordItem.setTitle("密码");
