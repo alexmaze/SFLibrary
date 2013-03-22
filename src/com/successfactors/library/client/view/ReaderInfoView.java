@@ -81,10 +81,36 @@ public class ReaderInfoView extends VLayout {
         		"Other"
         		);
 		userEducationItem.setDefaultToFirstOption(true);
+		
+
+
+		final SelectItem userFloorItem = new SelectItem();
+		userFloorItem.setTitle("所在楼层");
+		userFloorItem.setType("select");
+		userFloorItem.setName("userFloor");
+		userFloorItem.setValueMap(
+        		"3楼",
+        		"10楼"
+        		);
+		userFloorItem.setDefaultToFirstOption(true);
+
+		final SelectItem userPositionItem = new SelectItem();
+		userPositionItem.setTitle("所在位置");
+		userPositionItem.setType("select");
+		userPositionItem.setName("userPosition");
+		userPositionItem.setValueMap(
+        		"A区",
+        		"B区",
+        		"C区",
+        		"D区",
+        		"E区"
+        		);
+		userPositionItem.setDefaultToFirstOption(true);
+		
 
 		form.setFields(headerMust, userRealNameItem,
 				userEmailItem, userOccupationItem,
-				userEducationItem);
+				userEducationItem, userFloorItem, userPositionItem);
 
 		form.setStyleName("alex_myDecoratorPanel");
 		form.setMargin(10);
@@ -94,6 +120,8 @@ public class ReaderInfoView extends VLayout {
 		userEmailItem.setCanEdit(false);
 		userEducationItem.setCanEdit(false);
 		userOccupationItem.setCanEdit(false);
+		userFloorItem.setCanEdit(false);
+		userPositionItem.setCanEdit(false);
 		
 		// 按钮
 		final IButton butEdit = new IButton("编辑信息");
@@ -114,6 +142,9 @@ public class ReaderInfoView extends VLayout {
 				userEmailItem.setCanEdit(true);
 				userEducationItem.setCanEdit(true);
 				userOccupationItem.setCanEdit(false);
+				
+				userFloorItem.setCanEdit(true);
+				userPositionItem.setCanEdit(true);
 			}
 		});
 		butSubmit.addClickHandler(new ClickHandler() {
@@ -142,6 +173,8 @@ public class ReaderInfoView extends VLayout {
 						userEmailItem.setCanEdit(false);
 						userEducationItem.setCanEdit(false);
 						userOccupationItem.setCanEdit(false);
+						userFloorItem.setCanEdit(false);
+						userPositionItem.setCanEdit(false);
 						
 						SFLibrary.get().setNowUser(userInfo);
 					}
@@ -181,6 +214,8 @@ public class ReaderInfoView extends VLayout {
 		form.setValue("userEmail", userInfo.getUserEmail());
 		form.setValue("userType", userInfo.getUserType());
 		form.setValue("userDepartment", userInfo.getUserDepartment());
+		form.setValue("userFloor", userInfo.getUserFloor()==null?"":userInfo.getUserFloor());
+		form.setValue("userPosition", userInfo.getUserPosition()==null?"":userInfo.getUserPosition());
 
 	}
 	
@@ -190,6 +225,9 @@ public class ReaderInfoView extends VLayout {
 		this.userInfo.setUserEmail(form.getValueAsString("userEmail"));
 		this.userInfo.setUserType(form.getValueAsString("userType"));
 		this.userInfo.setUserDepartment(form.getValueAsString("userDepartment"));
+
+		this.userInfo.setUserFloor(form.getValueAsString("userFloor"));
+		this.userInfo.setUserPosition(form.getValueAsString("userPosition"));
 		
 		if (!isNotEmptyValid(this.userInfo.getUserName())) {
 			SC.say("请输入正确姓名");

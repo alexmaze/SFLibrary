@@ -17,6 +17,9 @@ public class SLUser implements Serializable {
 	private String userType;
 	private String userDepartment;
 	
+	private String userFloor;
+	private String userPosition;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -47,6 +50,18 @@ public class SLUser implements Serializable {
 	}
 	public void setUserDepartment(String userDepartment) {
 		this.userDepartment = userDepartment;
+	}
+	public String getUserFloor() {
+		return userFloor;
+	}
+	public void setUserFloor(String userFloor) {
+		this.userFloor = userFloor;
+	}
+	public String getUserPosition() {
+		return userPosition;
+	}
+	public void setUserPosition(String userPosition) {
+		this.userPosition = userPosition;
 	}
 	
 }
