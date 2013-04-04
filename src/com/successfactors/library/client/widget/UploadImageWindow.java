@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.smartgwt.client.types.Positioning;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.successfactors.library.shared.ServerInfo;
 
 @SuppressWarnings("deprecation")
 public class UploadImageWindow extends Window {
@@ -28,7 +29,7 @@ public class UploadImageWindow extends Window {
 	private static final int iWINDOW_HEIGHT = 180;
 	
 	
-	public static final String UPLOADED_IMAGES_PATH = "http://192.168.25.222/images/upload/";
+	public static final String UPLOADED_IMAGES_PATH = ServerInfo.SERVRE_ADDRESS+"/images/upload/";
 
 	public VLayout allVLayout = new VLayout();
 

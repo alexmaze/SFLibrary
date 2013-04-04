@@ -17,12 +17,14 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.successfactors.library.shared.ServerInfo;
+
 public class PictureUploadServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String UPLOAD_PATH = "D:\\Dev\\Tomcat 7.0\\webapps\\ROOT\\images\\upload\\";
-	public static final String TEMP_PATH = "D:\\Dev\\Tomcat 7.0\\webapps\\ROOT\\images\\upload\\temp\\";
+	public static final String UPLOAD_PATH = ServerInfo.UPLOAD_ADDRESS;
+	public static final String TEMP_PATH = UPLOAD_PATH + "/temp";
 
 	@SuppressWarnings("rawtypes")
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
