@@ -57,7 +57,7 @@ public class PictureUploadServlet extends HttpServlet {
 					if ((name == null || name.equals("")) && size == 0) {
 						continue;
 					}
-					item.write(new File(UPLOAD_PATH + picNewName));
+					item.write(new File(UPLOAD_PATH + "/" + picNewName));
 				}
 			}
 		} catch (FileUploadException e) {
