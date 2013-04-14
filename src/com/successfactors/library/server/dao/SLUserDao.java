@@ -3,13 +3,20 @@
  */
 package com.successfactors.library.server.dao;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.shared.model.UserPage;
 
 /**
  * @author alex
@@ -145,5 +152,70 @@ public class SLUserDao {
 			singleton = new SLUserDao();
 		}
 		return singleton;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public UserPage searchUserList(String userName, String userEmail,
+			String userType, String userDepartment, String usetFloor,
+			String usetPosition, int numberPerPage, int pageNumber) {
+
+		UserPage retDataWrapper = new UserPage();
+		
+		ArrayList<SLUser> ret = new ArrayList<SLUser>();
+
+		log.debug("Start get instance list by category and priority");
+		Session session = HibernateSessionFactory.getSession();
+		
+		Criteria criteria = session.createCriteria(SLUser.class);
+		
+		if (userName != null) {
+			criteria.add(Restrictions.like("userName", userName));
+		}
+		if (userEmail != null) {
+			criteria.add(Restrictions.like("userEmail", userEmail));
+		}
+		if (userType != null) {
+			criteria.add(Restrictions.eq("userType", userType));
+		}
+		if (userDepartment != null) {
+			criteria.add(Restrictions.eq("userDepartment", userDepartment));
+		}
+		if (usetFloor != null) {
+			criteria.add(Restrictions.eq("usetFloor", usetFloor));
+		}
+		if (usetPosition != null) {
+			criteria.add(Restrictions.eq("usetPosition", usetPosition));
+		}
+
+		// 取总页数
+		criteria.setProjection(Projections.rowCount());
+		int totalItemNum = ((Long)criteria.uniqueResult()).intValue();
+		int totalPageNum = getTotalPageNumber(totalItemNum, numberPerPage);
+		
+		// 真正取值
+		criteria.setProjection(null);
+		if (numberPerPage > 0 && pageNumber > 0) {
+			criteria.setMaxResults(numberPerPage);// 最大显示记录数
+			criteria.setFirstResult((pageNumber - 1) * numberPerPage);// 从第几条开始
+		}
+		criteria.addOrder(Order.asc("userName"));
+		
+		ret = (ArrayList<SLUser>) criteria.list();
+		
+		retDataWrapper.setTheUsers(ret);
+		retDataWrapper.setItemsNumPerPage(numberPerPage);
+		retDataWrapper.setPageNum(pageNumber);
+		retDataWrapper.setTotalPageNum(totalPageNum);
+		
+		return retDataWrapper;
+	}
+	
+	public static int getTotalPageNumber(int totalItemNum, int numberPerPage) {
+		if (totalItemNum % numberPerPage == 0) {
+			return (int) totalItemNum / numberPerPage;
+		} else {
+			return (int) totalItemNum / numberPerPage + 1;
+		}
 	}
 }

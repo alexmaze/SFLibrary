@@ -7,6 +7,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import com.successfactors.library.client.service.UserService;
 import com.successfactors.library.server.dao.SLUserDao;
 import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.shared.model.UserPage;
 
 @SuppressWarnings("serial")
 public class UserServiceImpl extends RemoteServiceServlet implements
@@ -103,6 +104,16 @@ public class UserServiceImpl extends RemoteServiceServlet implements
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public UserPage searchUserList(String userName, String userEmail,
+			String userType, String userDepartment, String usetFloor,
+			String usetPosition, int numberPerPage, int pageNumber) {
+		return slUserDao.searchUserList(
+				userName, userEmail, userType,
+				userDepartment, usetFloor, usetPosition,
+				numberPerPage, pageNumber);
 	}
 
 }

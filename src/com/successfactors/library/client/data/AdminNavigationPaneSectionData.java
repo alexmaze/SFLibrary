@@ -7,6 +7,7 @@ import com.successfactors.library.client.view.AdminOrderHistoryView;
 import com.successfactors.library.client.view.AdminOrderManagementView;
 import com.successfactors.library.client.view.AdminRecBookManagementView;
 import com.successfactors.library.client.view.AdminStaticsInformationView;
+import com.successfactors.library.client.view.AdminUserManagementView;
 
 public class AdminNavigationPaneSectionData {
 
@@ -21,6 +22,7 @@ public class AdminNavigationPaneSectionData {
 
 	public static NavigationPaneRecord[] getNewRecords() {
 		return new NavigationPaneRecord[] {
+				 new NavigationPaneRecord("reports", "读者管理", new AdminUserManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "书库管理", new AdminBookManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "借阅管理", new AdminBorrowManagementView.Factory(), null),
 				 new NavigationPaneRecord("reports", "借阅历史", new AdminBorrowHistoryView.Factory(), null),

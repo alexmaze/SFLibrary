@@ -3,6 +3,7 @@ package com.successfactors.library.client.service;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.shared.model.UserPage;
 
 @RemoteServiceRelativePath("userService")
 public interface UserService extends RemoteService {
@@ -28,4 +29,14 @@ public interface UserService extends RemoteService {
 	// 通过Email删除用户
 	boolean deleteUserByEmail(String userEmail);
 
+	// 搜索用户，filter都可为Null
+	UserPage searchUserList(
+			String userName,
+			String userEmail,
+			String userType,
+			String userDepartment,
+			String usetFloor,
+			String usetPosition,
+			int numberPerPage,
+			int pageNumber);
 }

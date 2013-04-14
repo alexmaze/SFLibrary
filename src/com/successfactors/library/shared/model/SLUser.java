@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.smartgwt.client.data.Record;
 
 @SuppressWarnings("serial")
 @Entity
@@ -71,5 +74,37 @@ public class SLUser implements Serializable {
 	public void setAvatarUrl(String avatarUrl) {
 		this.avatarUrl = avatarUrl;
 	}
+	@Transient
+	public Record getRecord() {
+		
+		Record record = new Record();
+		
+		record.setAttribute("userName", userName);
+		record.setAttribute("userEmail", userEmail);
+		record.setAttribute("userPassword", userPassword);
+		record.setAttribute("userType", userType);
+		record.setAttribute("userDepartment", userDepartment);
+		record.setAttribute("userFloor", userFloor);
+		record.setAttribute("userPosition", userPosition);
+		record.setAttribute("avatarUrl", avatarUrl);
+		
+		return record;
+	}
 	
+	@Transient
+	public static SLUser parse(Record record) {
+
+		SLUser ret = new SLUser();
+		
+		ret.setUserName(record.getAttribute("userName"));
+		ret.setUserEmail(record.getAttribute("userEmail"));
+		ret.setUserPassword(record.getAttribute("userPassword"));
+		ret.setUserType(record.getAttribute("userType"));
+		ret.setUserDepartment(record.getAttribute("userDepartment"));
+		ret.setUserFloor(record.getAttribute("userFloor"));
+		ret.setUserPosition(record.getAttribute("userPosition"));
+		ret.setAvatarUrl(record.getAttribute("avatarUrl"));
+		
+		return ret;
+	}
 }

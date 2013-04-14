@@ -2,6 +2,7 @@ package com.successfactors.library.client.service;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.successfactors.library.shared.model.SLUser;
+import com.successfactors.library.shared.model.UserPage;
 
 public interface UserServiceAsync {
 
@@ -18,5 +19,9 @@ public interface UserServiceAsync {
 	void register(SLUser newUser, AsyncCallback<SLUser> callback);
 
 	void saveUserInfo(SLUser slUser, AsyncCallback<Boolean> callback);
+
+	void searchUserList(String userName, String userEmail, String userType,
+			String userDepartment, String usetFloor, String usetPosition,
+			int numberPerPage, int pageNumber, AsyncCallback<UserPage> callback);
 
 }
