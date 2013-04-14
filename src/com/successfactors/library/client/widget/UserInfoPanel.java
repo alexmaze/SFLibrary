@@ -62,9 +62,11 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		
 		this.setBorder("1px solid lightgray");
 		this.setMargin(5);
-		this.setPadding(14);
+		this.setPadding(30);
 		this.setWidth(640);
 		this.setBackgroundColor("#FFFFFF");
+		
+		//this.setAlign(Alignment.CENTER);
 		
 	}
 
@@ -116,10 +118,15 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		userEmailItem.setName("userEmail");
 		userEmailItem.setWidth("100%");
 
-		final TextItem userOccupationItem = new TextItem();
+		final SelectItem userOccupationItem = new SelectItem();
 		userOccupationItem.setTitle("用户类型");
 		userOccupationItem.setName("userType");
 		userOccupationItem.setWidth("100%");
+		userOccupationItem.setValueMap(
+        		"读者",
+        		"管理员"
+        		);
+		userOccupationItem.setDefaultToFirstOption(true);
 
 		final SelectItem userEducationItem = new SelectItem();
 		userEducationItem.setTitle("所在团队");
@@ -187,13 +194,18 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		resetPasswordButton = new IButton("重置密码");
 		resetPasswordButton.setIcon("actions/approve.png");
 
+		submitButton.setWidth(IMG_WIDTH);
+		resetPasswordButton.setWidth(IMG_WIDTH);
+
 		buttonLayout.setMembers(resetPasswordButton, submitButton);
 		//buttonLayout.setAlign(Alignment.RIGHT);
 		buttonLayout.setMembersMargin(20);
 		
 		hLayout.setMembers(imgVLayout, form1);
+		hLayout.setHeight(220);
+		
 		this.setMembers(hLayout, buttonLayout);
-		this.setMembersMargin(20);
+//		this.setMembersMargin(20);
 		
 		bind();
 	}
@@ -237,10 +249,15 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		userEmailItem.setName("userEmail");
 		userEmailItem.setWidth("100%");
 
-		final TextItem userOccupationItem = new TextItem();
+		final SelectItem userOccupationItem = new SelectItem();
 		userOccupationItem.setTitle("用户类型");
 		userOccupationItem.setName("userType");
 		userOccupationItem.setWidth("100%");
+		userOccupationItem.setValueMap(
+        		"读者",
+        		"管理员"
+        		);
+		userOccupationItem.setDefaultToFirstOption(true);
 
 		final SelectItem userEducationItem = new SelectItem();
 		userEducationItem.setTitle("所在团队");
@@ -305,14 +322,19 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		buttonLayout = new HLayout();
 		newButton = new IButton("创建新用户");
 		newButton.setIcon("actions/approve.png");
+		newButton.setWidth(IMG_WIDTH);
 		
 		buttonLayout.setMembers(newButton);
-		//buttonLayout.setAlign(Alignment.RIGHT);
 		buttonLayout.setMembersMargin(20);
+		//buttonLayout.setWidth(450);
+		//buttonLayout.setAlign(Alignment.CENTER);
 		
 		hLayout.setMembers(imgVLayout, form1);
+		
+		hLayout.setHeight(220);
+		//hLayout.setWidth(450);
+		
 		this.setMembers(hLayout, buttonLayout);
-		this.setMembersMargin(20);
 		
 		bind();
 	}
