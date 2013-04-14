@@ -1,17 +1,16 @@
 package com.successfactors.library.client.datasource;
 
-import java.util.Date;
-
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
+import com.successfactors.library.client.helper.DataSourceIdGenerator;
 
 public class SLOrderDS extends DataSource {
 	
 	public SLOrderDS() {
 
-		this.setID("SLOS"+(new Date()).getTime());
+		this.setID(DataSourceIdGenerator.getId("SLOS"));
 		this.setClientOnly(true);
 		
 		DataSourceImageField iconField = new DataSourceImageField("icon", "#");

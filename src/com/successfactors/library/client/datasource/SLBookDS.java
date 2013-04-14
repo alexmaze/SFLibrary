@@ -1,18 +1,17 @@
 package com.successfactors.library.client.datasource;
 
-import java.util.Date;
-
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
+import com.successfactors.library.client.helper.DataSourceIdGenerator;
 
 public class SLBookDS extends DataSource {
 	
 	public SLBookDS() {
 
-		this.setID("SLBS"+(new Date()).getTime());
+		this.setID(DataSourceIdGenerator.getId("SLBS"));
 		this.setClientOnly(true);
 		
 		DataSourceImageField bookPicUrlField = new DataSourceImageField("bookPicUrl", "封面");

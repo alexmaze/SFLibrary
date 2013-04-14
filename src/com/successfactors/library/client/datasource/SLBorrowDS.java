@@ -1,19 +1,18 @@
 package com.successfactors.library.client.datasource;
 
-import java.util.Date;
-
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.fields.DataSourceBooleanField;
 import com.smartgwt.client.data.fields.DataSourceDateField;
 import com.smartgwt.client.data.fields.DataSourceImageField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.types.FieldType;
+import com.successfactors.library.client.helper.DataSourceIdGenerator;
 
 public class SLBorrowDS extends DataSource {
 	
 	public SLBorrowDS() {
 
-		this.setID("SLBWS"+(new Date()).getTime());
+		this.setID(DataSourceIdGenerator.getId("SLBWS"));
 		this.setClientOnly(true);
 		
 		DataSourceImageField iconField = new DataSourceImageField("icon", "#");
