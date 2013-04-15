@@ -119,6 +119,7 @@ public class SLEmailUtil {
 		String strContentToAdmin = "亲爱的管理员同志，\n\n"
 				+ slBorrow.getTheUser().getUserName() + "已成功借阅" +" 《"+ slBorrow.getTheBook().getBookName() +"》\n"
 				+ "请准备好此书给他，并登记出库信息\n"
+				+ "他的位置： "+slBorrow.getTheUser().getUserFloor()+" "+slBorrow.getTheUser().getUserPosition()+"区\n"
 				+ "借阅到期时间为："+formatDate(slBorrow.getShouldReturnDate())+"\n\n"
 				+ "感谢您的付出！\n"
 				+ "Minerva's Book Lib\n";
