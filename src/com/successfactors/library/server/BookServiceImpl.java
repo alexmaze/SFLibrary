@@ -218,25 +218,31 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	@SuppressWarnings("deprecation")
 	public static Date getDateFormString(String strDate)
 	{
-		if (strDate == null || strDate.equals("")) {
-			return null;
-		}
-		
-		Date ret = new Date();
-		
-		String[] arrDate = strDate.split("-");
-		if(arrDate.length == 1) {
-			ret.setYear(Integer.parseInt(arrDate[0])-1900);
-			ret.setMonth(1);
-			ret.setDate(1);
-		} else if(arrDate.length == 2) {
-			ret.setYear(Integer.parseInt(arrDate[0])-1900);
-			ret.setMonth(Integer.parseInt(arrDate[1])-1);
-			ret.setDate(1);
-		} else if(arrDate.length >= 3){
-			ret.setYear(Integer.parseInt(arrDate[0])-1900);
-			ret.setMonth(Integer.parseInt(arrDate[1])-1);
-			ret.setDate(Integer.parseInt(arrDate[2]));
+		Date ret = null;
+		try {
+			if (strDate == null || strDate.equals("")) {
+				return null;
+			}
+			
+			ret = new Date();
+			
+			String[] arrDate = strDate.split("-");
+			if(arrDate.length == 1) {
+				ret.setYear(Integer.parseInt(arrDate[0])-1900);
+				ret.setMonth(1);
+				ret.setDate(1);
+			} else if(arrDate.length == 2) {
+				ret.setYear(Integer.parseInt(arrDate[0])-1900);
+				ret.setMonth(Integer.parseInt(arrDate[1])-1);
+				ret.setDate(1);
+			} else if(arrDate.length >= 3){
+				ret.setYear(Integer.parseInt(arrDate[0])-1900);
+				ret.setMonth(Integer.parseInt(arrDate[1])-1);
+				ret.setDate(Integer.parseInt(arrDate[2]));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			ret = null;
 		}
 		
 		
