@@ -1,8 +1,15 @@
 package com.successfactors.library.shared.model;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="sl_book_review")
 public class SLBookReview implements Serializable {
 
 	/**
@@ -10,6 +17,7 @@ public class SLBookReview implements Serializable {
 	 */
 	private static final long serialVersionUID = -4688656576934914502L;
 
+	private int reviewId;
 	private String bookISBN;
 	private String userEmail;
 	
@@ -20,6 +28,15 @@ public class SLBookReview implements Serializable {
 	
 	public SLBookReview() {
 		
+	}
+
+	@Id
+	public int getReviewId() {
+		return reviewId;
+	}
+
+	public void setReviewId(int reviewId) {
+		this.reviewId = reviewId;
 	}
 
 	public String getBookISBN() {
