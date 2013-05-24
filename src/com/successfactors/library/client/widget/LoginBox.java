@@ -22,6 +22,7 @@ import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.AppController;
 import com.successfactors.library.client.SFLibrary;
 import com.successfactors.library.shared.FieldVerifier;
+import com.successfactors.library.shared.ServerInfo;
 
 public class LoginBox extends VLayout {
 	
@@ -130,7 +131,7 @@ public class LoginBox extends VLayout {
         androidApkLink.addClickHandler(new com.smartgwt.client.widgets.events.ClickHandler() {
 			@Override
 			public void onClick(com.smartgwt.client.widgets.events.ClickEvent event) {
-				Window.open("http://192.168.25.222/mobile/libmobile.apk", "Android app", null);
+				Window.open(ServerInfo.SERVRE_ADDRESS+"mobile/libmobile.apk", "Android app", null);
 			}
 		});
         
@@ -164,9 +165,9 @@ public class LoginBox extends VLayout {
         //adminLayout.addMember(iosLink);
         
         HLayout imgHLayout = new HLayout();
-        Img mobileImg = new Img("http://192.168.25.222/mobile/libmobile_icon.png");
+        Img mobileImg = new Img(ServerInfo.SERVRE_ADDRESS+"mobile/libmobile_icon.png");
         mobileImg.setSize("100px", "100px");
-        Img qrcodeImg = new Img("http://192.168.25.222/mobile/libmobile_qrcode.png");
+        Img qrcodeImg = new Img(ServerInfo.SERVRE_ADDRESS+"mobile/libmobile_qrcode.png");
         qrcodeImg.setSize("100px", "100px");
         qrcodeImg.setMargin(10);
         imgHLayout.setMembers(mobileImg, qrcodeImg);
