@@ -94,7 +94,7 @@ public class BorrowNeedReturnListGrid extends ListGrid implements BorrowEditWind
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -132,7 +132,7 @@ public class BorrowNeedReturnListGrid extends ListGrid implements BorrowEditWind
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -170,7 +170,7 @@ public class BorrowNeedReturnListGrid extends ListGrid implements BorrowEditWind
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -202,7 +202,7 @@ public class BorrowNeedReturnListGrid extends ListGrid implements BorrowEditWind
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

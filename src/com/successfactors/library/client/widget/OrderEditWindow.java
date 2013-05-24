@@ -37,7 +37,7 @@ public class OrderEditWindow  extends Window {
 	
 	public OrderEditWindow(SLOrder orderRec, FinishEditOrder finish) {
 		super();
-		this.theRecord = orderRec.getRecord();
+		this.theRecord = orderRec.toRecord();
 		this.theDataSource = new SLOrderDS();
 		this.theDataSource.addData(theRecord);
 		this.finishEdit = finish;

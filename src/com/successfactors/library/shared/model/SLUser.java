@@ -75,7 +75,7 @@ public class SLUser implements Serializable {
 		this.avatarUrl = avatarUrl;
 	}
 	@Transient
-	public Record getRecord() {
+	public Record toRecord() {
 		
 		Record record = new Record();
 		
@@ -107,4 +107,5 @@ public class SLUser implements Serializable {
 		
 		return ret;
 	}
+
 }

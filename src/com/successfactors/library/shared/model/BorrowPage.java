@@ -53,10 +53,10 @@ public class BorrowPage implements Serializable {
 		this.totalPageNum = totalPageNum;
 	}
 	
-	public SLBorrowDS getDataSource() {
+	public SLBorrowDS toDataSource() {
 		SLBorrowDS theDs = new SLBorrowDS();
 		for (SLBorrow borrow : theBorrows) {
-			theDs.addData(borrow.getRecord());
+			theDs.addData(borrow.toRecord());
 		}
 		return theDs;
 	}

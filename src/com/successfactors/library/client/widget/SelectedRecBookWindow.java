@@ -101,7 +101,7 @@ public class SelectedRecBookWindow  extends Window {
 		bookDS = new SLRecommendedBookDS();
 		
 		for (SLRecommendedBook book : AdminRecBookManagementListGrid.recBookList) {
-			bookDS.addData(book.getRecord());
+			bookDS.addData(book.toRecord());
 			totalPrice += book.getCountPrice();
 		}
 		

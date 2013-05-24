@@ -52,10 +52,10 @@ public class OrderPage implements Serializable {
 		this.totalPageNum = totalPageNum;
 	}
 	
-	public SLOrderDS getDataSource() {
+	public SLOrderDS toDataSource() {
 		SLOrderDS theDs = new SLOrderDS();
 		for (SLOrder order : theOrders) {
-			theDs.addData(order.getRecord());
+			theDs.addData(order.toRecord());
 		}
 		return theDs;
 	}

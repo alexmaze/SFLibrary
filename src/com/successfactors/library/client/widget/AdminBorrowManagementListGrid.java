@@ -105,7 +105,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -137,7 +137,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -177,7 +177,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -203,7 +203,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -244,7 +244,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -271,7 +271,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -319,7 +319,7 @@ public class AdminBorrowManagementListGrid extends ListGrid implements BorrowEdi
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

@@ -98,7 +98,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -129,7 +129,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -168,7 +168,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -193,7 +193,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -233,7 +233,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -259,7 +259,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -290,7 +290,7 @@ public class AdminOrderManagementListGrid extends ListGrid implements OrderEditW
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

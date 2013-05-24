@@ -98,7 +98,7 @@ public class ReaderOrderListGrid extends ListGrid implements OrderEditWindow.Fin
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -134,7 +134,7 @@ public class ReaderOrderListGrid extends ListGrid implements OrderEditWindow.Fin
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -171,7 +171,7 @@ public class ReaderOrderListGrid extends ListGrid implements OrderEditWindow.Fin
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -201,7 +201,7 @@ public class ReaderOrderListGrid extends ListGrid implements OrderEditWindow.Fin
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

@@ -101,7 +101,7 @@ public class SLBorrow implements Serializable {
 	}
 	
 	@Transient
-	public Record getRecord() {
+	public Record toRecord() {
 
 		Record record = new Record();
 		

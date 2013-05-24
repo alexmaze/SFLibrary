@@ -56,7 +56,7 @@ public class BorrowEditWindow  extends Window {
 
 	public BorrowEditWindow(SLBorrow borrowRec, FinishEditBorrow finish) {
 		super();
-		this.theRecord = borrowRec.getRecord();
+		this.theRecord = borrowRec.toRecord();
 		this.theDataSource = new SLBorrowDS();
 		this.theDataSource.addData(theRecord);
 		this.finishEdit = finish;
@@ -125,7 +125,7 @@ public class BorrowEditWindow  extends Window {
 								return;
 							}
 							setTitle("借阅记录"+result.getTheBook().getBookName());
-							theRecord = result.getRecord();
+							theRecord = result.toRecord();
 							theDataSource.addData(theRecord);
 							boorowForm1.selectRecord(theRecord);
 							boorowForm1.fetchData();
@@ -158,7 +158,7 @@ public class BorrowEditWindow  extends Window {
 							return;
 						}
 						setTitle("借阅记录"+result.getTheBook().getBookName());
-						theRecord = result.getRecord();
+						theRecord = result.toRecord();
 						theDataSource.addData(theRecord);
 						boorowForm1.selectRecord(theRecord);
 						boorowForm1.fetchData();

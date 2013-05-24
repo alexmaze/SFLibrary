@@ -1,5 +1,9 @@
-/gwt-unitCache
+/gwt-unitCache/
 
-/.gwt
+/.gwt/
 
-/test-classes
+/.settings/
+
+/test-classes/
+
+*.class

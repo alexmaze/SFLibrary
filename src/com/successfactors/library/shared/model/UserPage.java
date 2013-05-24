@@ -58,10 +58,10 @@ public class UserPage implements Serializable {
 		this.totalPageNum = totalPageNum;
 	}
 	
-	public SLUserDS getDataSource() {
+	public SLUserDS toDataSource() {
 		SLUserDS theDs = new SLUserDS();
 		for (SLUser user : theUsers) {
-			theDs.addData(user.getRecord());
+			theDs.addData(user.toRecord());
 		}
 		return theDs;
 	}

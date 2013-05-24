@@ -23,7 +23,7 @@ public class BorrowDisplayWindow  extends Window {
 	
 	public BorrowDisplayWindow(SLBorrow borrowRec) {
 		super();
-		this.theRecord = borrowRec.getRecord();
+		this.theRecord = borrowRec.toRecord();
 		this.theDataSource = new SLBorrowDS();
 		this.theDataSource.addData(theRecord);
 		initDisplayWindow();

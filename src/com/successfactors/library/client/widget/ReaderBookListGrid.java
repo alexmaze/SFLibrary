@@ -102,7 +102,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -134,7 +134,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -175,7 +175,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -201,7 +201,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -242,7 +242,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -269,7 +269,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -301,7 +301,7 @@ public class ReaderBookListGrid extends ListGrid implements BookEditWindow.Finis
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

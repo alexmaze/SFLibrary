@@ -384,7 +384,7 @@ public class RecommendedBookWindow extends Window {
 	private void initEditWindow() {
 		
 		SLRecommendedBookDS theDataSource = new SLRecommendedBookDS();
-		Record theRecord = theRecBook.getRecord();
+		Record theRecord = theRecBook.toRecord();
 		theDataSource.addData(theRecord);
 		
 		this.setAutoSize(true);
@@ -564,7 +564,7 @@ public class RecommendedBookWindow extends Window {
 	private void initReadWindow() {
 		
 		SLRecommendedBookDS theDataSource = new SLRecommendedBookDS();
-		Record theRecord = theRecBook.getRecord();
+		Record theRecord = theRecBook.toRecord();
 		theDataSource.addData(theRecord);
 		
 		this.setAutoSize(true);

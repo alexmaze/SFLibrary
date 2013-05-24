@@ -106,7 +106,7 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 					return;
 				}
 				for (SLRecommendedBook book : result.getTheBooks()) {
-					slRecBookDS.addData(book.getRecord());
+					slRecBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -146,7 +146,7 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 					return;
 				}
 				for (SLRecommendedBook book : result.getTheBooks()) {
-					slRecBookDS.addData(book.getRecord());
+					slRecBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -187,7 +187,7 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 					return;
 				}
 				for (SLRecommendedBook book : result.getTheBooks()) {
-					slRecBookDS.addData(book.getRecord());
+					slRecBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -224,7 +224,7 @@ public class AdminRecBookManagementListGrid extends ListGrid implements Recommen
 					return;
 				}
 				for (SLRecommendedBook book : result.getTheBooks()) {
-					slRecBookDS.addData(book.getRecord());
+					slRecBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

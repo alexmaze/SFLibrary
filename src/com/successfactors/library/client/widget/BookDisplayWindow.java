@@ -43,7 +43,7 @@ public class BookDisplayWindow  extends Window {
 	
 	public BookDisplayWindow(SLBook bookRec, FinishEditBook finish) {
 		super();
-		this.theRecord = bookRec.getRecord();
+		this.theRecord = bookRec.toRecord();
 		this.theDataSource = new SLBookDS();
 		this.theDataSource.addData(theRecord);
 		finishEdit = finish;

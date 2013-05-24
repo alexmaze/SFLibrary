@@ -98,7 +98,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 					return;
 				}
 				for (SLBorrow borrow : result.getTheBorrows()) {
-					slBorrowDS.addData(borrow.getRecord());
+					slBorrowDS.addData(borrow.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -135,7 +135,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -172,7 +172,7 @@ public class ReaderBorrowHistoryListGrid extends ListGrid {
 						return;
 					}
 					for (SLBorrow borrow : result.getTheBorrows()) {
-						slBorrowDS.addData(borrow.getRecord());
+						slBorrowDS.addData(borrow.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();

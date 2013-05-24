@@ -104,7 +104,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -180,7 +180,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -223,7 +223,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -253,7 +253,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -297,7 +297,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -328,7 +328,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 						return;
 					}
 					for (SLBook book : result.getTheBooks()) {
-						slBookDS.addData(book.getRecord());
+						slBookDS.addData(book.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -365,7 +365,7 @@ public class AdminBookManagementListGrid extends ListGrid implements
 					return;
 				}
 				for (SLBook book : result.getTheBooks()) {
-					slBookDS.addData(book.getRecord());
+					slBookDS.addData(book.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();

@@ -74,7 +74,7 @@ public class SLOrder implements Serializable {
 	}
 	
 	@Transient
-	public Record getRecord() {
+	public Record toRecord() {
 
 		Record record = new Record();
 

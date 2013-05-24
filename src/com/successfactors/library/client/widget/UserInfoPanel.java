@@ -76,7 +76,7 @@ public class UserInfoPanel extends VLayout implements FinishUploadOperatable {
 		initEditPanel();
 		avatarUrl = theUser.getAvatarUrl();
 		
-		theRecord = theUser.getRecord();
+		theRecord = theUser.toRecord();
 		theDataSource.addData(theRecord);
 
 		form1.selectRecord(theRecord);

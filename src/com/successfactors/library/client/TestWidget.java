@@ -145,7 +145,7 @@ public class TestWidget {
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
 				
-				BorrowDisplayWindow borrowDisplayWindow = new BorrowDisplayWindow(borrow.getRecord());
+				BorrowDisplayWindow borrowDisplayWindow = new BorrowDisplayWindow(borrow.toRecord());
 				borrowDisplayWindow.show();
 				
 				GWT.log("***********  Test Widget End  *************");
@@ -156,7 +156,7 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				BorrowEditWindow borrowDisplayWindow = new BorrowEditWindow(borrow.getRecord(), null);
+				BorrowEditWindow borrowDisplayWindow = new BorrowEditWindow(borrow.toRecord(), null);
 				borrowDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}
@@ -178,7 +178,7 @@ public class TestWidget {
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
 
-				OrderDisplayWindow orderDisplayWindow = new OrderDisplayWindow(order.getRecord());
+				OrderDisplayWindow orderDisplayWindow = new OrderDisplayWindow(order.toRecord());
 				orderDisplayWindow.show();
 				
 				GWT.log("***********  Test Widget End  *************");
@@ -189,7 +189,7 @@ public class TestWidget {
 			@Override
 			public void onClick(ClickEvent event) {
 				GWT.log("*********** Test Widget Start *************");
-				OrderEditWindow orderDisplayWindow = new OrderEditWindow(order.getRecord(), null);
+				OrderEditWindow orderDisplayWindow = new OrderEditWindow(order.toRecord(), null);
 				orderDisplayWindow.show();
 				GWT.log("***********  Test Widget End  *************");
 			}

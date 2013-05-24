@@ -52,10 +52,10 @@ public class BookPage implements Serializable {
 		this.totalPageNum = totalPageNum;
 	}
 
-	public SLBookDS getDataSource() {
+	public SLBookDS toDataSource() {
 		SLBookDS theDs = new SLBookDS();
 		for (SLBook book : theBooks) {
-			theDs.addData(book.getRecord());
+			theDs.addData(book.toRecord());
 		}
 		return theDs;
 	}

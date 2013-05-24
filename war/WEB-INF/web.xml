@@ -5,6 +5,21 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
 
+	<context-param>
+		<param-name>org.restlet.application</param-name>
+		<param-value>com.successfactors.library.rest.app.RestPrivateApplication</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>RestletServlet</servlet-name>
+		<servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>RestletServlet</servlet-name>
+		<url-pattern>/webservice/*</url-pattern>
+	</servlet-mapping>
+
   <!-- Servlets -->
 	<servlet>
 		<servlet-name>userServlet</servlet-name>

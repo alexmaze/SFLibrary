@@ -7,11 +7,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Others"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SmartGwt"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/POI 3.8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/POI 3.8"/>
+	<classpathentry kind="lib" path="war/WEB-INF/lib/stringtree-json-2.0.9.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Restlet"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>

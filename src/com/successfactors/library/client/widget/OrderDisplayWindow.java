@@ -22,7 +22,7 @@ public class OrderDisplayWindow  extends Window {
 	
 	public OrderDisplayWindow(SLOrder orderRec) {
 		super();
-		this.theRecord = orderRec.getRecord();
+		this.theRecord = orderRec.toRecord();
 		this.theDataSource = new SLOrderDS();
 		this.theDataSource.addData(theRecord);
 		initDisplayWindow();

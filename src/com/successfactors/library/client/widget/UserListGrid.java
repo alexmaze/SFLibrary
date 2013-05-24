@@ -76,7 +76,7 @@ public class UserListGrid extends ListGrid implements FinishUserInfoEdit {
 				}
 				
 				for (SLUser user : result.getTheUsers()) {
-					userListDS.addData(user.getRecord());
+					userListDS.addData(user.toRecord());
 				}
 				
 				pageNowNum = result.getPageNum();

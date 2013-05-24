@@ -77,7 +77,7 @@ public class BookNowBorrowOrderListWindow extends Window {
 		
 		borrowDS = new SLBorrowDS();
 		for (SLBorrow borrow : theInfo.getTheBorrows()) {
-			borrowDS.addData(borrow.getRecord());
+			borrowDS.addData(borrow.toRecord());
 		}
 
 		Label headerItem1 = new Label("当前借阅");
@@ -107,7 +107,7 @@ public class BookNowBorrowOrderListWindow extends Window {
 
 		orderDS = new SLOrderDS();
 		for (SLOrder order : theInfo.getTheOrders()) {
-			orderDS.addData(order.getRecord());
+			orderDS.addData(order.toRecord());
 		}
 		
 		Label headerItem2 = new Label("当前预订");

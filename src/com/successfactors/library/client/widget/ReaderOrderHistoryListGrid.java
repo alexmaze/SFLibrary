@@ -98,7 +98,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 					return;
 				}
 				for (SLOrder order : result.getTheOrders()) {
-					slOrderDS.addData(order.getRecord());
+					slOrderDS.addData(order.toRecord());
 				}
 				pageNowNum = result.getPageNum();
 				pageTotalNum = result.getTotalPageNum();
@@ -134,7 +134,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
@@ -171,7 +171,7 @@ public class ReaderOrderHistoryListGrid extends ListGrid {
 						return;
 					}
 					for (SLOrder order : result.getTheOrders()) {
-						slOrderDS.addData(order.getRecord());
+						slOrderDS.addData(order.toRecord());
 					}
 					pageNowNum = result.getPageNum();
 					pageTotalNum = result.getTotalPageNum();
