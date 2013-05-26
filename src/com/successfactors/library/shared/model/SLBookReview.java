@@ -7,6 +7,9 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import com.smartgwt.client.data.Record;
 
 @Entity
 @Table(name="sl_book_review")
@@ -17,7 +20,7 @@ public class SLBookReview implements Serializable {
 	 */
 	private static final long serialVersionUID = -4688656576934914502L;
 
-	private int reviewId;
+	private Long reviewId;
 	private String bookISBN;
 	private String userEmail;
 	
@@ -31,11 +34,11 @@ public class SLBookReview implements Serializable {
 	}
 
 	@Id
-	public int getReviewId() {
+	public Long getReviewId() {
 		return reviewId;
 	}
 
-	public void setReviewId(int reviewId) {
+	public void setReviewId(Long reviewId) {
 		this.reviewId = reviewId;
 	}
 
@@ -87,4 +90,37 @@ public class SLBookReview implements Serializable {
 		this.postDate = postDate;
 	}
 	
+	@Transient
+	public Record toRecord() {
+
+		Record record = new Record();
+		
+		record.setAttribute("reviewId", reviewId);
+		record.setAttribute("bookISBN", bookISBN);
+		record.setAttribute("userEmail", userEmail);
+		record.setAttribute("title", title);
+		record.setAttribute("subTitle", subTitle);
+		record.setAttribute("content", content);
+		record.setAttribute("postDate", postDate);
+
+		record.setAttribute("icon", "icons/16/reports.png");
+		
+		return record;
+	}
+	
+	@Transient
+	public static SLBookReview parse(Record record) {
+
+		SLBookReview ret = new SLBookReview();
+		
+		ret.setReviewId(record.getAttributeAsLong("reviewId"));
+		ret.setBookISBN(record.getAttribute("bookISBN"));
+		ret.setUserEmail(record.getAttribute("userEmail"));
+		ret.setTitle(record.getAttribute("title"));
+		ret.setSubTitle(record.getAttribute("subTitle"));
+		ret.setContent(record.getAttribute("content"));
+		ret.setPostDate(record.getAttributeAsDate("postDate"));
+		
+		return ret;
+	}
 }

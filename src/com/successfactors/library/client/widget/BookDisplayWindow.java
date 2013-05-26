@@ -35,6 +35,8 @@ public class BookDisplayWindow  extends Window {
 	private Record theRecord;
 	private SLBookDS theDataSource;
 
+
+	private IButton showReviewsButton;
 	private IButton orderButton;
 	private IButton borrowButton;
 	private IButton borrowOrderListButton;
@@ -228,8 +230,11 @@ public class BookDisplayWindow  extends Window {
 		borrowOrderListButton = new IButton("当前借阅与预订");
 		borrowOrderListButton.setIcon("icons/16/reports.png");
 		borrowOrderListButton.setWidth("150px");
+
+		showReviewsButton = new IButton("书评");
+		showReviewsButton.setIcon("icons/16/reports.png");
 		
-		buttonLayout.setMembers(borrowOrderListButton, orderButton, borrowButton);
+		buttonLayout.setMembers(showReviewsButton, borrowOrderListButton, orderButton, borrowButton);
 		buttonLayout.setAlign(Alignment.RIGHT);
 		
 		int bookAvailableQuantity = theRecord.getAttributeAsInt("bookAvailableQuantity");
@@ -342,6 +347,15 @@ public class BookDisplayWindow  extends Window {
 				}.retry(3);
 			}
 		});
+		
+		showReviewsButton.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				(new BookReviewListWindow(theRecord.getAttribute("bookISBN"), theRecord.getAttribute("bookName"))).show();
+			}
+		});
+		
 	}
 	
 }

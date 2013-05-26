@@ -17,11 +17,11 @@ import org.stringtree.json.JSONReader;
 import org.stringtree.json.JSONValidatingReader;
 
 import com.successfactors.library.rest.utils.JSONHelper;
-import com.successfactors.library.rest.utils.RestCallInfo;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallErrorCode;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallStatus;
 import com.successfactors.library.rest.utils.SLSessionManager;
 import com.successfactors.library.server.dao.SLUserDao;
+import com.successfactors.library.shared.RestCallInfo;
+import com.successfactors.library.shared.RestCallInfo.RestCallErrorCode;
+import com.successfactors.library.shared.RestCallInfo.RestCallStatus;
 import com.successfactors.library.shared.model.SLUser;
 
 @SuppressWarnings({ "rawtypes", "unchecked"})

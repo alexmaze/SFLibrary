@@ -40,6 +40,15 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>bookReviewServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.BookReviewServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bookReviewServlet</servlet-name>
+		<url-pattern>/sflibrary/bookReviewService</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>borrowServlet</servlet-name>
 		<servlet-class>com.successfactors.library.server.BorrowServiceImpl</servlet-class>
 	</servlet>

@@ -1,4 +1,4 @@
-package com.successfactors.library.rest.utils;
+package com.successfactors.library.shared;
 
 import java.util.HashMap;
 
@@ -35,7 +35,9 @@ public class RestCallInfo {
 		
 		can_not_modify_other_person,
 		
-		can_not_order_while_you_can_borrow,
+		can_not_order_while_you_can_borrow, 
+		
+		can_not_find_this_review,
 		
 		
 	}

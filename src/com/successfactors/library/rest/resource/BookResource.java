@@ -22,19 +22,19 @@ import org.stringtree.json.JSONReader;
 import org.stringtree.json.JSONValidatingReader;
 
 import com.successfactors.library.rest.utils.MyTools;
-import com.successfactors.library.rest.utils.RestCallInfo;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallErrorCode;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallStatus;
 import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLBorrowDao;
 import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
+import com.successfactors.library.shared.RestCallInfo.RestCallErrorCode;
+import com.successfactors.library.shared.RestCallInfo.RestCallStatus;
 import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
 import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.BookSearchType;
+import com.successfactors.library.shared.RestCallInfo;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Path("book")

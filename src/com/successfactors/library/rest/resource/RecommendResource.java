@@ -17,14 +17,14 @@ import org.stringtree.json.JSONReader;
 import org.stringtree.json.JSONValidatingReader;
 
 import com.successfactors.library.rest.utils.JSONHelper;
-import com.successfactors.library.rest.utils.RestCallInfo;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallErrorCode;
-import com.successfactors.library.rest.utils.RestCallInfo.RestCallStatus;
 import com.successfactors.library.rest.utils.SLSessionManager;
 import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLRecommendHistoryDao;
 import com.successfactors.library.server.dao.SLRecommendedBookDao;
+import com.successfactors.library.shared.RestCallInfo;
 import com.successfactors.library.shared.SLEmailUtil;
+import com.successfactors.library.shared.RestCallInfo.RestCallErrorCode;
+import com.successfactors.library.shared.RestCallInfo.RestCallStatus;
 import com.successfactors.library.shared.model.RecommendedBookPage;
 import com.successfactors.library.shared.model.SLRecommendHistory;
 import com.successfactors.library.shared.model.SLRecommendedBook;
