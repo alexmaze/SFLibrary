@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.ListGridFieldType;
 import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
@@ -20,10 +21,11 @@ import com.successfactors.library.client.datasource.SLBookReviewDS;
 import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.service.BookReviewService;
 import com.successfactors.library.client.service.BookReviewServiceAsync;
+import com.successfactors.library.client.widget.BookReviewEditWindow.FinishEditReview;
 import com.successfactors.library.shared.model.PageDataWrapper;
 import com.successfactors.library.shared.model.SLBookReview;
 
-public class BookReviewListWindow extends Window {
+public class BookReviewListWindow extends Window implements FinishEditReview {
 	
 	private BookReviewServiceAsync bookReviewService = GWT.create(BookReviewService.class);
 	
@@ -61,7 +63,7 @@ public class BookReviewListWindow extends Window {
 		VLayout theLayout = new VLayout();
 		
 		theListGrid = new ListGrid();
-		ListGridField iconField = new ListGridField("icon", "#", 20);
+		ListGridField iconField = new ListGridField("icon", "#", 30);
 		iconField.setType(ListGridFieldType.IMAGE);
 		ListGridField titleField = new ListGridField("title", "标题");
 		ListGridField subTitleField = new ListGridField("subTitle", "副标题");
@@ -72,7 +74,7 @@ public class BookReviewListWindow extends Window {
 		theListGrid.setDataSource(theDataSource);
 		theListGrid.setAutoFetchData(true);
 		
-		addButton = new IButton("发表书评");
+		addButton = new IButton("发布书评");
 		addButton.setIcon("icons/16/add.png");
 		
 		theLayout.setMargin(12);
@@ -88,8 +90,6 @@ public class BookReviewListWindow extends Window {
 		bind();
 		
 	}
-
-
 
 	private void updateData() {
 		new RPCCall<PageDataWrapper<ArrayList<SLBookReview>>>() {
@@ -128,19 +128,31 @@ public class BookReviewListWindow extends Window {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				// TODO Auto-generated method stub
-				
+				BookReviewEditWindow window = new BookReviewEditWindow(bookISBN, getSelf());
+				window.show();
 			}
 		});
 		theListGrid.addCellDoubleClickHandler(new CellDoubleClickHandler() {
 			
 			@Override
 			public void onCellDoubleClick(CellDoubleClickEvent event) {
-				// TODO Auto-generated method stub
-				
+				BookReviewDisplayWindow window = new BookReviewDisplayWindow(event.getRecord(), getSelf());
+				window.show();
 			}
 		});
 		
+	}
+
+	protected FinishEditReview getSelf() {
+		return this;
+	}
+
+	@Override
+	public void doRefreshPage() {
+		for (Record record : theListGrid.getRecords()) {
+			theDataSource.removeData(record);
+		}
+		updateData();
 	}
 	
 }
