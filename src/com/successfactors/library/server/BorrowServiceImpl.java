@@ -69,6 +69,7 @@ public class BorrowServiceImpl extends RemoteServiceServlet implements
 		SLBook slBook = bookDao.queryByISBN(bookISBN);
 		if (slBook.getBookAvailableQuantity() > 0) {
 			slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() - 1);
+			slBook.setBorrowOrderTimes(slBook.getBorrowOrderTimes()==null?0:slBook.getBorrowOrderTimes() + 1);
 			SLBorrow slBorrow = initBorrow(userEmail,
 					slBook.getBookISBN());
 			borrowDao.save(slBorrow);

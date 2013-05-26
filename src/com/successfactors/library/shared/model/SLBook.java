@@ -31,6 +31,9 @@ public class SLBook implements Serializable {
 	private String bookPicUrl;
 	private Date bookAddDate;
 	
+
+	private Long borrowOrderTimes;
+	
 	public String getBookName() {
 		return bookName;
 	}
@@ -122,6 +125,13 @@ public class SLBook implements Serializable {
 	public void setBookAddDate(Date bookAddDate) {
 		this.bookAddDate = bookAddDate;
 	}
+
+	public Long getBorrowOrderTimes() {
+		return borrowOrderTimes;
+	}
+	public void setBorrowOrderTimes(Long borrowOrderTimes) {
+		this.borrowOrderTimes = borrowOrderTimes;
+	}
 	@Transient
 	public Record toRecord() {
 
@@ -142,6 +152,7 @@ public class SLBook implements Serializable {
 		record.setAttribute("bookAvailableQuantity", bookAvailableQuantity);
 		record.setAttribute("bookPicUrl", bookPicUrl);
 		record.setAttribute("bookAddDate", bookAddDate);
+		record.setAttribute("borrowOrderTimes", borrowOrderTimes);
 		
 
 		record.setAttribute("bookTotalQuantityTitle", "总数");
@@ -172,6 +183,7 @@ public class SLBook implements Serializable {
 		ret.setBookAvailableQuantity(record.getAttributeAsInt("bookAvailableQuantity"));
 		ret.setBookPicUrl(record.getAttribute("bookPicUrl"));
 		ret.setBookAddDate(record.getAttributeAsDate("bookAddDate"));
+		ret.setBorrowOrderTimes(record.getAttributeAsLong("borrowOrderTimes"));
 		
 		return ret;
 	}

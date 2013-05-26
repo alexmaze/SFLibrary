@@ -30,6 +30,7 @@ import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.RestCallInfo.RestCallErrorCode;
 import com.successfactors.library.shared.RestCallInfo.RestCallStatus;
 import com.successfactors.library.shared.model.OrderPage;
+import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
 
@@ -88,7 +89,8 @@ public class OrderResource {
 		}
 		
 		// 如果还有的借，不能预订
-		if (bookDao.queryByISBN(bookISBN).getBookAvailableQuantity() > 0) {
+		SLBook theBook = bookDao.queryByISBN(bookISBN);
+		if (theBook.getBookAvailableQuantity() > 0) {
 			returnInfo.put(RestCallInfo.REST_STATUS, RestCallStatus.fail);
 			returnInfo.put(RestCallInfo.REST_ERROR_CODE, RestCallErrorCode.can_not_order_while_you_can_borrow);
 			return new JsonRepresentation(returnInfo);
@@ -121,6 +123,10 @@ public class OrderResource {
 			returnInfo.put(RestCallInfo.REST_ERROR_CODE, RestCallErrorCode.db_operate_error);
 			return new JsonRepresentation(returnInfo);
 		}
+
+		
+		theBook.setBorrowOrderTimes(theBook.getBorrowOrderTimes()==null?0:theBook.getBorrowOrderTimes() + 1);
+		bookDao.updateBook(theBook);
 		
 		// 发送邮件
 		slOrder.setTheBook(bookDao.queryByISBN(bookISBN));

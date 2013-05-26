@@ -8,9 +8,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BookSearchType;
@@ -63,40 +65,21 @@ public class SLBookDao {
 		}
 	}
 
-	public List<String> getHotBooks(int num) {
+	@SuppressWarnings("unchecked")
+	public ArrayList<SLBook> getHotBooks(int num) {
 
-		try {
-			log.debug("Start getHotBooks");
-			session = HibernateSessionFactory.getSession();
-			String hql = null;
-			hql = "select bookISBN, sum(record) as addition from" +
-					" (SELECT a.bookISBN, count(a.bookISBN) as record FROM sl_borrow as a group by a.bookISBN " +
-					"union all " +
-					"SELECT b.bookISBN, count(b.bookISBN)  FROM sl_order as b group by b.bookISBN ) " +
-					"as total" +
-					" group by bookISBN order by addition desc";
-					
-			Query q = session.createSQLQuery(hql);
-			q.setFirstResult(0);
-			q.setMaxResults(num);
+		log.debug("Start getHotBooks");
+		session = HibernateSessionFactory.getSession();
 
-			List<String> results = new ArrayList<String>();
-			List list = q.list();
-			Iterator it = list.iterator();
-			while (it.hasNext()) {
-				Object[] objs= (Object[])it.next();
-				String bookISBN = (String) objs[0];
-				results.add(bookISBN);
-			}
-			log.debug("getHotBooks successfully");
-			return results;
-		} catch (HibernateException e) {
-			e.printStackTrace();
-			log.error("Class: MysqlBookDao ; Method: getHotBooks");
-			return null;
-		} finally {
-			HibernateSessionFactory.closeSession();
-		}
+		Criteria criteria = session.createCriteria(SLBook.class);
+		criteria.addOrder(Order.asc("borrowOrderTimes"));
+		criteria.setProjection(null);
+		criteria.setFirstResult(0);
+		criteria.setMaxResults(num);
+		
+		ArrayList<SLBook> ret = (ArrayList<SLBook>) criteria.list();
+		
+		return ret;
 
 	}
 

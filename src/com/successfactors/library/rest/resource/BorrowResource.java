@@ -409,6 +409,7 @@ public class BorrowResource {
 			slBook.setBookAvailableQuantity(slBook.getBookAvailableQuantity() - 1);
 			SLBorrow slBorrow = initBorrow(userEmail,
 					slBook.getBookISBN());
+			slBook.setBorrowOrderTimes(slBook.getBorrowOrderTimes()==null?0:slBook.getBorrowOrderTimes() + 1);
 			borrowDao.save(slBorrow);
 			bookDao.updateBook(slBook);
 			slBorrow.setTheBook(bookDao.queryByISBN(slBorrow.getBookISBN()));

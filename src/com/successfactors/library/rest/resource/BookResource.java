@@ -8,7 +8,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -26,6 +25,8 @@ import com.successfactors.library.server.dao.SLBookDao;
 import com.successfactors.library.server.dao.SLBorrowDao;
 import com.successfactors.library.server.dao.SLOrderDao;
 import com.successfactors.library.server.dao.SLUserDao;
+import com.successfactors.library.shared.BookSearchType;
+import com.successfactors.library.shared.RestCallInfo;
 import com.successfactors.library.shared.RestCallInfo.RestCallErrorCode;
 import com.successfactors.library.shared.RestCallInfo.RestCallStatus;
 import com.successfactors.library.shared.model.BookBorrowOrderListInfo;
@@ -33,8 +34,6 @@ import com.successfactors.library.shared.model.BookPage;
 import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLBorrow;
 import com.successfactors.library.shared.model.SLOrder;
-import com.successfactors.library.shared.BookSearchType;
-import com.successfactors.library.shared.RestCallInfo;
 
 @SuppressWarnings({"rawtypes", "unchecked"})
 @Path("book")
@@ -132,15 +131,10 @@ public class BookResource {
 	public Representation getHotBookList(@PathParam("num") int num) {
 
 		BookPage page = new BookPage(num, 1);
-		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 
-		ArrayList<String> listISBN = (ArrayList<String>) dao.getHotBooks(num);
-		Iterator<String> it = listISBN.iterator();
-		while (it.hasNext()) {
-			ret.add(dao.queryByISBN((String) it.next()));
-		}
+		ArrayList<SLBook> listISBN =  dao.getHotBooks(num);
 
-		page.setTheBooks(ret);
+		page.setTheBooks(listISBN);
 		page.setTotalPageNum(1);
 		
 		JsonRepresentation retRep = new JsonRepresentation(page);

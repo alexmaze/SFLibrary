@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,15 +120,10 @@ public class BookServiceImpl extends RemoteServiceServlet implements
 	public BookPage getHotBookList(int num) {
 
 		BookPage page = new BookPage(num, 1);
-		ArrayList<SLBook> ret = new ArrayList<SLBook>();
 
-		ArrayList<String> listISBN = (ArrayList<String>) dao.getHotBooks(num);
-		Iterator<String> it = listISBN.iterator();
-		while (it.hasNext()) {
-			ret.add(dao.queryByISBN((String) it.next()));
-		}
+		ArrayList<SLBook> listISBN = dao.getHotBooks(num);
 
-		page.setTheBooks(ret);
+		page.setTheBooks(listISBN);
 		page.setTotalPageNum(1);
 		return page;
 	}

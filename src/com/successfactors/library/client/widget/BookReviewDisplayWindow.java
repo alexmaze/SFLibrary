@@ -1,6 +1,5 @@
 package com.successfactors.library.client.widget;
 
-import com.google.gwt.core.client.GWT;
 import com.smartgwt.client.data.Record;
 import com.smartgwt.client.types.Positioning;
 import com.smartgwt.client.widgets.IButton;
@@ -11,8 +10,6 @@ import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.successfactors.library.client.SFLibrary;
-import com.successfactors.library.client.service.BookReviewService;
-import com.successfactors.library.client.service.BookReviewServiceAsync;
 import com.successfactors.library.client.widget.BookReviewEditWindow.FinishEditReview;
 import com.successfactors.library.shared.model.SLBookReview;
 

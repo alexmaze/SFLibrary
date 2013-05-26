@@ -17,6 +17,7 @@ import com.successfactors.library.shared.OrderSearchType;
 import com.successfactors.library.shared.OrderStatusType;
 import com.successfactors.library.shared.SLEmailUtil;
 import com.successfactors.library.shared.model.OrderPage;
+import com.successfactors.library.shared.model.SLBook;
 import com.successfactors.library.shared.model.SLOrder;
 import com.successfactors.library.shared.model.SLUser;
 
@@ -56,7 +57,8 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 	@Override
 	public boolean orderBook(String bookISBN) {
 		// 如果还有的借，不能预订
-		if (bookDao.queryByISBN(bookISBN).getBookAvailableQuantity() > 0) {
+		SLBook theBook = bookDao.queryByISBN(bookISBN);
+		if (theBook.getBookAvailableQuantity() > 0) {
 			return false;
 		}
 		
@@ -84,6 +86,9 @@ public class OrderServiceImpl extends RemoteServiceServlet implements
 		slOrder.setOrderDate(orderDate);
 		slOrder.setStatus(ORDER_INQUEUE);
 		orderDao.orderBook(slOrder);
+		
+		theBook.setBorrowOrderTimes(theBook.getBorrowOrderTimes()==null?0:theBook.getBorrowOrderTimes() + 1);
+		bookDao.updateBook(theBook);
 		
 		// 发送邮件
 		slOrder.setTheBook(bookDao.queryByISBN(bookISBN));
