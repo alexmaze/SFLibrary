@@ -44,7 +44,8 @@ public class BookResource {
 	private SLOrderDao orderDao = SLOrderDao.getDao();
 	private SLUserDao userDao = SLUserDao.getDao();
 	private static final String DOUBAN_API_URL = "https://api.douban.com/v2/book/isbn/";
-	private static final String DOUBAN_API_KEY = "?apikey={0b71b06d4ed8d8a722551147ec8a89f5}";
+	private static final String DOUBAN_API_KEY = "";
+	//private static final String DOUBAN_API_KEY = "?apikey={0b71b06d4ed8d8a722551147ec8a89f5}";
 	
 	/**
 	 * 获取某本书籍的详细信息，by ISBN
