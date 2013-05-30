@@ -156,6 +156,9 @@ public class RecommendResource {
 			returnInfo.put(RestCallInfo.REST_ERROR_CODE, RestCallErrorCode.need_login);
 			return new JsonRepresentation(returnInfo);
 		}
+
+		recommendedBook.setRecUserName(slUser.getUserName());
+		recommendedBook.setRecUserEmail(slUser.getUserEmail());
 		
 		// 检查是否已有
 		if (bookDao.queryByISBN(recommendedBook.getBookISBN()) != null) {

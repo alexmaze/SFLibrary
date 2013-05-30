@@ -2,6 +2,7 @@ package com.successfactors.library.rest.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
 
 import com.successfactors.library.shared.model.SLRecommendedBook;
@@ -13,13 +14,15 @@ public class JSONHelper {
 	public static SLRecommendedBook parseMapToSLRecommendedBook(Map mapInfo) {
 		SLRecommendedBook ret = new SLRecommendedBook();
 		try {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		
 		ret.setBookName(mapInfo.containsKey("bookName")?(String)mapInfo.get("bookName"):"");
 		ret.setBookAuthor(mapInfo.containsKey("bookAuthor")?(String)mapInfo.get("bookAuthor"):"");
 		ret.setBookISBN(mapInfo.containsKey("bookISBN")?(String)mapInfo.get("bookISBN"):"");
 		ret.setBookPublisher(mapInfo.containsKey("bookPublisher")?(String)mapInfo.get("bookPublisher"):"");
-		ret.setBookPublishDate(mapInfo.containsKey("bookPublishDate")?sdf.parse((String)mapInfo.get("bookPublishDate")):null);
+		
+		
+		
+		
 		ret.setBookLanguage(mapInfo.containsKey("bookLanguage")?(String)mapInfo.get("bookLanguage"):"");
 		ret.setBookPrice(mapInfo.containsKey("bookPrice")?(Double)mapInfo.get("bookPrice"):0.0);
 		ret.setBookClass(mapInfo.containsKey("bookClass")?(String)mapInfo.get("bookClass"):"");
@@ -30,9 +33,19 @@ public class JSONHelper {
 		ret.setRecUserName(mapInfo.containsKey("recUserName")?(String)mapInfo.get("recUserName"):"");
 		ret.setRecUserEmail(mapInfo.containsKey("recUserEmail")?(String)mapInfo.get("recUserEmail"):"");
 		ret.setRecStatus(mapInfo.containsKey("recStatus")?(String)mapInfo.get("recStatus"):"");
-		ret.setRecDate(mapInfo.containsKey("recDate")?sdf.parse((String)mapInfo.get("recDate")):null);
 		ret.setRecRate(mapInfo.containsKey("recRate")?Integer.valueOf(((Long)mapInfo.get("recRate")).intValue()):0);
 		ret.setCountPrice(mapInfo.containsKey("countPrice")?(Double)mapInfo.get("countPrice"):0.0);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			ret.setBookPublishDate(mapInfo.containsKey("bookPublishDate")?sdf.parse((String)mapInfo.get("bookPublishDate")):null);
+			ret.setRecDate(mapInfo.containsKey("recDate")?sdf.parse((String)mapInfo.get("recDate")):null);
+		} catch (Exception e) {
+			sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.US);
+			ret.setBookPublishDate(mapInfo.containsKey("bookPublishDate")?sdf.parse((String)mapInfo.get("bookPublishDate")):null);
+			ret.setRecDate(mapInfo.containsKey("recDate")?sdf.parse((String)mapInfo.get("recDate")):null);
+		}
+		
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
