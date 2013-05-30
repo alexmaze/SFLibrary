@@ -24,9 +24,6 @@ import com.successfactors.library.shared.model.SLUser;
 import static com.successfactors.library.server.UserServiceImpl.USER_SESSION_KEY;
 
 /**
- * 
- * @author haimingli
- * 
  */
 @SuppressWarnings("serial")
 public class OrderServiceImpl extends RemoteServiceServlet implements

@@ -39,7 +39,6 @@ public class SLBorrowDao {
 	}
 
 	/**
-	 * @Author:icelure
 	 * @保留实现
 	 */
 	protected void initDao() {
@@ -47,7 +46,6 @@ public class SLBorrowDao {
 	}
 
 	/**
-	 * @Author:icelure
 	 */
 	public boolean save(SLBorrow slBorrow) {
 		log.info("MysqlBorrowDao save is running");

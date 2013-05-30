@@ -2,8 +2,6 @@ package com.successfactors.library.shared;
 
 /**
  * 
- * @author haimingli
- * 
  */
 public enum OrderStatusType {
 

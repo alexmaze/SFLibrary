@@ -19,9 +19,6 @@ import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.model.SLOrder;
 
 /**
- * 
- * @author haimingli
- *
  */
 public class SLOrderDao {
 	private static final Logger log = Logger.getLogger(SLOrderDao.class);

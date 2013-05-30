@@ -74,6 +74,15 @@
 		<servlet-name>recommendedBookServlet</servlet-name>
 		<url-pattern>/sflibrary/recommendedBookService</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>otherServlet</servlet-name>
+		<servlet-class>com.successfactors.library.server.OtherServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>otherServlet</servlet-name>
+		<url-pattern>/sflibrary/otherService</url-pattern>
+	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>
