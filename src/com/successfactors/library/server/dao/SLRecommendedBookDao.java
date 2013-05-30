@@ -183,6 +183,25 @@ public class SLRecommendedBookDao {
 			HibernateSessionFactory.closeSession();
 		}
 	}
+	
+	public long getCountAllRemain() {
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = "select count(*) from SLRecommendedBook as p where p.recStatus='已推荐' ";
+			Query q = session.createQuery(hql);
+			if (q.uniqueResult() != null)
+				return (Long) q.uniqueResult();
+			else
+				return 0;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+	}
+	
 	public static SLRecommendedBookDao getDao() {
 		if (singleton == null) {
 			singleton = new SLRecommendedBookDao();

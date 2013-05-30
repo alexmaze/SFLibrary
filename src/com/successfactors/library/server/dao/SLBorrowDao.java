@@ -1,8 +1,10 @@
 package com.successfactors.library.server.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -15,6 +17,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
+import com.google.gwt.dev.util.collect.HashMap;
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.BorrowSearchType;
 import com.successfactors.library.shared.BorrowStatusType;
@@ -497,6 +500,102 @@ public class SLBorrowDao {
 		} else {
 			return true;
 		}
+	}
+	
+	public long getCountNowAllOverdue() {
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = "select count(*) from SLBorrow as p where p.status='已超期' ";
+			Query q = session.createQuery(hql);
+			if (q.uniqueResult() != null)
+				return (Long) q.uniqueResult();
+			else
+				return 0;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+	}
+	public long getCountNowAllBorrow() {
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = "select count(*) from SLBorrow as p where p.status<>'已归还' ";
+			Query q = session.createQuery(hql);
+			if (q.uniqueResult() != null)
+				return (Long) q.uniqueResult();
+			else
+				return 0;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+	}
+	
+	public Map<String, Long> getEachTeamBorrowNumber(Date fromDate, Date toDate) {
+		
+		Map<String, Long> ret = new HashMap<String, Long>();
+		
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = " select u.userDepartment, count(u.userDepartment) as therecord " +
+					" from SLUser as u, SLBorrow as b" +
+					" where u.userEmail = b.userEmail " +
+					" and b.borrowDate >= ? and b.borrowDate <= ? " +
+					" group by u.userDepartment";
+			
+			Query q = session.createQuery(hql);
+			q.setDate(0, fromDate);
+			q.setDate(1, toDate);
+			@SuppressWarnings("unchecked")
+			ArrayList<Object[]> result = (ArrayList<Object[]>) q.list();
+			for (Object[] objects : result) {
+				ret.put((String) objects[0], (Long) objects[1]);
+			}
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return ret;
+	}
+	
+	public Map<Integer, Long> getEachMonthBorrowNumber(Date fromDate, Date toDate) {
+		
+		Map<Integer, Long> ret = new HashMap<Integer, Long>();
+		
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = " select month(b.borrowDate), count(*) as therecord  " +
+					" from SLBorrow as b" +
+					" where b.borrowDate >= ? and b.borrowDate <= ? " +
+					"  group by month(b.borrowDate) ";
+			
+			Query q = session.createQuery(hql);
+			q.setDate(0, fromDate);
+			q.setDate(1, toDate);
+			@SuppressWarnings("unchecked")
+			ArrayList<Object[]> result = (ArrayList<Object[]>) q.list();
+			for (Object[] objects : result) {
+				ret.put((Integer) objects[0], (Long) objects[1]);
+			}
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return ret;
 	}
 	
 	public static SLBorrowDao getDao() {

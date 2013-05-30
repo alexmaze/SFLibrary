@@ -81,6 +81,9 @@ public class SFLibDailyTask extends TimerTask {
 			}
 		}
 
+		// 统计数据
+		LibraryStatisticDataCenter.getThisMonthStatisticalData();
+		
 		context.log("定时任务执行结束");
 	}
 

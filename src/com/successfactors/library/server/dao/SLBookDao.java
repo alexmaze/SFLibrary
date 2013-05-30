@@ -177,6 +177,25 @@ public class SLBookDao {
 			HibernateSessionFactory.closeSession();
 		}
 	}
+	
+
+	public long getSumAll(String fieldName) {
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = "select sum(" + fieldName+ ") from SLBook as p ";
+			Query q = session.createQuery(hql);
+			if (q.uniqueResult() != null)
+				return (Long) q.uniqueResult();
+			else
+				return 0;
+		} catch (HibernateException e) {
+			e.printStackTrace();
+			return -1;
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+	}
 
 	public long getCountByCustomField(BookSearchType searchType,
 			String searchValue) {

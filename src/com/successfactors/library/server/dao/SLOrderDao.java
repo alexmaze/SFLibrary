@@ -1,8 +1,10 @@
 package com.successfactors.library.server.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -12,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
+import com.google.gwt.dev.util.collect.HashMap;
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.model.SLOrder;
 
@@ -309,6 +312,67 @@ public class SLOrderDao {
 		} else {
 			return true;
 		}
+	}
+	
+	public Map<String, Long> getEachTeamOrderNumber(Date fromDate, Date toDate) {
+		
+		Map<String, Long> ret = new HashMap<String, Long>();
+		
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = " select u.userDepartment, count(u.userDepartment) as therecord " +
+					" from SLUser as u, SLOrder as o" +
+					" where u.userEmail = o.userEmail " +
+					" and o.orderDate >= ? and o.orderDate <= ? " +
+					" group by u.userDepartment";
+			
+			Query q = session.createQuery(hql);
+			q.setDate(0, fromDate);
+			q.setDate(1, toDate);
+			@SuppressWarnings("unchecked")
+			ArrayList<Object[]> result = (ArrayList<Object[]>) q.list();
+			for (Object[] objects : result) {
+				ret.put((String) objects[0], (Long) objects[1]);
+			}
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return ret;
+	}
+	
+	public Map<Integer, Long> getEachMonthOrderNumber(Date fromDate, Date toDate) {
+		
+		Map<Integer, Long> ret = new HashMap<Integer, Long>();
+		
+		try {
+			session = HibernateSessionFactory.getSession();
+			String hql = null;
+			hql = " select month(b.orderDate), count(*) as therecord  " +
+					" from SLOrder as b" +
+					" where b.orderDate >= ? and b.orderDate <= ? " +
+					"  group by month(b.orderDate) ";
+			
+			Query q = session.createQuery(hql);
+			q.setDate(0, fromDate);
+			q.setDate(1, toDate);
+			@SuppressWarnings("unchecked")
+			ArrayList<Object[]> result = (ArrayList<Object[]>) q.list();
+			for (Object[] objects : result) {
+				ret.put((Integer) objects[0], (Long) objects[1]);
+			}
+			
+		} catch (HibernateException e) {
+			e.printStackTrace();
+		} finally {
+			HibernateSessionFactory.closeSession();
+		}
+		
+		return ret;
 	}
 	
 	public static SLOrderDao getDao() {
