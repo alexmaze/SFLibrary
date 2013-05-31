@@ -1,18 +1,29 @@
 package com.successfactors.library.client.widget;
 
+import static com.successfactors.library.client.SFLibrary.otherService;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Map;
 
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.ListBox;
 import com.rednels.ofcgwt.client.ChartWidget;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.form.DynamicForm;
 import com.smartgwt.client.widgets.form.fields.StaticTextItem;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.successfactors.library.client.helper.RPCCall;
 import com.successfactors.library.client.helper.SLChartHelper;
 import com.successfactors.library.shared.model.SLChartData;
+import com.successfactors.library.shared.model.SLStatisticalData;
 
 public class AdminStaticsInfomationLayout extends VLayout {
 	
@@ -20,15 +31,17 @@ public class AdminStaticsInfomationLayout extends VLayout {
 	private VLayout vLayout2;
 	private VLayout vLayout3;
 
-	ChartWidget chartPlanPlan;
-	ArrayList<SLChartData> chartPlanPlanDataList;
+	SLStatisticalData theData;
 	
-	ChartWidget chartPlanActurally;
-	ArrayList<SLChartData> chartPlanActurallyDataList;
+	ChartWidget eachTeamBorrowChart;
+	ArrayList<SLChartData> eachTeamBorrowChartData;
 	
-	ChartWidget chartSvn;
-	ArrayList<SLChartData> chartSvnDataList1;
-	ArrayList<SLChartData> chartSvnDataList2;
+	ChartWidget eachTeamOrderChart;
+	ArrayList<SLChartData> eachTeamOrderChartData;
+	
+	ChartWidget eachMonthTrendChart;
+	ArrayList<SLChartData> eachMonthBorrowTrendChartData;
+	ArrayList<SLChartData> eachMonthOrderTrendChartData;
 	
 	ArrayList<ArrayList<SLChartData>> chartSvnDataList;
 	
@@ -46,15 +59,148 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		vLayout2.setPadding(10);
 		vLayout3.setPadding(10);
 		
-		initProjectForm();
-		initPlanChart();
-		initSvnChart();
+		this.setPadding(10);
+		this.setMembersMargin(5);
 		
 		this.addMember(vLayout1);
 		this.addMember(vLayout2);
 		this.addMember(vLayout3);
-		this.setPadding(10);
-		this.setMembersMargin(5);
+		
+		fetchDataAndRenderChart();
+		
+	}
+	
+	private void fetchDataAndRenderChart() {
+		new RPCCall<SLStatisticalData>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				SC.say("通信失败，请检查您的网络连接！");
+			}
+			@Override
+			public void onSuccess(SLStatisticalData result) {
+				if (result == null) {
+					SC.say("暂无资料。。。囧rz");
+					return;
+				}
+				theData = result;
+				
+				prepareChartDataList();
+				
+				initProjectForm();
+				initPlanChart();
+				initSvnChart();
+			}
+			@Override
+			protected void callService(AsyncCallback<SLStatisticalData> cb) {
+				otherService.getThisMonthStatisticalData(cb);
+			}
+		}.retry(3);
+	}
+
+	private void prepareChartDataList() {
+
+		
+		// ---------------------------------------------------------------------
+		eachTeamBorrowChartData  = new ArrayList<SLChartData>();
+		Iterator<Map.Entry<String, Long>> iterator1 = theData.getBorrowNumberEachTeam().entrySet().iterator();
+		while (iterator1.hasNext()) {
+			Map.Entry<String, Long> entry = iterator1.next();
+			SLChartData newData = new SLChartData();
+			newData.setName(entry.getKey());
+			newData.setValue(entry.getValue().intValue());
+			eachTeamBorrowChartData.add(newData);
+		}
+		
+		Collections.sort(eachTeamBorrowChartData, new Comparator<SLChartData>() {
+			@Override
+			public int compare(SLChartData o1, SLChartData o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+		ArrayList<SLChartData> tempList1  = new ArrayList<SLChartData>();
+		SLChartData lastData1 = new SLChartData();
+		lastData1.setName("其他");
+		lastData1.setValue(0);
+		int iCount = 0;
+		for (SLChartData cData : eachTeamBorrowChartData) {
+			if (iCount < 5) {
+				if (cData.getName().equals("")) {
+					lastData1.setValue(lastData1.getValue() + cData.getValue());
+					iCount--;
+				} else {
+					tempList1.add(cData);
+				}
+			} else {
+				lastData1.setValue(lastData1.getValue() + cData.getValue());
+			}
+			iCount++;
+		}
+		tempList1.add(lastData1);
+		eachTeamBorrowChartData = tempList1;
+
+		// ---------------------------------------------------------------------
+		eachTeamOrderChartData  = new ArrayList<SLChartData>();
+		Iterator<Map.Entry<String, Long>> iterator2 = 
+				theData.getOrderNumberEachTeam().entrySet().iterator();
+		while (iterator2.hasNext()) {
+			Map.Entry<String, Long> entry = iterator2.next();
+			SLChartData newData = new SLChartData();
+			newData.setName(entry.getKey());
+			newData.setValue(entry.getValue().intValue());
+			eachTeamOrderChartData.add(newData);
+		}
+		Collections.sort(eachTeamOrderChartData, new Comparator<SLChartData>() {
+			@Override
+			public int compare(SLChartData o1, SLChartData o2) {
+				return o2.getValue() - o1.getValue();
+			}
+		});
+		ArrayList<SLChartData> tempList2  = new ArrayList<SLChartData>();
+		SLChartData lastData2 = new SLChartData();
+		lastData2.setName("其他");
+		lastData2.setValue(0);
+		int iCount2 = 0;
+		for (SLChartData cData : eachTeamOrderChartData) {
+			if (iCount2 < 5) {
+				if (cData.getName().equals("")) {
+					lastData2.setValue(lastData2.getValue() + cData.getValue());
+					iCount2--;
+				} else {
+					tempList2.add(cData);
+				}
+			} else {
+				lastData2.setValue(lastData2.getValue() + cData.getValue());
+			}
+			iCount2++;
+		}
+		tempList2.add(lastData2);
+		eachTeamOrderChartData = tempList2;
+		
+		// ---------------------------------------------------------------------
+
+		eachMonthBorrowTrendChartData = new ArrayList<SLChartData>();
+		@SuppressWarnings("deprecation")
+		int thisMonth = (new Date()).getMonth() + 1;
+		for (int i = thisMonth+1; i < thisMonth + 13; i++) {
+			int realMonth = (i <= 12) ? i : (i - 12);
+			SLChartData newData = new SLChartData();
+			Long valueLong = theData.getBorrowNumberEachMonth().get(realMonth);
+			newData.setName(realMonth + "月");
+			newData.setValue(valueLong == null?0:valueLong.intValue());
+			eachMonthBorrowTrendChartData.add(newData);
+		}
+
+		// ---------------------------------------------------------------------
+		
+		eachMonthOrderTrendChartData = new ArrayList<SLChartData>();
+		for (int i = thisMonth+1; i < thisMonth + 13; i++) {
+			int realMonth = (i <= 12) ? i : (i - 12);
+			SLChartData newData = new SLChartData();
+			Long valueLong = theData.getOrderNumberEachMonth().get(realMonth);
+			newData.setName(realMonth + "月");
+			newData.setValue(valueLong == null?0:valueLong.intValue());
+			eachMonthOrderTrendChartData.add(newData);
+		}
 		
 	}
 	
@@ -69,16 +215,16 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		DynamicForm formProject = new DynamicForm();
 		formProject.setNumCols(4);
 		
-		StaticTextItem progressItem = new StaticTextItem("bookNum", "图书总量");
-		StaticTextItem statusItem = new StaticTextItem("instoreNum", "库中数量");
+		StaticTextItem progressItem = new StaticTextItem("totalBookNumber", "图书总量");
+		StaticTextItem statusItem = new StaticTextItem("inStoreBookNumber", "库中数量");
 		
-		StaticTextItem startDateItem = new StaticTextItem("borrowOkNum", "可借数量");
-		StaticTextItem planNumItem = new StaticTextItem("rec", "剩余推荐");
+		StaticTextItem startDateItem = new StaticTextItem("avaliableBookNumber", "可借数量");
+		StaticTextItem planNumItem = new StaticTextItem("remainingRecommendNumber", "剩余推荐");
 
-		StaticTextItem expected1DateItem = new StaticTextItem("exspare1", "超期数量");
-		StaticTextItem finishDate1Item = new StaticTextItem("lost1", "丢失数量");		
-		StaticTextItem expectedDateItem = new StaticTextItem("exspare", "超期率");
-		StaticTextItem finishDateItem = new StaticTextItem("lost", "丢失率");		
+		StaticTextItem expected1DateItem = new StaticTextItem("nowOverdueBorrowNumber", "当前超期数量");
+		StaticTextItem finishDate1Item = new StaticTextItem("totalLostBookNumber", "总丢失数量");		
+		StaticTextItem expectedDateItem = new StaticTextItem("nowOverdueRate", "当前超期率");
+		StaticTextItem finishDateItem = new StaticTextItem("totalLostBookRate", "总丢失率");		
 		
 		formProject.setFields(
 				progressItem, 
@@ -96,49 +242,39 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		
 		vLayout1.addMember(formProject);
 		
-				formProject.setValue("bookNum", "1002本");
-				formProject.setValue("instoreNum", "597本");
-				formProject.setValue("borrowOkNum", "323本");
-				formProject.setValue("rec", "63本");
-				formProject.setValue("exspare1", "6本");
-				formProject.setValue("lost1", "3本");
-				formProject.setValue("exspare", "2%");
-				formProject.setValue("lost", "1%");
-				
-
-
+		formProject.setValue("totalBookNumber", theData.getTotalBookNumber()+"本");
+		formProject.setValue("inStoreBookNumber", theData.getInStoreBookNumber()+"本");
+		formProject.setValue("avaliableBookNumber", theData.getAvaliableBookNumber()+"本");
+		formProject.setValue("remainingRecommendNumber", theData.getRemainingRecommendNumber()+"本");
+		formProject.setValue("nowOverdueBorrowNumber", theData.getNowOverdueBorrowNumber()+"本");
+		formProject.setValue("totalLostBookNumber", theData.getTotalLostBookNumber()+"本");
+		formProject.setValue("nowOverdueRate", theData.getNowOverdueRate()*100+"%");
+		formProject.setValue("totalLostBookRate", theData.getTotalLostBookRate()*100+"%");
+		
 	}
 	
 	private void initPlanChart() {
 		
-		chartPlanPlanDataList  = new ArrayList<SLChartData>();
-		chartPlanActurallyDataList  = new ArrayList<SLChartData>();
-		
 		HLayout headHLayout = new HLayout();
-		Label label2 = new Label("各部门借阅、预订量统计");
+		Label label2 = new Label("近一年各部门借阅、预订统计");
 		label2.setStyleName("alex_header_label");
 		label2.setHeight(20);
-		label2.setWidth("200px");
+		label2.setWidth("240px");
 		
 		ListBox selectTypeBox = new ListBox();
 		selectTypeBox.addItem("饼图", "饼图");
 		selectTypeBox.addItem("柱状图", "柱状图");
 		selectTypeBox.setVisibleItemCount(1);
 		selectTypeBox.addChangeHandler(new ChangeHandler() {
-			
 			@Override
 			public void onChange(ChangeEvent event) {
 				
 				if (((ListBox)(event.getSource())).getValue(((ListBox)(event.getSource())).getSelectedIndex()).equals("饼图")) {
-					chartPlanPlan.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "本", chartPlanPlanDataList));
-					
-					chartPlanActurally.setChartData(SLChartHelper.getAniPieChartData("预订比重", "本", chartPlanActurallyDataList));
-					
+					eachTeamBorrowChart.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "本", eachTeamBorrowChartData));
+					eachTeamOrderChart.setChartData(SLChartHelper.getAniPieChartData("预订比重", "本", eachTeamOrderChartData));
 				} else {
-					chartPlanPlan.setChartData(SLChartHelper.getBarChartTransparentData("借阅比重", "本", chartPlanPlanDataList));
-					
-					chartPlanActurally.setChartData(SLChartHelper.getBarChartTransparentData("预订比重", "本", chartPlanActurallyDataList));
-					
+					eachTeamBorrowChart.setChartData(SLChartHelper.getBarChartTransparentData("借阅比重", "本", eachTeamBorrowChartData));
+					eachTeamOrderChart.setChartData(SLChartHelper.getBarChartTransparentData("预订比重", "本", eachTeamOrderChartData));
 				}
 				
 			}
@@ -164,72 +300,16 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		hLayout2.setWidth("300px");
 		hLayout.addMember(hLayout2);
 		
-		// fake data1
-		SLChartData data11 = new SLChartData();
-		data11.setName("RE");
-		data11.setValue(10);
-
-		SLChartData data12 = new SLChartData();
-		data12.setName("ECT");
-		data12.setValue(15);
-
-		SLChartData data13 = new SLChartData();
-		data13.setName("PLT");
-		data13.setValue(22);
-
-		SLChartData data14 = new SLChartData();
-		data14.setName("PM");
-		data14.setValue(5);
-
-		SLChartData data15 = new SLChartData();
-		data15.setName("Mobile");
-		data15.setValue(8);
+		eachTeamBorrowChart = new ChartWidget();
+		eachTeamBorrowChart.setSize("300px", "200px");
+		eachTeamBorrowChart.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "本", eachTeamBorrowChartData));
 		
-		chartPlanPlanDataList.add(data11);
-		chartPlanPlanDataList.add(data12);
-		chartPlanPlanDataList.add(data13);
-		chartPlanPlanDataList.add(data14);
-		chartPlanPlanDataList.add(data15);
-		
-		chartPlanPlan = new ChartWidget();
-		chartPlanPlan.setSize("300px", "200px");
-		chartPlanPlan.setChartData(SLChartHelper.getAniPieChartData("借阅比重", "本", chartPlanPlanDataList));
-		
+		eachTeamOrderChart = new ChartWidget();
+		eachTeamOrderChart.setSize("300px", "200px");
+		eachTeamOrderChart.setChartData(SLChartHelper.getAniPieChartData("预订比重", "本", eachTeamOrderChartData));
 
-		
-		// fake data 2
-		SLChartData data21 = new SLChartData();
-		data21.setName("RE");
-		data21.setValue(5);
-
-		SLChartData data22 = new SLChartData();
-		data22.setName("ECT");
-		data22.setValue(6);
-
-		SLChartData data23 = new SLChartData();
-		data23.setName("PLT");
-		data23.setValue(1);
-
-		SLChartData data24 = new SLChartData();
-		data24.setName("PM");
-		data24.setValue(4);
-
-		SLChartData data25 = new SLChartData();
-		data25.setName("Mobile");
-		data25.setValue(6);
-		
-		chartPlanActurallyDataList.add(data21);
-		chartPlanActurallyDataList.add(data22);
-		chartPlanActurallyDataList.add(data23);
-		chartPlanActurallyDataList.add(data24);
-		chartPlanActurallyDataList.add(data25);
-		
-		chartPlanActurally = new ChartWidget();
-		chartPlanActurally.setSize("300px", "200px");
-		chartPlanActurally.setChartData(SLChartHelper.getAniPieChartData("预订比重", "本", chartPlanActurallyDataList));
-
-		hLayout1.addChild(chartPlanPlan);
-		hLayout2.addChild(chartPlanActurally);
+		hLayout1.addChild(eachTeamBorrowChart);
+		hLayout2.addChild(eachTeamOrderChart);
 		hLayout.setMembers(hLayout1, hLayout2);
 		
 	}
@@ -237,267 +317,13 @@ public class AdminStaticsInfomationLayout extends VLayout {
 	private void initSvnChart() {
 		
 		HLayout headHLayout = new HLayout();
-		Label label2 = new Label("借阅、预订走势统计");
+		Label label2 = new Label("近一年借阅、预订走势统计");
 		label2.setStyleName("alex_header_label");
 		label2.setHeight(20);
-		label2.setWidth("200px");
+		label2.setWidth("240px");
 
 		final ListBox selectTypeBox2 = new ListBox();
 		
-		ListBox selectTypeBox1 = new ListBox();
-		selectTypeBox1.addItem("日统计", "日统计");
-		selectTypeBox1.addItem("周统计", "周统计");
-		selectTypeBox1.addItem("月统计", "月统计");
-		selectTypeBox1.setVisibleItemCount(1);
-		selectTypeBox1.addChangeHandler(new ChangeHandler() {
-			
-			@Override
-			public void onChange(ChangeEvent event) {
-				
-				if (((ListBox)(event.getSource())).getValue(((ListBox)(event.getSource())).getSelectedIndex()).equals("日统计")) {
-
-					SLChartData data11 = new SLChartData();
-					data11.setName("2012-11-1");
-					data11.setValue(10);
-
-					SLChartData data13 = new SLChartData();
-					data13.setName("2012-11-25");
-					data13.setValue(22);
-
-					SLChartData data14 = new SLChartData();
-					data14.setName("2012-11-30");
-					data14.setValue(7);
-
-					SLChartData data15 = new SLChartData();
-					data15.setName("2012-12-8");
-					data15.setValue(9);
-					
-					SLChartData data16 = new SLChartData();
-					data16.setName("2012-12-16");
-					data16.setValue(24);
-					
-					SLChartData data17 = new SLChartData();
-					data17.setName("2012-12-21");
-					data17.setValue(20);
-					
-					SLChartData data18 = new SLChartData();
-					data18.setName("2013-01-01");
-					data18.setValue(8);
-					
-					chartSvnDataList1 = new ArrayList<SLChartData>();
-					chartSvnDataList1.add(data11);
-					chartSvnDataList1.add(data13);
-					chartSvnDataList1.add(data14);
-					chartSvnDataList1.add(data15);
-					chartSvnDataList1.add(data16);
-					chartSvnDataList1.add(data17);
-					chartSvnDataList1.add(data18);
-					
-					SLChartData data21 = new SLChartData();
-					data21.setName("2012-11-1");
-					data21.setValue(4);
-
-					SLChartData data23 = new SLChartData();
-					data23.setName("2012-11-25");
-					data23.setValue(9);
-
-					SLChartData data24 = new SLChartData();
-					data24.setName("2012-11-30");
-					data24.setValue(7);
-
-					SLChartData data25 = new SLChartData();
-					data25.setName("2012-12-8");
-					data25.setValue(9);
-					
-					SLChartData data26 = new SLChartData();
-					data26.setName("2012-12-16");
-					data26.setValue(12);
-					
-					SLChartData data27 = new SLChartData();
-					data27.setName("2012-12-21");
-					data27.setValue(8);
-					
-					SLChartData data28 = new SLChartData();
-					data28.setName("2013-01-01");
-					data28.setValue(6);
-					
-					chartSvnDataList2 = new ArrayList<SLChartData>();
-					chartSvnDataList2.add(data21);
-					chartSvnDataList2.add(data23);
-					chartSvnDataList2.add(data24);
-					chartSvnDataList2.add(data25);
-					chartSvnDataList2.add(data26);
-					chartSvnDataList2.add(data27);
-					chartSvnDataList2.add(data28);
-					
-					chartSvnDataList = new ArrayList<ArrayList<SLChartData>>();
-					chartSvnDataList.add(chartSvnDataList1);
-					chartSvnDataList.add(chartSvnDataList2);
-					
-							chartSvn.setChartData(SLChartHelper.getLineChartData("借阅量", "日借阅量","本", chartSvnDataList));
-							selectTypeBox2.setSelectedIndex(0);
-
-				} else if (((ListBox)(event.getSource())).getValue(((ListBox)(event.getSource())).getSelectedIndex()).equals("周统计")) {
-					SLChartData data11 = new SLChartData();
-					data11.setName("2012 第1周");
-					data11.setValue(10);
-
-					SLChartData data12 = new SLChartData();
-					data12.setName("2012 第2周");
-					data12.setValue(15);
-
-					SLChartData data13 = new SLChartData();
-					data13.setName("2012 第3周");
-					data13.setValue(22);
-
-					SLChartData data14 = new SLChartData();
-					data14.setName("2012 第4周");
-					data14.setValue(7);
-
-					SLChartData data15 = new SLChartData();
-					data15.setName("2012 第5周");
-					data15.setValue(9);
-					
-					SLChartData data16 = new SLChartData();
-					data16.setName("2012 第6周");
-					data16.setValue(24);
-					
-					SLChartData data17 = new SLChartData();
-					data17.setName("2012 第7周");
-					data17.setValue(20);
-					
-					chartSvnDataList1 = new ArrayList<SLChartData>();
-					chartSvnDataList1.add(data11);
-					chartSvnDataList1.add(data12);
-					chartSvnDataList1.add(data13);
-					chartSvnDataList1.add(data14);
-					chartSvnDataList1.add(data15);
-					chartSvnDataList1.add(data16);
-					chartSvnDataList1.add(data17);
-					
-					SLChartData data21 = new SLChartData();
-					data21.setName("2012 第1周");
-					data21.setValue(10);
-
-					SLChartData data22 = new SLChartData();
-					data22.setName("2012 第2周");
-					data22.setValue(5);
-
-					SLChartData data23 = new SLChartData();
-					data23.setName("2012 第3周");
-					data23.setValue(21);
-
-					SLChartData data24 = new SLChartData();
-					data24.setName("2012 第4周");
-					data24.setValue(12);
-
-					SLChartData data25 = new SLChartData();
-					data25.setName("2012 第5周");
-					data25.setValue(10);
-					
-					SLChartData data26 = new SLChartData();
-					data26.setName("2012 第6周");
-					data26.setValue(5);
-					
-					SLChartData data27 = new SLChartData();
-					data27.setName("2012 第7周");
-					data27.setValue(6);
-					
-					chartSvnDataList2 = new ArrayList<SLChartData>();
-					chartSvnDataList2.add(data21);
-					chartSvnDataList2.add(data22);
-					chartSvnDataList2.add(data23);
-					chartSvnDataList2.add(data24);
-					chartSvnDataList2.add(data25);
-					chartSvnDataList2.add(data26);
-					chartSvnDataList2.add(data27);
-
-					chartSvnDataList = new ArrayList<ArrayList<SLChartData>>();
-					chartSvnDataList.add(chartSvnDataList1);
-					chartSvnDataList.add(chartSvnDataList2);
-					
-							chartSvn.setChartData(SLChartHelper.getLineChartData("借阅量", "周借阅量","本", chartSvnDataList));
-							selectTypeBox2.setSelectedIndex(0);
-							
-				} else {
-					SLChartData data11 = new SLChartData();
-					data11.setName("2012-01");
-					data11.setValue(10);
-
-					SLChartData data12 = new SLChartData();
-					data12.setName("2012-02");
-					data12.setValue(15);
-
-					SLChartData data13 = new SLChartData();
-					data13.setName("2012-03");
-					data13.setValue(15);
-
-					SLChartData data14 = new SLChartData();
-					data14.setName("2012-04");
-					data14.setValue(7);
-
-					SLChartData data15 = new SLChartData();
-					data15.setName("2012-05");
-					data15.setValue(12);
-					
-					SLChartData data16 = new SLChartData();
-					data16.setName("2012-06");
-					data16.setValue(8);
-					
-					
-					chartSvnDataList1 = new ArrayList<SLChartData>();
-					chartSvnDataList1.add(data11);
-					chartSvnDataList1.add(data12);
-					chartSvnDataList1.add(data13);
-					chartSvnDataList1.add(data14);
-					chartSvnDataList1.add(data15);
-					chartSvnDataList1.add(data16);
-					
-					SLChartData data21 = new SLChartData();
-					data21.setName("2012-01");
-					data21.setValue(5);
-
-					SLChartData data22 = new SLChartData();
-					data22.setName("2012-02");
-					data22.setValue(2);
-
-					SLChartData data23 = new SLChartData();
-					data23.setName("2012-03");
-					data23.setValue(3);
-
-					SLChartData data24 = new SLChartData();
-					data24.setName("2012-04");
-					data24.setValue(9);
-
-					SLChartData data25 = new SLChartData();
-					data25.setName("2012-05");
-					data15.setValue(12);
-					
-					SLChartData data26 = new SLChartData();
-					data26.setName("2012-06");
-					data26.setValue(8);
-					
-					
-					chartSvnDataList2 = new ArrayList<SLChartData>();
-					chartSvnDataList2.add(data21);
-					chartSvnDataList2.add(data22);
-					chartSvnDataList2.add(data23);
-					chartSvnDataList2.add(data24);
-					chartSvnDataList2.add(data25);
-					chartSvnDataList2.add(data26);
-
-					chartSvnDataList = new ArrayList<ArrayList<SLChartData>>();
-					chartSvnDataList.add(chartSvnDataList1);
-					chartSvnDataList.add(chartSvnDataList2);
-					
-							chartSvn.setChartData(SLChartHelper.getLineChartData("借阅量", "月借阅量","本", chartSvnDataList));
-							selectTypeBox2.setSelectedIndex(0);
-							
-				}
-				
-			}
-		});
-
 		selectTypeBox2.addItem("折线图", "折线图");
 		selectTypeBox2.addItem("柱状图", "柱状图");
 		selectTypeBox2.addChangeHandler(new ChangeHandler() {
@@ -506,19 +332,14 @@ public class AdminStaticsInfomationLayout extends VLayout {
 			public void onChange(ChangeEvent event) {
 				
 				if (((ListBox)(event.getSource())).getValue(((ListBox)(event.getSource())).getSelectedIndex()).equals("折线图")) {
-
-						chartSvn.setChartData(SLChartHelper.getLineChartData("借阅量","",  "本",chartSvnDataList));
-
+						eachMonthTrendChart.setChartData(SLChartHelper.getLineChartData("借阅、预订量","",  "本",chartSvnDataList));
 				} else {
-
-						chartSvn.setChartData(SLChartHelper.getSketchChartData("借阅量", "本", chartSvnDataList1, chartSvnDataList2, chartSvnDataList2));
-
+						eachMonthTrendChart.setChartData(SLChartHelper.getSketchChartData("借阅、预订量", "本", eachMonthBorrowTrendChartData, eachMonthOrderTrendChartData));
 				}
 			}
 		});
 		
 		headHLayout.addMember(label2);
-		headHLayout.addMember(selectTypeBox1);
 		headHLayout.addMember(selectTypeBox2);
 		
 		vLayout3.addMember(headHLayout);
@@ -527,90 +348,15 @@ public class AdminStaticsInfomationLayout extends VLayout {
 		hLayout.setHeight("200px");
 		vLayout3.addMember(hLayout);
 		
-		SLChartData data11 = new SLChartData();
-		data11.setName("2012-11-1");
-		data11.setValue(10);
-
-		SLChartData data13 = new SLChartData();
-		data13.setName("2012-11-25");
-		data13.setValue(22);
-
-		SLChartData data14 = new SLChartData();
-		data14.setName("2012-11-30");
-		data14.setValue(7);
-
-		SLChartData data15 = new SLChartData();
-		data15.setName("2012-12-8");
-		data15.setValue(9);
-		
-		SLChartData data16 = new SLChartData();
-		data16.setName("2012-12-16");
-		data16.setValue(24);
-		
-		SLChartData data17 = new SLChartData();
-		data17.setName("2012-12-21");
-		data17.setValue(20);
-		
-		SLChartData data18 = new SLChartData();
-		data18.setName("2013-01-01");
-		data18.setValue(8);
-		
-		chartSvnDataList1 = new ArrayList<SLChartData>();
-		chartSvnDataList1.add(data11);
-		chartSvnDataList1.add(data13);
-		chartSvnDataList1.add(data14);
-		chartSvnDataList1.add(data15);
-		chartSvnDataList1.add(data16);
-		chartSvnDataList1.add(data17);
-		chartSvnDataList1.add(data18);
-		
-		SLChartData data21 = new SLChartData();
-		data21.setName("2012-11-1");
-		data21.setValue(4);
-
-		SLChartData data23 = new SLChartData();
-		data23.setName("2012-11-25");
-		data23.setValue(9);
-
-		SLChartData data24 = new SLChartData();
-		data24.setName("2012-11-30");
-		data24.setValue(7);
-
-		SLChartData data25 = new SLChartData();
-		data25.setName("2012-12-8");
-		data25.setValue(9);
-		
-		SLChartData data26 = new SLChartData();
-		data26.setName("2012-12-16");
-		data26.setValue(12);
-		
-		SLChartData data27 = new SLChartData();
-		data27.setName("2012-12-21");
-		data27.setValue(8);
-		
-		SLChartData data28 = new SLChartData();
-		data28.setName("2013-01-01");
-		data28.setValue(6);
-		
-		chartSvnDataList2 = new ArrayList<SLChartData>();
-		chartSvnDataList2.add(data21);
-		chartSvnDataList2.add(data23);
-		chartSvnDataList2.add(data24);
-		chartSvnDataList2.add(data25);
-		chartSvnDataList2.add(data26);
-		chartSvnDataList2.add(data27);
-		chartSvnDataList2.add(data28);
-		
 		chartSvnDataList = new ArrayList<ArrayList<SLChartData>>();
-		chartSvnDataList.add(chartSvnDataList1);
-		chartSvnDataList.add(chartSvnDataList2);
+		chartSvnDataList.add(eachMonthBorrowTrendChartData);
+		chartSvnDataList.add(eachMonthOrderTrendChartData);
 		
-				
-				chartSvn = new ChartWidget();
-				chartSvn.setSize("600px", "200px");
-				chartSvn.setChartData(SLChartHelper.getLineChartData("借阅量", "日借阅量","本", chartSvnDataList));
-				
-				hLayout.addChild(chartSvn);
+		eachMonthTrendChart = new ChartWidget();
+		eachMonthTrendChart.setSize("600px", "200px");
+		eachMonthTrendChart.setChartData(SLChartHelper.getLineChartData("借阅量", "月借阅量","本", chartSvnDataList));
+		
+		hLayout.addChild(eachMonthTrendChart);
 
 		
 	}

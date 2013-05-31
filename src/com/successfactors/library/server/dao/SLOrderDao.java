@@ -2,9 +2,9 @@ package com.successfactors.library.server.dao;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -14,7 +14,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.google.gwt.dev.util.collect.HashMap;
 import com.successfactors.library.server.hibernate.HibernateSessionFactory;
 import com.successfactors.library.shared.model.SLOrder;
 
@@ -311,9 +310,9 @@ public class SLOrderDao {
 		}
 	}
 	
-	public Map<String, Long> getEachTeamOrderNumber(Date fromDate, Date toDate) {
+	public HashMap<String, Long> getEachTeamOrderNumber(Date fromDate, Date toDate) {
 		
-		Map<String, Long> ret = new HashMap<String, Long>();
+		HashMap<String, Long> ret = new HashMap<String, Long>();
 		
 		try {
 			session = HibernateSessionFactory.getSession();
@@ -342,9 +341,9 @@ public class SLOrderDao {
 		return ret;
 	}
 	
-	public Map<Integer, Long> getEachMonthOrderNumber(Date fromDate, Date toDate) {
+	public HashMap<Integer, Long> getEachMonthOrderNumber(Date fromDate, Date toDate) {
 		
-		Map<Integer, Long> ret = new HashMap<Integer, Long>();
+		HashMap<Integer, Long> ret = new HashMap<Integer, Long>();
 		
 		try {
 			session = HibernateSessionFactory.getSession();

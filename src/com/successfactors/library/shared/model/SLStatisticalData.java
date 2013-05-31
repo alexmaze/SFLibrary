@@ -2,7 +2,7 @@ package com.successfactors.library.shared.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
+import java.util.HashMap;
 
 public class SLStatisticalData implements Serializable {
 
@@ -27,11 +27,12 @@ public class SLStatisticalData implements Serializable {
 	
 	
 	// 各部门借阅、预订统计（近一年）
-	private Map<String, Long> borrowNumberEachTeam;
-	private Map<String, Long> OrderNumberEachTeam;
-	
-	// 每月活跃度统计（近一年）
-	private Map<Integer, Long> activinessEachMonth;
+	private HashMap<String, Long> borrowNumberEachTeam;
+	private HashMap<String, Long> OrderNumberEachTeam;
+
+	// 每月借阅、预订统计（近一年）
+	private HashMap<Integer, Long> borrowNumberEachMonth;
+	private HashMap<Integer, Long> orderNumberEachMonth;
 
 	public SLStatisticalData() {
 		timestamp = new Date();
@@ -108,27 +109,36 @@ public class SLStatisticalData implements Serializable {
 	public void setTotalLostBookRate(double totalLostBookRate) {
 		this.totalLostBookRate = totalLostBookRate;
 	}
-
-	public Map<Integer, Long> getActivinessEachMonth() {
-		return activinessEachMonth;
+	
+	public HashMap<Integer, Long> getBorrowNumberEachMonth() {
+		return borrowNumberEachMonth;
 	}
 
-	public void setActivinessEachMonth(Map<Integer, Long> activinessEachMonth) {
-		this.activinessEachMonth = activinessEachMonth;
+	public void setBorrowNumberEachMonth(
+			HashMap<Integer, Long> borrowNumberEachMonth) {
+		this.borrowNumberEachMonth = borrowNumberEachMonth;
 	}
-	public Map<String, Long> getBorrowNumberEachTeam() {
+
+	public HashMap<Integer, Long> getOrderNumberEachMonth() {
+		return orderNumberEachMonth;
+	}
+
+	public void setOrderNumberEachMonth(HashMap<Integer, Long> orderNumberEachMonth) {
+		this.orderNumberEachMonth = orderNumberEachMonth;
+	}
+	public HashMap<String, Long> getBorrowNumberEachTeam() {
 		return borrowNumberEachTeam;
 	}
 
-	public void setBorrowNumberEachTeam(Map<String, Long> borrowNumberEachTeam) {
+	public void setBorrowNumberEachTeam(HashMap<String, Long> borrowNumberEachTeam) {
 		this.borrowNumberEachTeam = borrowNumberEachTeam;
 	}
 
-	public Map<String, Long> getOrderNumberEachTeam() {
+	public HashMap<String, Long> getOrderNumberEachTeam() {
 		return OrderNumberEachTeam;
 	}
 
-	public void setOrderNumberEachTeam(Map<String, Long> orderNumberEachTeam) {
+	public void setOrderNumberEachTeam(HashMap<String, Long> orderNumberEachTeam) {
 		OrderNumberEachTeam = orderNumberEachTeam;
 	}
 	

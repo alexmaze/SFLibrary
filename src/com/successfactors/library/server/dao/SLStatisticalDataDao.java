@@ -2,8 +2,6 @@ package com.successfactors.library.server.dao;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -43,15 +41,8 @@ public class SLStatisticalDataDao {
     	ret.setBorrowNumberEachTeam(borrowDao.getEachTeamBorrowNumber(yearBeforeDate, todayDate));
     	ret.setOrderNumberEachTeam(orderDao.getEachTeamOrderNumber(yearBeforeDate, todayDate));
     	
-    	Map<Integer, Long> activinessEachMonth_borrow = borrowDao.getEachMonthBorrowNumber(yearBeforeDate, todayDate);
-    	Map<Integer, Long> activinessEachMonth_order = orderDao.getEachMonthOrderNumber(yearBeforeDate, todayDate);
-    	Map<Integer, Long> activinessEachMonth = new HashMap<Integer, Long>();
-    	for (int i = 1; i < 13; i++) {
-    		long borrowc = activinessEachMonth_borrow.get(i) == null?0:activinessEachMonth_borrow.get(i).longValue();
-    		long orderc = activinessEachMonth_order.get(i) == null?0:activinessEachMonth_order.get(i).longValue();
-    		activinessEachMonth.put(i, borrowc + orderc);
-		}
-    	ret.setActivinessEachMonth(activinessEachMonth);
+    	ret.setBorrowNumberEachMonth(borrowDao.getEachMonthBorrowNumber(yearBeforeDate, todayDate));
+    	ret.setOrderNumberEachMonth(orderDao.getEachMonthOrderNumber(yearBeforeDate, todayDate));
     	
     	return ret;
     	

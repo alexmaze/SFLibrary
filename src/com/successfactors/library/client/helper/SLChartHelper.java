@@ -1,8 +1,6 @@
 package com.successfactors.library.client.helper;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 import com.rednels.ofcgwt.client.model.ChartData;
 import com.rednels.ofcgwt.client.model.Text;
@@ -46,7 +44,6 @@ public class SLChartHelper {
 	 *  柱状图
 	 * */
 	public static ChartData getBarChartTransparentData(String strName, String strToolTip, ArrayList<SLChartData> dataList) {
-		//"font-size: 16px; font-weight: bold; font-family: Microsoft YaHei; color:#000000; text-align: center;"
 		ChartData cd = new ChartData(strName, "font-size: 14px; font-family: Microsoft YaHei; text-align: center;");
 		cd.setBackgroundColour("-1");
 		cd.setDecimalSeparatorComma(true);
@@ -68,16 +65,14 @@ public class SLChartHelper {
 		
 		YAxis ya = new YAxis();
 		ya.setRange(0, iLargestNum);
-//		ya.setSteps(1000);
 		ya.setGridColour("#aaaaff");
 		ya.setColour("#000000");
 		cd.setYAxisLabelStyle(10, "#000000");
 		cd.setYAxis(ya);
 		
-		
 		BarChart bchart = new BarChart(BarStyle.NORMAL);
 		bchart.setColour("#000088");
-		bchart.setTooltip("#val#" + strToolTip);
+		bchart.setTooltip("#val#"+strToolTip);
 		
 		for (SLChartData smsChartData : dataList) {
 			bchart.addValues(smsChartData.getValue());
@@ -99,33 +94,30 @@ public class SLChartHelper {
 		ArrayList<String> xLabels = new ArrayList<String>();
 		int i = 0;
 		int iLargestNum = 0;
+		boolean isFirst = true;
 		for (ArrayList<SLChartData> arrayList : dataList) {
 
 			LineChart lineChart = new LineChart();
 			lineChart.setLineStyle(new LineChart.LineStyle(2, 4));
 			lineChart.setDotStyle(null);
-			lineChart.setText(arrayList.get(0).getName());
+			lineChart.setText(isFirst?"借阅趋势":"预订趋势");
 			lineChart.setColour(CHART_COLOURS[i++]);
 			
 			for (SLChartData smsChartData : arrayList) {
 				lineChart.addValues(smsChartData.getValue());
 				
-				if (!xLabels.contains(smsChartData.getDate())) {
-					xLabels.add(smsChartData.getDate());
+				if (isFirst) {
+					xLabels.add(smsChartData.getName());
 				}
 				
 				iLargestNum = smsChartData.getValue() > iLargestNum ? smsChartData.getValue() : iLargestNum;
 			}
 			lineChart.setTooltip("#val#" + strToolTip);
 			cd.addElements(lineChart);
+			isFirst = false;
 		}
 		
-		//  xLabels 排序
-        Comparator<String> comp = new MyComparator();
-        Collections.sort(xLabels,comp);  
-		
 		XAxis xa = new XAxis();
-//		xa.setSteps(2);
 		xa.setLabels(xLabels);
 		cd.setXAxis(xa);
 
@@ -186,7 +178,7 @@ public class SLChartHelper {
 	/**
 	 *  素描柱状图
 	 * */
-	public static ChartData getSketchChartData(String strName, String strToolTip, ArrayList<SLChartData> dataList1, ArrayList<SLChartData> dataList2, ArrayList<SLChartData> dataList3) {
+	public static ChartData getSketchChartData(String strName, String strToolTip, ArrayList<SLChartData> dataList1, ArrayList<SLChartData> dataList2) {
 		
 		ChartData cd2 = new ChartData(strName, "font-size: 14px; font-family: Microsoft YaHei; text-align: center;");
 		cd2.setBackgroundColour("#ffffff");
@@ -198,7 +190,6 @@ public class SLChartHelper {
 		ArrayList<SLChartData> allArrayList = new ArrayList<SLChartData>();
 		allArrayList.addAll(dataList1);
 		allArrayList.addAll(dataList2);
-		allArrayList.addAll(dataList3);
 		for (SLChartData smsChartData : allArrayList) {
 			labelList.add(smsChartData.getName());
 			iLargestNum = smsChartData.getValue() > iLargestNum ? smsChartData.getValue() : iLargestNum;
@@ -224,15 +215,10 @@ public class SLChartHelper {
 			sketch.addValues(smsChartData.getValue());
 		}
 		for (SLChartData smsChartData : dataList2) {
-			
 			SketchBarChart.SketchBar skb = new SketchBarChart.SketchBar(smsChartData.getValue());
 			skb.setColour("#6666ff");
-			skb.setTooltip("Highest<br>#val#");
+			skb.setTooltip("#val#"+strToolTip);
 			sketch.addBars(skb);
-			
-		}
-		for (SLChartData smsChartData : dataList3) {
-			sketch.addValues(smsChartData.getValue());
 		}
 		
 		cd2.addElements(sketch);

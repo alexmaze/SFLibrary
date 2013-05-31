@@ -23,6 +23,8 @@ import com.successfactors.library.client.service.BorrowService;
 import com.successfactors.library.client.service.BorrowServiceAsync;
 import com.successfactors.library.client.service.OrderService;
 import com.successfactors.library.client.service.OrderServiceAsync;
+import com.successfactors.library.client.service.OtherService;
+import com.successfactors.library.client.service.OtherServiceAsync;
 import com.successfactors.library.client.service.RecommendedBookService;
 import com.successfactors.library.client.service.RecommendedBookServiceAsync;
 import com.successfactors.library.client.service.UserService;
@@ -44,6 +46,7 @@ public class SFLibrary implements EntryPoint {
 	public final static OrderServiceAsync orderService = GWT.create(OrderService.class);
 	public final static BorrowServiceAsync borrowService = GWT.create(BorrowService.class);
 	public final static RecommendedBookServiceAsync recommendedBookService = GWT.create(RecommendedBookService.class);
+	public final static OtherServiceAsync otherService = GWT.create(OtherService.class);
 
 	public final static String SF_CK_USER_EMAIL = "SF_LIB_CK_USER_NAME";
 	public final static String SF_CK_USER_PASSWORD = "SF_LIB_CK_USER_PASSWORD";

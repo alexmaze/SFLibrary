@@ -4,11 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.InvocationException;
 
-//import edu.tongji.tjfood.client.TongjiFood;
-//import edu.tongji.tjfood.client.event.RPCInEvent;
-//import edu.tongji.tjfood.client.event.RPCOutEvent;
-
-
 public abstract class RPCCall<T> implements AsyncCallback<T> {
 	
   protected abstract void callService(AsyncCallback<T> cb);
@@ -43,12 +38,12 @@ public abstract class RPCCall<T> implements AsyncCallback<T> {
 
   private void onRPCIn() {
 	  GWT.log("RPCCall:onRPCIn");
-	  //TongjiFood.get().getEventBus().fireEvent(new RPCInEvent());
+	  //SFLibrary.get().getEventBus().fireEvent(new RPCInEvent());
   }
 
   private void onRPCOut() {
 	  GWT.log("RPCCall:onRPCOut");
-	  //TongjiFood.get().getEventBus().fireEvent(new RPCOutEvent());
+	  //SFLibrary.get().getEventBus().fireEvent(new RPCOutEvent());
   }
 
   public void retry(int retryCount) {
